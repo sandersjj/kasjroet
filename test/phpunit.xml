@@ -1,0 +1,17 @@
+<phpunit
+    bootstrap="./Bootstrap.php"
+    colors="false"
+    verbose="true"
+>
+    <testsuites>
+        <testsuite name="Kasjroet Test Suite">
+            <directory>./</directory>
+        </testsuite>
+    </testsuites>
+    <filter>  
+        <whitelist>  
+            <directory>./KasjroetTest</directory>
+        </whitelist>  
+    </filter>  
+      
+</phpunit>

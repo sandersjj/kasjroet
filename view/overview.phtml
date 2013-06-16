@@ -1,0 +1,26 @@
+<table class="table  table-striped">
+  <thead>
+        <tr>
+            <th>#</th>
+            <th>Product name</th>
+            <th>Brand name</th>
+            <th>Visible</th>
+            <th>&nbsp;</th>
+        </tr>
+   </thead>
+   <tbody>
+       <?php foreach($this->products as $product) : ?>
+       
+       <tr>
+           <td> <?php echo $product->getId(); ?></td>
+           <td> <?php echo $product->getProductName(); ?></td>
+           <td> <?php echo $product->getBrand()->getBrandName(); ?></td>
+           <td> <?php echo $product->getVisible() ? 'Yes' : "No"; ?></td>
+           <td> <a href="<?php echo $this->url('overview', array('action' => 'edit', 'id' => $product->getId())); ?>" title="edit">Edit</a></td>
+       </tr>
+       <?php endforeach ?>
+   </tbody>
+    
+</table>
+
+
