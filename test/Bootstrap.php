@@ -1,13 +1,12 @@
 <?php
-namespace KasjroetTest;//Change this namespace for your test
+namespace KasjroetTest;
 
 use Zend\Loader\AutoloaderFactory;
 use Zend\Mvc\Service\ServiceManagerConfig;
 use Zend\Mvc\MvcEvent;
 use Zend\ServiceManager\ServiceManager;
 use Zend\Stdlib\ArrayUtils;
-use RuntimeException;
-use KasjroetTest\Controller\OverviewControllerTest as OverviewControllerTest;
+use Zend\Loader\StandardAutoloader;
 
 error_reporting(E_ALL | E_STRICT);
 chdir(__DIR__);
@@ -20,57 +19,63 @@ class Bootstrap
 
     public static function init()
     {
-        // Load the user-defined test configuration file, if it exists; otherwise, load
-        if (is_readable(__DIR__ . '/TestConfig.php')) {
-            $testConfig = include __DIR__ . '/TestConfig.php';
-        } else {
-            $testConfig = include __DIR__ . '/TestConfig.php.dist';
+        
+        
+ 
+    $previousDir = '.';
+    while (!file_exists('config/application.config.php')) {
+        $dir = dirname(getcwd());
+
+        if ($previousDir === $dir) {
+            throw new RuntimeException(
+                'Unable to locate "config/application.config.php":'
+                    . ' is the Content module in a sub-directory of your application skeleton?'
+            );
         }
 
-        $zf2ModulePaths = array();
-
-        if (isset($testConfig['module_listener_options']['module_paths'])) {
-            $modulePaths = $testConfig['module_listener_options']['module_paths'];
-            foreach ($modulePaths as $modulePath) {
-                if (($path = static::findParentPath($modulePath)) ) {
-                    $zf2ModulePaths[] = $path;
-                }
-            }
+        $previousDir = $dir;
+        chdir($dir);
+}
+        if  (!((@include_once __DIR__ . '/../../../../../vendor/autoload.php') || !(@include_once __DIR__ . '/../../../../autoload.php'))) {
+           throw new RuntimeException('vendor/autoload.php could not be found. Did you run `php composer.phar install`?');
         }
 
-        $zf2ModulePaths  = implode(PATH_SEPARATOR, $zf2ModulePaths) . PATH_SEPARATOR;
-        $zf2ModulePaths .= getenv('ZF2_MODULES_TEST_PATHS') ?: (defined('ZF2_MODULES_TEST_PATHS') ? ZF2_MODULES_TEST_PATHS : '');
-
-        static::initAutoloader();
+        
+        $loader = new StandardAutoloader();
+        $loader->registerNamespace('KasjroetTest', __DIR__ . '\KasjroetTest');
+        $loader->register();
 
         // use ModuleManager to load this module and it's dependencies
-        $baseConfig = array(
-            'module_listener_options' => array(
-                'module_paths' => explode(PATH_SEPARATOR, $zf2ModulePaths),
-            ),
-        );
+//        $config = array(
+//            'module_listener_options' => array(
+//                'module_paths' => $zf2ModulePaths,
+//            ),
+//            'modules' => array(
+//                'DoctrineModule',
+//                'DoctrineORMModule',
+//                'Kasjroet',
+//            )
+//        );
+        
+        if (!$config = @include __DIR__ . '/TestConfiguration.php') {
+           $config = require __DIR__ . '/TestConfiguration.php.dist';
+        }
 
-        $config = ArrayUtils::merge($baseConfig, $testConfig);
-
-        $serviceManager = new ServiceManager(new ServiceManagerConfig());
+        $serviceManager = new ServiceManager(new ServiceManagerConfig(
+            isset($config['service_manager']) ? $config['service_manager'] : array()
+        ));
         $serviceManager->setService('ApplicationConfig', $config);
-        $serviceManager->get('ModuleManager')->loadModules();
         
-        $application = $serviceManager->get('Application');
-        $event  = new MvcEvent();
-        $event->setTarget($application);
-        $event->setApplication($application)
-        ->setRequest($application->getRequest())
-        ->setResponse($application->getResponse())
-        ->setRouter($serviceManager->get('Router'));
+        /** @var $moduleManager \Zend\ModuleManager\ModuleManager */
+        $moduleManager = $serviceManager->get('ModuleManager');
+        $moduleManager->loadModules();
         
-        static::$serviceManager = $serviceManager;
-        static::$config = $config;
-        
-        OverviewControllerTest::setMvcEvent($event);
+         
+        ServiceManagerFactory::setApplicationConfig($config);
+        //$sm = ServiceManagerFactory::getServiceManager()->get('Doctrine\ORM\EntityManager');
         
     }
-
+    
     public static function getServiceManager()
     {
         return static::$serviceManager;

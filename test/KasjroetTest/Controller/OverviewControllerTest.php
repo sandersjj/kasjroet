@@ -9,6 +9,7 @@ use Zend\Http\Response;
 use Zend\Mvc\MvcEvent;
 use Zend\Mvc\Router\RouteMatch;
 use \PHPUnit_Framework_TestCase; 
+use KasjroetTest\Util\ServiceManagerFactory;
 
 /**
  * Description of OverviewControllerTest
@@ -35,10 +36,6 @@ class OverviewControllerTest extends \PHPUnit_Framework_Testcase{
         
         $serviceManager     = Bootstrap::getServiceManager();
         $this->controller   = new OverviewController();
-        $this->controller->setEvent(self::getMvcEvent());
-        $this->controller->setServiceLocator( 
-                self::getMvcEvent()->getApplication()->getServiceManager()
-        );
         $this->request      = new Request();
         $this->routeMatch   = new RouteMatch(array('controller' => 'overview'));
         $this->event        = new MvcEvent();
@@ -52,13 +49,32 @@ class OverviewControllerTest extends \PHPUnit_Framework_Testcase{
         $this->controller->setServiceLocator($serviceManager);
     }
     
+    public function tearDown(){
+        parent::tearDown();
+    }
+    
     public function testIndexActionCanBeAccessed(){
         $this->routeMatch->setParam('action', 'index');
         
-        $result = $this->controller->dispatch($this->request);
         $response = $this->controller->getResponse();
         $this->assertEquals(200, $response->getStatusCode());
-        
-        
+    }
+    
+    public function testEditActionCanBeAccessed(){
+        $this->routeMatch->setParam('action', 'edit');
+        $response = $this->controller->getResponse();
+        $this->assertEquals(200, $response->getStatusCode());
+    }
+    
+    public function testEditActionAcceptsId(){
+            $sm = ServiceManagerFactory::getServiceManager()->get('Doctrine\ORM\EntityManager');
+           $request = $this->getMockBuilder('Zend\Http\Request')->getMock();
+           $request->expects($this->once())
+                   ->method('getQuery')
+                   ->with(array('id'=> 1))
+                   ->will($this->returnValue('Zend\View\Model'));
+           $this->routeMatch->setParam('action', 'edit');
+           $this->assertEquals('Zend\View\Model', $this->controller->dispatch($request));
     }
 }
+
