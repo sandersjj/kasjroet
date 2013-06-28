@@ -34,11 +34,12 @@ class OverviewControllerTest extends \PHPUnit_Framework_Testcase{
     }
     public function setUp(){
         
-        $serviceManager     = Bootstrap::getServiceManager();
+        $serviceManager = ServiceManagerFactory::getServiceManager();
         $this->controller   = new OverviewController();
         $this->request      = new Request();
         $this->routeMatch   = new RouteMatch(array('controller' => 'overview'));
         $this->event        = new MvcEvent();
+        
         $config = $serviceManager->get('Config');
         $routerConfig = isset($config['router']) ? $config['router'] : array();
         $router = HttpRouter::factory($routerConfig);

@@ -7,6 +7,7 @@ use Zend\Mvc\MvcEvent;
 use Zend\ServiceManager\ServiceManager;
 use Zend\Stdlib\ArrayUtils;
 use Zend\Loader\StandardAutoloader;
+use KasjroetTest\Util\ServiceManagerFactory;
 
 error_reporting(E_ALL | E_STRICT);
 chdir(__DIR__);
@@ -39,23 +40,13 @@ class Bootstrap
         if  (!((@include_once __DIR__ . '/../../../../../vendor/autoload.php') || !(@include_once __DIR__ . '/../../../../autoload.php'))) {
            throw new RuntimeException('vendor/autoload.php could not be found. Did you run `php composer.phar install`?');
         }
-
+        static::initAutoloader();
         
         $loader = new StandardAutoloader();
         $loader->registerNamespace('KasjroetTest', __DIR__ . '\KasjroetTest');
         $loader->register();
 
-        // use ModuleManager to load this module and it's dependencies
-//        $config = array(
-//            'module_listener_options' => array(
-//                'module_paths' => $zf2ModulePaths,
-//            ),
-//            'modules' => array(
-//                'DoctrineModule',
-//                'DoctrineORMModule',
-//                'Kasjroet',
-//            )
-//        );
+
         
         if (!$config = @include __DIR__ . '/TestConfiguration.php') {
            $config = require __DIR__ . '/TestConfiguration.php.dist';
@@ -90,19 +81,26 @@ class Bootstrap
     {
         $vendorPath = static::findParentPath('vendor');
 
-        if (is_readable($vendorPath . '/autoload.php')) {
-            $loader = include $vendorPath . '/autoload.php';
-        } else {
-            $zf2Path = getenv('ZF2_PATH') ?: (defined('ZF2_PATH') ? ZF2_PATH : (is_dir($vendorPath . '/ZF2/library') ? $vendorPath . '/ZF2/library' : false));
-
-            if (!$zf2Path) {
-                throw new RuntimeException('Unable to load ZF2. Run `php composer.phar install` or define a ZF2_PATH environment variable.');
+        $zf2Path = getenv('ZF2_PATH');
+        if (!$zf2Path) {
+            if (defined('ZF2_PATH')) {
+                $zf2Path = ZF2_PATH;
+            } elseif (is_dir($vendorPath . '/ZF2/library')) {
+                $zf2Path = $vendorPath . '/ZF2/library';
+            } elseif (is_dir($vendorPath . '/zendframework/zendframework/library')) {
+                $zf2Path = $vendorPath . '/zendframework/zendframework/library';
             }
-
-            include $zf2Path . '/Zend/Loader/AutoloaderFactory.php';
-
         }
 
+        if (!$zf2Path) {
+            throw new RuntimeException('Unable to load ZF2. Run `php composer.phar install` or define a ZF2_PATH environment variable.');
+        }
+
+        if (file_exists($vendorPath . '/autoload.php')) {
+            include $vendorPath . '/autoload.php';
+        }
+
+        include $zf2Path . '/Zend/Loader/AutoloaderFactory.php';
         AutoloaderFactory::factory(array(
             'Zend\Loader\StandardAutoloader' => array(
                 'autoregister_zf' => true,

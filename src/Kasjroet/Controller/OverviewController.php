@@ -23,6 +23,7 @@ class OverviewController extends AbstractKasjroetActionController {
 
         $repo = $this->getEntityManager()->getRepository('Kasjroet\Entity\Product');
         $id = (int) $this->getEvent()->getRouteMatch()->getParam('id', 1);
+        
         $product = $repo->find($id);
         $productNames = $this->getEntityManager()->getRepository('Kasjroet\Entity\ProductGroup')->findAll();
         $product->SetProductGroup($productNames);
@@ -46,18 +47,7 @@ class OverviewController extends AbstractKasjroetActionController {
         $product = new \Kasjroet\Entity\Product;
         $builder = new AnnotationBuilder($this->getEntityManager());
         $form = $builder->createForm($product);
-//        //$repo = $this->getEntityManager()->getRepository('Kasjroet\Entity\Product');
-//        $builder = new AnnotationBuilder($this->getEntityManager());
-//        $form = $builder->createForm(new Product());
-//        $config = $this->getModuleConfig();
-//        if (isset($config['kasjroet_form_extra'])) {
-//            foreach ($config['kasjroet_form_extra'] as $field) {
-//                $form->add($field);
-//            }
-//        }
 
-        //$form->setHydrator(new DoctrineHydrator($this->getEntityManager(), 'Kasjroet\Entity\Product'));
-        //$form->bind($repo);
         return new ViewModel(array('form' => $form));
     }
 
