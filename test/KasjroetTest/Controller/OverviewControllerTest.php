@@ -68,14 +68,30 @@ class OverviewControllerTest extends \PHPUnit_Framework_Testcase{
     }
     
     public function testEditActionAcceptsId(){
-            $sm = ServiceManagerFactory::getServiceManager()->get('Doctrine\ORM\EntityManager');
-           $request = $this->getMockBuilder('Zend\Http\Request')->getMock();
-           $request->expects($this->once())
-                   ->method('getQuery')
-                   ->with(array('id'=> 1))
-                   ->will($this->returnValue('Zend\View\Model'));
-           $this->routeMatch->setParam('action', 'edit');
-           $this->assertEquals('Zend\View\Model', $this->controller->dispatch($request));
+
+        $sm = ServiceManagerFactory::getServiceManager();
+        $this->repository = $sm->get('Doctrine\ORM\EntityManager')->getRepository('Kasjroet\Entity\Product');
+        $this->assertInstanceOf('Kasjroet\EntityRepository\Product', $this->repository);
+
+
+//
+//        $emMock  = $this->getMock('\Doctrine\ORM\EntityManager',
+//            array('getRepository', 'getClassMetadata', 'persist', 'flush'), array(), '', false);
+//
+//            //$em = ServiceManagerFactory::getServiceManager()->get('Doctrine\ORM\EntityManager');
+//        $emMock->expects($this->any())
+//            ->method('getRepository')
+//            ->will($this->returnValue( 'Kasjroet\EntityRepository\Product'));
+//
+//
+//
+//           $request = $this->getMockBuilder('Zend\Http\Request')->getMock();
+//           $request->expects($this->once())
+//                   ->method('getQuery')
+//                   ->with(array('id'=> 1))
+//                   ->will($this->returnValue('Zend\View\Model'));
+//           $this->routeMatch->setParam('action', 'edit');
+//           $this->assertEquals('Zend\View\Model', $this->controller->dispatch($request));
     }
 }
 

@@ -8,6 +8,7 @@ use Doctrine\ORM\EntityManager;
 use DoctrineModule\Stdlib\Hydrator\DoctrineObject as DoctrineHydrator;
 use DoctrineORMModule\Form\Annotation\AnnotationBuilder;
 use Kasjroet\Entity\Product as Product;
+use ZendTest\XmlRpc\Server\Exception;
 
 class OverviewController extends AbstractKasjroetActionController {
 
@@ -21,9 +22,14 @@ class OverviewController extends AbstractKasjroetActionController {
 
     public function editAction() {
 
-        $repo = $this->getEntityManager()->getRepository('Kasjroet\Entity\Product');
+        try{
+            $repo = $this->getEntityManager()->getRepository('Kasjroet\Entity\Product');
+
+        }catch(ObjectNotFoundException $e){
+            throw new Exception('Object not found!');
+        }
+
         $id = (int) $this->getEvent()->getRouteMatch()->getParam('id', 1);
-        
         $product = $repo->find($id);
         $productNames = $this->getEntityManager()->getRepository('Kasjroet\Entity\ProductGroup')->findAll();
         $product->SetProductGroup($productNames);

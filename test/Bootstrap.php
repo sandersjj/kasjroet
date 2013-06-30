@@ -41,16 +41,21 @@ class Bootstrap
            throw new RuntimeException('vendor/autoload.php could not be found. Did you run `php composer.phar install`?');
         }
         static::initAutoloader();
-        
+
+
+
+        if (!$config = @include __DIR__ . '/TestConfiguration.php') {
+            $config = require __DIR__ . '/TestConfiguration.php.dist';
+        }
+
+
         $loader = new StandardAutoloader();
-        $loader->registerNamespace('KasjroetTest', __DIR__ . '\KasjroetTest');
+        $loader->registerNamespace('KasjroetTest', __DIR__ . 'KasjroetTest');
+
+        $loader->registerNamespace('Kasjroet', __DIR__ . 'Kasjroet');
         $loader->register();
 
 
-        
-        if (!$config = @include __DIR__ . '/TestConfiguration.php') {
-           $config = require __DIR__ . '/TestConfiguration.php.dist';
-        }
 
         $serviceManager = new ServiceManager(new ServiceManagerConfig(
             isset($config['service_manager']) ? $config['service_manager'] : array()
@@ -63,7 +68,7 @@ class Bootstrap
         
          
         ServiceManagerFactory::setApplicationConfig($config);
-        //$sm = ServiceManagerFactory::getServiceManager()->get('Doctrine\ORM\EntityManager');
+        
         
     }
     
