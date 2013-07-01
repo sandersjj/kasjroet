@@ -22,6 +22,15 @@ class OverviewController extends AbstractKasjroetActionController {
 
     public function editAction() {
 
+        $request = $this->getRequest();
+        if($request->isPost()){
+            // save
+
+            echo 'looser!';
+            exit;
+        }
+
+
         try{
             $repo = $this->getEntityManager()->getRepository('Kasjroet\Entity\Product');
 

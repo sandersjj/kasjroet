@@ -10,6 +10,7 @@ Use Zend\Mvc\Controller\AbstractActionController;
 class AbstractKasjroetActionController extends AbstractActionController{
 
     
+    
     public function getModuleConfig(){
         return $this->getServiceLocator()->get('Config');
     }

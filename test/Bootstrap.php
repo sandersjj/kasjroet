@@ -51,7 +51,6 @@ class Bootstrap
 
         $loader = new StandardAutoloader();
         $loader->registerNamespace('KasjroetTest', __DIR__ . 'KasjroetTest');
-
         $loader->registerNamespace('Kasjroet', __DIR__ . 'Kasjroet');
         $loader->register();
 
@@ -65,7 +64,8 @@ class Bootstrap
         /** @var $moduleManager \Zend\ModuleManager\ModuleManager */
         $moduleManager = $serviceManager->get('ModuleManager');
         $moduleManager->loadModules();
-        
+        var_dump($config);
+        exit;
          
         ServiceManagerFactory::setApplicationConfig($config);
         
