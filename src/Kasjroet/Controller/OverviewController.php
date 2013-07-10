@@ -24,10 +24,8 @@ class OverviewController extends AbstractKasjroetActionController {
 
         $request = $this->getRequest();
         if($request->isPost()){
-            // save
+            var_dump($request->getContent());
 
-            echo 'looser!';
-            exit;
         }
 
 
@@ -41,7 +39,7 @@ class OverviewController extends AbstractKasjroetActionController {
         $id = (int) $this->getEvent()->getRouteMatch()->getParam('id', 1);
         $product = $repo->find($id);
         $productNames = $this->getEntityManager()->getRepository('Kasjroet\Entity\ProductGroup')->findAll();
-        $product->SetProductGroup($productNames);
+
         $builder = new AnnotationBuilder($this->getEntityManager());
         $form = $builder->createForm($product);
 

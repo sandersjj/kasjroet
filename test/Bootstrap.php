@@ -64,9 +64,7 @@ class Bootstrap
         /** @var $moduleManager \Zend\ModuleManager\ModuleManager */
         $moduleManager = $serviceManager->get('ModuleManager');
         $moduleManager->loadModules();
-        var_dump($config);
-        exit;
-         
+
         ServiceManagerFactory::setApplicationConfig($config);
         
         

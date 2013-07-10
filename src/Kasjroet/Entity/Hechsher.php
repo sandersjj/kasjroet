@@ -25,5 +25,10 @@ class Hechsher {
      * @ORM\Column
      */
     protected $hechsherDescription;
+
+    public function __toString(){
+        return $this->hechsherName;
+    }
+
 }
 

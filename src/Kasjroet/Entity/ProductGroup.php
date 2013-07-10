@@ -24,5 +24,10 @@ class ProductGroup {
      * @Annotation\Options({"label":"Product Group:"})
      */
     protected $productGroupName;
+
+
+    public function __toString(){
+        return $this->productGroupName;
+    }
 }
 

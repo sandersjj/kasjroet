@@ -57,12 +57,15 @@ class Product {
     /**
      * hechsheriem -> Multiple hechsherim should be possible
      * @ORM\ManyToMany(targetEntity="\Kasjroet\Entity\Hechsher")
+     * @Annotation\Type("Zend\Form\Element\Select")
      */
     protected $hechsheriem;
 
     /**
+     *
      * visible -> default false
      * @ORM\Column(type="boolean")
+     * @Annotation\Type("Zend\Form\Elements\Radio");
      */
     protected $visible;
 
