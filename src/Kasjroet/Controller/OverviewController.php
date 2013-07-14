@@ -45,23 +45,23 @@ class OverviewController extends AbstractKasjroetActionController {
                 foreach($this->params()->fromPost('productGroups') as $productGroup){
                     $productGroupRepo = $this->getEntityManager()->getRepository('Kasjroet\Entity\ProductGroup');
                     $productGroupObject = $productGroupRepo->find((int)$productGroup);
-                    //$product->getProductGroups()->add($productGroupObject);
+
                     $product->addProductGroup($productGroupObject);
                 }
             }
 
-//            $hechsherim = array();
-//            if($this->params()->fromPost('hechsherim')){
-//                $hechsherim = $this->params()->fromPost('hechsherim');
-//            }
-//
-//            if(!empty($hechsherim)){
-//                foreach($this->params()->fromPost('hechsheriem') as $productGroup){
-//                    $hechsherimpRepo = $this->getEntityManager()->getRepository('Kasjroet\Entity\Hechsher');
-//                    $hechsherObject = $productGroupRepo->find((int)$productGroup);
-//                    $product->getHechsherim()->add($hechsherObject);
-//                }
-//            }
+            $hechsheriem = array();
+            if($this->params()->fromPost('hechsheriem')){
+                $hechsheriem = $this->params()->fromPost('hechsheriem');
+            }
+
+            if(!empty($hechsheriem)){
+                foreach($this->params()->fromPost('hechsheriem') as $hechsher){
+                    $hechsherimpRepo = $this->getEntityManager()->getRepository('Kasjroet\Entity\Hechsher');
+                    $hechsherObject = $hechsherimpRepo->find((int)$hechsher);
+                    $product->addHechsher($hechsherObject);
+                }
+            }
 
 
 
@@ -116,7 +116,7 @@ class OverviewController extends AbstractKasjroetActionController {
 
     /**
      * 
-     * @param \kasjroet\EntityManager $entityManager
+     * @param Kasjroet\EntityManager $entityManager
      */
     public function setEntityManager(EntityManager $entityManager) {
         $this->_entityManager = $entityManager;

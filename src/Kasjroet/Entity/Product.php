@@ -26,6 +26,7 @@ class Product {
     /**
      *  brandId -> bolletje, John West
      *  @ORM\ManyToOne(targetEntity="Brand", inversedBy="products")
+     *  @Annotation\Options({"label":"Brand: "})
      */
     protected $brand;
 
@@ -33,7 +34,7 @@ class Product {
      * productGroupId -> Vis / Groente / Vlees enz.
      * @ORM\ManyToMany(targetEntity="productGroup")
      * @Annotation\Type("Zend\Form\Element\Select")
-     * @Annotation\Options({"label":"Productgroup:"})
+     * @Annotation\Options({"label":"Productgroup: "})
      */
     protected $productGroups;
 
@@ -48,7 +49,7 @@ class Product {
     /**
      * description -> Only kosher if Xyz.
      * @Annotation\Attributes({"type":"textarea"})
-     * @Annotation\Options({"label":"Product description"})
+     * @Annotation\Options({"label":"Product description: "})
      * @ORM\Column
      */
     protected $description;
@@ -57,7 +58,7 @@ class Product {
      * hechsheriem -> Multiple hechsherim should be possible
      * @ORM\ManyToMany(targetEntity="\Kasjroet\Entity\Hechsher")
      * @Annotation\Type("Zend\Form\Element\Select")
-     * @Annotation\Options({"label":"Hechsherim"})
+     * @Annotation\Options({"label":"Hechsherim: "})
      */
     protected $hechsheriem;
 
@@ -99,9 +100,6 @@ class Product {
         $this->brand = $brand;
     }
 
-    public function getProductGroup() {
-        return $this->productGroup;
-    }
 
     public function setProductGroup($productGroup) {
         $this->productGroup = $productGroup;
@@ -121,14 +119,6 @@ class Product {
 
     public function setDescription($description) {
         $this->description = $description;
-    }
-
-    public function getHechsheriem() {
-        return $this->hechsheriem;
-    }
-
-    public function setHechsheriem($hechsheriem) {
-        $this->hechsheriem = $hechsheriem;
     }
 
     public function getVisible() {
@@ -152,9 +142,9 @@ class Product {
 
     }
 
-    public function addHechsher(Hechsher $heshsher){
-        if (!$this->hechsheriem->contains($heshsher)){
-            $this->hechsheriemproductGroups->add($heshsher);
+    public function addHechsher(Hechsher $hechsher){
+        if (!$this->hechsheriem->contains($hechsher)){
+            $this->hechsheriem  ->add($hechsher);
         }
     }
 

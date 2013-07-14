@@ -11,6 +11,7 @@ echo $this->form()->openTag($form);
 
 echo $this->formRow($form->get('productName'));
 echo $this->formRow($form->get('description'));
+echo $this->formRow($form->get('brand', 'prepend'));
 echo $this->formRow($form->get('productGroups'), 'prepend');
 echo $this->formRow($form->get('hechsheriem'), 'prepend');
 echo $this->formRow($form->get('visible'), 'prepend');
