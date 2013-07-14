@@ -48,6 +48,10 @@ class Brand {
         $this->brandName = $brandName;
     }
 
+    public function __toString() {
+        return $this->brandName;
+    }
+
 
     
 }

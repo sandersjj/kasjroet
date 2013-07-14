@@ -25,7 +25,6 @@ class Product {
 
     /**
      *  brandId -> bolletje, John West
-     * 
      *  @ORM\ManyToOne(targetEntity="Brand", inversedBy="products")
      */
     protected $brand;
@@ -34,9 +33,9 @@ class Product {
      * productGroupId -> Vis / Groente / Vlees enz.
      * @ORM\ManyToMany(targetEntity="productGroup")
      * @Annotation\Type("Zend\Form\Element\Select")
-     
+     * @Annotation\Options({"label":"Productgroup:"})
      */
-    protected $productGroup;
+    protected $productGroups;
 
     /**
      * productName -> Gerookte zalm
@@ -58,14 +57,16 @@ class Product {
      * hechsheriem -> Multiple hechsherim should be possible
      * @ORM\ManyToMany(targetEntity="\Kasjroet\Entity\Hechsher")
      * @Annotation\Type("Zend\Form\Element\Select")
+     * @Annotation\Options({"label":"Hechsherim"})
      */
     protected $hechsheriem;
 
     /**
      *
-     * visible -> default false
      * @ORM\Column(type="boolean")
-     * @Annotation\Type("Zend\Form\Elements\Radio");
+     * @Annotation\Type("Zend\Form\Element\Radio");
+     * @Annotation\Attributes({"1":"Yes", "0":"No", "class":"checkbox"})
+     * @Annotation\Options({"label":"Visible:"})
      */
     protected $visible;
 
@@ -78,7 +79,7 @@ class Product {
     public function __construct() {
         $this->memos = new ArrayCollection();
         $this->hechsheriem = new ArrayCollection();
-        $this->productGroup = new ArrayCollection();
+        $this->productGroups = new ArrayCollection();
           
     }
 
@@ -146,6 +147,22 @@ class Product {
         $this->memos = $memos;
     }
 
+    public function getProductGroups() {
+        return $this->productGroups;
+
+    }
+
+    public function addHechsher(Hechsher $heshsher){
+        if (!$this->hechsheriem->contains($heshsher)){
+            $this->hechsheriemproductGroups->add($heshsher);
+        }
+    }
+
+    public function addProductGroup(ProductGroup $productGroup){
+        if (!$this->productGroups->contains($productGroup)){
+            $this->productGroups->add($productGroup);
+        }
+    }
 
 
 
