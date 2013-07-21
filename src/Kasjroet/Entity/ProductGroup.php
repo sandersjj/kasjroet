@@ -8,6 +8,7 @@ use Zend\Form\Annotation;
 /**
  * @ORM\Entity
  * @ORM\Table(name="productGroup")
+ * @ORM\Entity(repositoryClass="Kasjroet\EntityRepository\ProductGroup")
  * @Annotation\Hydrator("Zend\Stdlib\Hydrator\ArraySerializable")
  */
 class ProductGroup {
@@ -28,6 +29,10 @@ class ProductGroup {
 
     public function __toString(){
         return $this->productGroupName;
+    }
+
+    public function getId(){
+        return $this->id;
     }
 }
 

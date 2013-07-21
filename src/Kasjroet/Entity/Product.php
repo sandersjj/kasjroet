@@ -101,10 +101,6 @@ class Product {
     }
 
 
-    public function setProductGroup($productGroup) {
-        $this->productGroup = $productGroup;
-    }
-
     public function getProductName() {
         return $this->productName;
     }
@@ -137,21 +133,33 @@ class Product {
         $this->memos = $memos;
     }
 
-    public function getProductGroups() {
-        return $this->productGroups;
-
-    }
-
     public function addHechsher(Hechsher $hechsher){
         if (!$this->hechsheriem->contains($hechsher)){
             $this->hechsheriem  ->add($hechsher);
         }
     }
 
-    public function addProductGroup(ProductGroup $productGroup){
-        if (!$this->productGroups->contains($productGroup)){
-            $this->productGroups->add($productGroup);
-        }
+    /**
+     * Returns all related product groups
+     * @return ArrayCollection
+     */
+    public function getProductGroups() {
+        return $this->productGroups;
+    }
+
+    /**
+     * Sets the product groups
+     * @param ArrayCollection $productGroups
+     */
+    public function setProductGroups(\Doctrine\Common\Collections\ArrayCollection $productGroups) {
+        $this->productGroups = $productGroups;
+    }
+
+    /**
+     * This function unsets a product group
+     */
+    public function unsetProductsGroups() {
+        unset($this->productGroups);
     }
 
 
