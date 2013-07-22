@@ -51,7 +51,4 @@ class Brand {
     public function __toString() {
         return $this->brandName;
     }
-
-
-    
 }
