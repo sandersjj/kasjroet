@@ -2,13 +2,11 @@
 
 namespace Kasjroet\Controller;
 
-use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 use Doctrine\ORM\EntityManager;
 use DoctrineModule\Stdlib\Hydrator\DoctrineObject as DoctrineHydrator;
 use DoctrineORMModule\Form\Annotation\AnnotationBuilder;
 use Kasjroet\Entity\Product as Product;
-use Kasjroet\EntityRepository\ProductGroup;
 use Kasjroet\Controller\AbstractKasjroetActionController;
 use ZendTest\XmlRpc\Server\Exception;
 
@@ -31,6 +29,7 @@ class OverviewController extends AbstractKasjroetActionController {
         $id = $this->getEvent()->getRouteMatch()->getParam('id');
         if ($request->isPost() AND is_numeric($id))  {
             $productGroupsArray  = $this->params()->fromPost('productGroups');
+            $hechsheriemArray = $this->params()->fromPost('hechsheriem');
 
             $product = $this->getEntityManager()->getRepository('Kasjroet\Entity\Product')->find($id);
             $product->setProductName($this->params()->fromPost('productName'));
@@ -41,6 +40,13 @@ class OverviewController extends AbstractKasjroetActionController {
                 $product->setProductGroups($productGroups);
             } else {
                 $product->unsetProductsGroups();
+            }
+
+            if (!empty($hechsheriemArray )) {
+                $hechsheriem = $this->getEntityManager()->getRepository('Kasjroet\Entity\Hechsher')->findList($hechsheriemArray );
+                $product->setHechsheriem($hechsheriem);
+            } else {
+                $product->unsetHechsheriem();
             }
 
             $em->persist($product);
@@ -58,7 +64,6 @@ class OverviewController extends AbstractKasjroetActionController {
 
             $id = (int) $this->getEvent()->getRouteMatch()->getParam('id', 1);
             $product = $repo->find($id);
-            $productNames = $this->getEntityManager()->getRepository('Kasjroet\Entity\ProductGroup')->findAll();
 
             $builder = new AnnotationBuilder($this->getEntityManager());
             $form = $builder->createForm($product);

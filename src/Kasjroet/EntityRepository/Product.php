@@ -1,9 +1,7 @@
 <?php
 namespace Kasjroet\EntityRepository;
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+
+
 use \Doctrine\ORM\EntityRepository as EntityRepository;
 /**
  * Description of Product

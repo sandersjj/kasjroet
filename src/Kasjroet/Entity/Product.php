@@ -56,7 +56,7 @@ class Product {
 
     /**
      * hechsheriem -> Multiple hechsherim should be possible
-     * @ORM\ManyToMany(targetEntity="\Kasjroet\Entity\Hechsher")
+     * @ORM\ManyToMany(targetEntity="hechsher")
      * @Annotation\Type("Zend\Form\Element\Select")
      * @Annotation\Options({"label":"Hechsherim: "})
      */
@@ -160,6 +160,30 @@ class Product {
      */
     public function unsetProductsGroups() {
         unset($this->productGroups);
+    }
+
+
+    /**
+     * Returns all related product groups
+     * @return ArrayCollection
+     */
+    public function getHechsheriem() {
+        return $this->hechsheriem;
+    }
+
+    /**
+     * Sets the hechsherim
+     * @param ArrayCollection $hechsherim
+     */
+    public function setHechsheriem(\Doctrine\Common\Collections\ArrayCollection $hechsheriem) {
+        $this->hechsheriem = $hechsheriem;
+    }
+
+    /**
+     * This function unsets hechsherim
+     */
+    public function unsetHechsheriem() {
+        unset($this->hechsheriem);
     }
 
 

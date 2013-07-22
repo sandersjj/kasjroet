@@ -4,9 +4,8 @@ $form->setAttribute('method','post');
 echo $this->form()->openTag($form);
 
 echo $this->formRow($form->get('productName'));
-//echo $this->formCollection($form->get('product'));
 echo $this->formRow($form->get('description'));
-
 echo $this->formRow($form->get('productGroups'));
+echo $this->formRow($form->get('hechsheriem'));
 echo $this->formInput($form->get('send'));
 echo $this->form()->closeTag($form);
