@@ -65,7 +65,8 @@ class OverviewControllerTest extends \PHPUnit_Framework_Testcase{
         $this->routeMatch->setParam('action', 'edit');
         $response = $this->controller->getResponse();
         $this->assertEquals(200, $response->getStatusCode());
-    }
+    } 
+    
     
     public function testEditActionAcceptsId(){
 

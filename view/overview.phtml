@@ -14,9 +14,15 @@
        <tr>
            <td> <?php echo $product->getId(); ?></td>
            <td> <?php echo $product->getProductName(); ?></td>
-           <td> <?php echo $product->getBrand()->getBrandName(); ?></td>
+           <?php if($product->getBrand()): ?>
+                <td> <?php echo $product->getBrand()->getBrandName(); ?></td>
+           <?php else:?>
+               <td> &nbsp;</td>
+           <?php endif; ?>
+
            <td> <?php echo $product->getVisible() ? 'Yes' : "No"; ?></td>
            <td> <a href="<?php echo $this->url('overview', array('action' => 'edit', 'id' => $product->getId())); ?>" title="edit">Edit</a></td>
+           <td> <a href="<?php echo $this->url('overview', array('action' => 'delete', 'id' => $product->getId())); ?>" title="delete">delete</a></td>
        </tr>
        <?php endforeach ?>
    </tbody>
