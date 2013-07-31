@@ -53,9 +53,9 @@ return array(
                 ),
             ),
             'products'  => array(
-                'type'      => 'Literal',
+                'type'      => 'Segment',
                 'options'   => array(
-                    'route' => '/products',
+                    'route' => '/products[/:id]',
                     'defaults' => array(
                       '__NAMESPACE__'   => 'Kasjroet\Controller',
                       'controller'      => 'products'  

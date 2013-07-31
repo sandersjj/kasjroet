@@ -21,14 +21,17 @@ class OverviewController extends AbstractKasjroetActionController {
         return new ViewModel(array('products' => $repo->listProducts()));
     }
 
+    /**
+     * @return \Zend\Http\Response|ViewModel
+     * @throws \ZendTest\XmlRpc\Server\Exception
+     */
     public function editAction() {
 
         $request = $this->getRequest();
 
         $id = $this->getEvent()->getRouteMatch()->getParam('id');
         if ($request->isPost() AND is_numeric($id))  {
-            
-            //@todo call to editData function in product Repository
+
             $repo = $this->getEntityManager()->getRepository('Kasjroet\Entity\Product');
             $repo->editProduct($id, $this->getRequest()->getPost());
             return $this->redirect()->toRoute('overview', array( 'controller' => 'overview', 'action' => 'index'));
@@ -60,6 +63,9 @@ class OverviewController extends AbstractKasjroetActionController {
         }
     }
 
+    /**
+     * @return ViewModel
+     */
     public function newAction() {
 
         $request = $this->getRequest();
@@ -81,6 +87,9 @@ class OverviewController extends AbstractKasjroetActionController {
         }
     }
 
+    /**
+     * @return \Zend\Http\Response
+     */
     public function deleteAction(){
         $id = (int) $this->getEvent()->getRouteMatch()->getParam('id');
         if($id && is_numeric($id)){

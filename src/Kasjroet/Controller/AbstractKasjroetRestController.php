@@ -13,12 +13,14 @@ use Doctrine\ORM\EntityManager;
  */
 class AbstractKasjroetRestController extends AbstractRestfulcontroller {
 
+    const OK_200 = 200;
+    const BAD_REQUEST_400 = 400;
+    const NOT_FOUND_404 =  404;
+
+
     protected $_entityManager;
     protected $allowedCollectionMethods = array('GET', 'POST');
     protected $allowedResourceMethods = array('GET', 'PATCH', 'PUT', 'DELETE');
-
-    
-    
 
     // configure response
     public function getResponseWithHeader() {
@@ -30,8 +32,7 @@ class AbstractKasjroetRestController extends AbstractRestfulcontroller {
                 ->addHeaderLine('Access-Control-Allow-Methods', 'POST PUT DELETE GET');
         return $response;
     }
-    
-    
+
     public function getEntityManager() {
         return $this->_entityManager;
     }

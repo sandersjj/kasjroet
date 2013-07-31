@@ -44,17 +44,40 @@ class ProductsController extends AbstractKasjroetRestController {
 //    }
 
     public function get($id) {
-        $response = $this->getResponseWithHeader()
-                ->setMetadata('HTTP', 200)
-                ->setContent(__METHOD__ . ' get current data with id =  ' );
+        $id = (int) $this->getEvent()->getRouteMatch()->getParam('id');
+
+        if($id && is_numeric($id)){
+
+            $em = $this->getEntityManager();
+            $repo = $em->getRepository('Kasjroet\Entity\Product');
+            $product = $repo->find($id);
+            if($product){
+                $response = $this->getResponseWithHeader()
+                    ->setStatusCode(self::OK_200)
+                    ->setContent(json_encode($product));
+            }else{
+                $response = $this->getResponseWithHeader()
+                    ->setStatusCode(self::NOT_FOUND_404);
+            }
+        }else{
+            $response = $this->getResponseWithHeader()
+                ->setStatusCode(self::BAD_REQUEST_400);
+        }
         return $response;
     }
 
+    /**
+     * returns a list with all products
+     * @return mixed|void
+     */
     public function getList() {
+
         $em = $this->getEntityManager();
         $repo = $em->getRepository('Kasjroet\Entity\Product');
         $response = $this->getResponseWithHeader()
-                ->setContent($repo->listProducts());
+                    ->setStatusCode(200)
+                    ->setContent(count($repo->findAll()));
+
         return $response;
     }
 
