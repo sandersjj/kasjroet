@@ -13,9 +13,10 @@ use Doctrine\ORM\EntityManager;
  */
 class AbstractKasjroetRestController extends AbstractRestfulcontroller {
 
-    const OK_200 = 200;
-    const BAD_REQUEST_400 = 400;
-    const NOT_FOUND_404 =  404;
+    const OK_200                = 200;
+    const BAD_REQUEST_400       = 400;
+    const NOT_FOUND_404         = 404;
+    const METHOD_NOT_ALLOWED    = 405;
 
 
     protected $_entityManager;
@@ -55,13 +56,13 @@ class AbstractKasjroetRestController extends AbstractRestfulcontroller {
         
         if ($matches->getParam('id', false)) {
             if (!in_array($method, $this->allowedResourceMethods)) {
-                $response->setStatusCode(405);
+                $response->setStatusCode(self::METHOD_NOT_ALLOWED);
                 return $response;
             }
         }
 
         if (!in_array($method, $this->allowedCollectionMethods)) {
-            $response->setStatusCode(405);
+            $response->setStatusCode(self::METHOD_NOT_ALLOWED);
             return $response;
         }
     }

@@ -44,8 +44,11 @@ class ProductsController extends AbstractKasjroetRestController {
 //    }
 
     public function get($id) {
-        $id = (int) $this->getEvent()->getRouteMatch()->getParam('id');
+        $request = $this->getRequest();
+        var_dump($request->getHeaders()->get('Accept')->getFieldValue());
 
+        exit;
+        $id = (int) $this->getEvent()->getRouteMatch()->getParam('id');
         if($id && is_numeric($id)){
 
             $em = $this->getEntityManager();
@@ -76,8 +79,7 @@ class ProductsController extends AbstractKasjroetRestController {
         $repo = $em->getRepository('Kasjroet\Entity\Product');
         $response = $this->getResponseWithHeader()
                     ->setStatusCode(200)
-                    ->setContent(count($repo->findAll()));
-
+                    ->setContent($repo->findAll());
         return $response;
     }
 

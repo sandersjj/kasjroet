@@ -18,7 +18,7 @@ class Hechsher {
     protected $id;
     
     /**
-     * @ORM\Column
+     * @ORM\Column(unique=true)
      */
     protected $hechsherName;
     
@@ -26,6 +26,20 @@ class Hechsher {
      * @ORM\Column
      */
     protected $hechsherDescription;
+
+    /**
+     * @ORM\Column
+     */
+    protected $url;
+
+    /**
+     * @ORM\Column
+     */
+    protected $address;
+    /**
+     *  @ORM\Column(type="blob")
+     */
+    protected $hechsherstamp;
 
     public function __toString(){
         return $this->hechsherName;
