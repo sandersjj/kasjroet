@@ -20,41 +20,34 @@ class Bootstrap
 
     public static function init()
     {
-        
-        
- 
     $previousDir = '.';
-    while (!file_exists('config/application.config.php')) {
-        $dir = dirname(getcwd());
+        while (!file_exists('config/application.config.php')) {
+            $dir = dirname(getcwd());
 
-        if ($previousDir === $dir) {
-            throw new RuntimeException(
-                'Unable to locate "config/application.config.php":'
-                    . ' is the Content module in a sub-directory of your application skeleton?'
-            );
+            if ($previousDir === $dir) {
+                throw new RuntimeException(
+                    'Unable to locate "config/application.config.php":'
+                        . ' is the Content module in a sub-directory of your application skeleton?'
+                );
+            }
+
+            $previousDir = $dir;
+            chdir($dir);
         }
 
-        $previousDir = $dir;
-        chdir($dir);
-}
         if  (!((@include_once __DIR__ . '/../../../../../vendor/autoload.php') || !(@include_once __DIR__ . '/../../../../autoload.php'))) {
            throw new RuntimeException('vendor/autoload.php could not be found. Did you run `php composer.phar install`?');
         }
         static::initAutoloader();
 
-
-
         if (!$config = @include __DIR__ . '/TestConfiguration.php') {
             $config = require __DIR__ . '/TestConfiguration.php.dist';
         }
-
 
         $loader = new StandardAutoloader();
         $loader->registerNamespace('KasjroetTest', __DIR__ . 'KasjroetTest');
         $loader->registerNamespace('Kasjroet', __DIR__ . 'Kasjroet');
         $loader->register();
-
-
 
         $serviceManager = new ServiceManager(new ServiceManagerConfig(
             isset($config['service_manager']) ? $config['service_manager'] : array()
@@ -64,10 +57,7 @@ class Bootstrap
         /** @var $moduleManager \Zend\ModuleManager\ModuleManager */
         $moduleManager = $serviceManager->get('ModuleManager');
         $moduleManager->loadModules();
-
         ServiceManagerFactory::setApplicationConfig($config);
-        
-        
     }
     
     public static function getServiceManager()
