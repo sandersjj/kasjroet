@@ -4,7 +4,7 @@ namespace Kasjroet\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 use Zend\Form\Annotation;
-
+use JMS\Serializer\Annotation as JSMA;
 
 
 /**
@@ -13,7 +13,7 @@ use Zend\Form\Annotation;
  * @Annotation\Hydrator("Zend\Stdlib\Hydrator\ArraySerializable")
  * @Annotation\Name("Product")
  */
-class Product {
+class Product{
 
     /**
      * @ORM\id
@@ -35,6 +35,7 @@ class Product {
      * @ORM\ManyToMany(targetEntity="productGroup")
      * @Annotation\Type("Zend\Form\Element\Select")
      * @Annotation\Options({"label":"Productgroup: "})
+     * @JSMA\Type("ArrayCollection<Kasjroet\Entity\ProductGroup>")
      */
     protected $productGroups;
 
@@ -59,6 +60,7 @@ class Product {
      * @ORM\ManyToMany(targetEntity="hechsher")
      * @Annotation\Type("Zend\Form\Element\Select")
      * @Annotation\Options({"label":"Hechsherim: "})
+     * @JSMA\Type("ArrayCollection<Kasjroet\Entity\Hechsher>")
      */
     protected $hechsheriem;
 
@@ -175,6 +177,7 @@ class Product {
      * Sets the hechsherim
      * @param ArrayCollection $hechsherim
      */
+
     public function setHechsheriem(\Doctrine\Common\Collections\ArrayCollection $hechsheriem) {
         $this->hechsheriem = $hechsheriem;
     }
@@ -184,6 +187,11 @@ class Product {
      */
     public function unsetHechsheriem() {
         unset($this->hechsheriem);
+    }
+
+    public function getArrayCopy()
+    {
+        return get_object_vars($this);
     }
 
 

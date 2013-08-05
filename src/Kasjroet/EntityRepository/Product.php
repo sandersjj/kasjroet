@@ -3,6 +3,7 @@ namespace Kasjroet\EntityRepository;
 
 
 use \Doctrine\ORM\EntityRepository as EntityRepository;
+use Doctrine\Common\Collections;
 /**
  * Description of Product
  *
@@ -21,6 +22,14 @@ class Product extends EntityRepository{
         $em = $this->getEntityManager();
         return $this->findAll();
     }
+
+    public function getProducts(){
+        $qb = $this->getEntityManager()->createQueryBuilder();
+        $qb->select('p')
+            ->from('Kasjroet\Entity\Product', 'p');
+
+        return new Collections\ArrayCollection($qb->getQuery()->getResult());
+    }
     
     /**
      * 
@@ -29,13 +38,11 @@ class Product extends EntityRepository{
      */
     public function editProduct($id, $productData){
         $em = $this->getEntityManager();
-// var_dump($productData);
-//exit;
+
             $productGroupsArray  =$productData->productGroups;
             $hechsheriemArray = $productData->hechsheriem;
 
             $product = $this->find($id);
-//var_dump($product);
 
             $product->setProductName($productData->productName);
             $product->setDescription($productData->description);

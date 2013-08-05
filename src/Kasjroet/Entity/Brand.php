@@ -3,10 +3,13 @@ namespace Kasjroet\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
+use Zend\Form\Annotation;
 
 /**
  * @ORM\Entity
  * @ORM\Table(name="brand")
+ * @Annotation\Hydrator("Zend\Stdlib\Hydrator\ArraySerializable")
+ * @Annotation\Name("Brand")
  */
 class Brand {
     /**
@@ -50,5 +53,10 @@ class Brand {
 
     public function __toString() {
         return $this->brandName;
+    }
+
+    public function getArrayCopy()
+    {
+        return get_object_vars($this);
     }
 }

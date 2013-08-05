@@ -49,10 +49,10 @@ class AbstractKasjroetRestController extends AbstractRestfulcontroller {
     }
 
     public function checkOptions($e) {
-        $matches = $e->getRouteMatch();
-        $response = $e->getResponse();
-        $request = $e->getRequest();
-        $method = $request->getMethod();
+        $matches    = $e->getRouteMatch();
+        $response   = $e->getResponse();
+        $request    = $e->getRequest();
+        $method     = $request->getMethod();
         
         if ($matches->getParam('id', false)) {
             if (!in_array($method, $this->allowedResourceMethods)) {

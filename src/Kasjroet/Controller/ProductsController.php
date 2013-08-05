@@ -2,7 +2,9 @@
 
 namespace Kasjroet\Controller;
 
+use Zend\Stdlib\ArrayObject;
 use Zend\View\Model\JsonModel;
+use Zend\Stdlib\Hydrator;
 
 
 /**
@@ -46,7 +48,6 @@ class ProductsController extends AbstractKasjroetRestController {
     public function get($id) {
         $request = $this->getRequest();
         var_dump($request->getHeaders()->get('Accept')->getFieldValue());
-
         exit;
         $id = (int) $this->getEvent()->getRouteMatch()->getParam('id');
         if($id && is_numeric($id)){
@@ -58,6 +59,7 @@ class ProductsController extends AbstractKasjroetRestController {
                 $response = $this->getResponseWithHeader()
                     ->setStatusCode(self::OK_200)
                     ->setContent(json_encode($product));
+
             }else{
                 $response = $this->getResponseWithHeader()
                     ->setStatusCode(self::NOT_FOUND_404);
@@ -80,8 +82,17 @@ class ProductsController extends AbstractKasjroetRestController {
         $response = $this->getResponseWithHeader()
                     ->setStatusCode(200)
                     ->setContent($repo->findAll());
-        return $response;
+//        return $response;
+
+        var_dump($repo->findAll());
+        exit;
+
+
+        return new JsonModel($data);
     }
+
+
+
 
     public function create($data) {
         $em = $this->getEntityManager();

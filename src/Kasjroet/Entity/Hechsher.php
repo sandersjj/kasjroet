@@ -45,5 +45,10 @@ class Hechsher {
         return $this->hechsherName;
     }
 
+    public function getArrayCopy()
+    {
+        return get_object_vars($this);
+    }
+
 }
 

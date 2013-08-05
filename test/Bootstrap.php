@@ -54,10 +54,12 @@ class Bootstrap
         ));
         $serviceManager->setService('ApplicationConfig', $config);
         
-        /** @var $moduleManager \Zend\ModuleManager\ModuleManager */
+
         $moduleManager = $serviceManager->get('ModuleManager');
         $moduleManager->loadModules();
-        ServiceManagerFactory::setApplicationConfig($config);
+
+        ServiceManagerFactory::setConfig($config);
+        unset($files, $file, $loader, $config);
     }
     
     public static function getServiceManager()
