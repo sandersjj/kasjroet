@@ -2,35 +2,43 @@
 /**
  * Created by JetBrains PhpStorm.
  * User: jigal
- * Date: 8/6/13
- * Time: 11:37 PM
+ * Date: 8/5/13
+ * Time: 11:40 PM
  * To change this template use File | Settings | File Templates.
  */
 
 namespace Kasjroet\Util\Hydrator;
 
 use Zend\Stdlib\Hydrator\HydratorInterface;
-use Kasjroet\Util\Exception\UnsupportedObjectException;
 
-class ProductGroup implements  HydratorInterface{
+class ProductGroups implements  HydratorInterface{
+
+
+    protected $productGroupHydrator;
+
+    public function __construct(ProductGroup $productGroupHydrator)
+    {
+        $this->productHydrator = $productGroupHydrator;
+
+    }
 
     /**
-     * Extract the values of a product group object
      * @param object $object
-     * @return array|void
+     * @return array
      * @throws UnsupportedObjectException
      */
     public function extract($object)
     {
-        if(!$object instanceof \Kasjroet\Entity\ProductGroup){
-            $message = sprintf("The object '%s' is not supported", get_class($object));
-            throw new UnsupportedObjectException($message);
+        if (! $object instanceof \Doctrine\Common\Collections\Collection) {
+            throw new UnsupportedObjectException();
+        }
+        foreach ($object as $key => $value) {
+            var_dump($key);
+            exit;
+            $data[$key] = $this->productGroupHydrator->extract($value);
         }
 
-        return array(
-            'id'                => $object->getId(),
-            'productGroupName'  => $object->getProductGroupName()
-        );
+        return $data;
     }
 
     /**

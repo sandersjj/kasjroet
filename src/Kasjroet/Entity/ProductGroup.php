@@ -35,9 +35,8 @@ class ProductGroup {
         return $this->id;
     }
 
-    public function getArrayCopy()
-    {
-        return get_object_vars($this);
+    public function getProductGroupName(){
+        return $this->productGroupName;
     }
 }
 

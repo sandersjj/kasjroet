@@ -20,7 +20,7 @@ class Product implements HydratorInterface {
     /**
      * @var \Zend\Stdlib\Hydrator\HydratorInterface
      */
-    private $productGroupHydrator;
+    private $productGroupsHydrator;
     /**
      * @var \Zend\Stdlib\Hydrator\HydratorInterface
      */
@@ -32,17 +32,17 @@ class Product implements HydratorInterface {
 
     /**
      * @param HydratorInterface $brandHydrator
-     * @param HydratorInterface $productGroupHydrator
+     * @param HydratorInterface $productGroupsHydrator
      * @param HydratorInterface $hechsherHydrator
      * @param HydratorInterface $memoHydtrator
      */
-    public function __construct(HydratorInterface $brandHydrator, HydratorInterface $productGroupHydrator,
-                                HydratorInterface $hechsherHydrator, HydratorInterface $memoHydtrator){
-        $this->brandHydrator        = $brandHydrator;
-        $this->productGroupHydrator = $productGroupHydrator;
-        $this->hechsherHydrator     = $hechsherHydrator;
-        $this->memoHydtrator        = $memoHydtrator;
+    public function __construct(HydratorInterface $productGroupsHydrator){
+        //$this->brandHydrator        = $brandHydrator;
+        $this->productGroupsHydrator = $productGroupsHydrator;
+        //$this->hechsherHydrator     = $hechsherHydrator;
+        //$this->memoHydtrator        = $memoHydtrator;
     }
+
 
     /**
      * @param object $object
@@ -59,9 +59,9 @@ class Product implements HydratorInterface {
           'productName'     => $object->getProductName(),
           'description'     => $object->getDescription(),
           'visible'         => $object->getVisible(),
-          'brand'           => $this->brandHydrator->extract($object->getBrand()),
-          'productGroups'   => $this->productGroupHydrator->extract($object->getProductGroups()),
-          'memos'           => $this->memoHydrator($object->getMemos())
+          //'brand'           => $this->brandHydrator->extract($object->getBrand()),
+          'productGroups'   => $this->productGroupsHydrator->extract($object->getProductGroups()),
+          //'memos'           => $this->memoHydrator($object->getMemos())
 
         );
     }

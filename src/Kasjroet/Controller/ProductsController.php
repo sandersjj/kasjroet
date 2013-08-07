@@ -5,7 +5,9 @@ namespace Kasjroet\Controller;
 use Zend\Stdlib\ArrayObject;
 use Zend\View\Model\JsonModel;
 use Zend\Stdlib\Hydrator;
-
+use Kasjroet\Util\Hydrator\Product as ProductHydtrator;
+use Kasjroet\Util\Hydrator\ProductGroups as ProductGroupsHydtrator;
+use Kasjroet\Util\Hydrator\ProductGroup as ProductGroupHydtrator;
 
 /**
  * Description of RestController
@@ -82,10 +84,16 @@ class ProductsController extends AbstractKasjroetRestController {
         $response = $this->getResponseWithHeader()
                     ->setStatusCode(200)
                     ->setContent($repo->findAll());
-//        return $response;
 
-        var_dump($repo->findAll());
-        exit;
+        $products = $repo->findAll();
+        $productsArray = array();
+
+        $hydrator = new ProductHydtrator(new ProductGroupsHydtrator(new ProductGroupHydtrator()));
+        foreach($products as $product){
+            $productsArray = $hydrator->extract($product);
+            var_dump($productsArray);
+            exit;
+        }
 
 
         return new JsonModel($data);
