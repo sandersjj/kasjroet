@@ -18,7 +18,7 @@ class ProductGroups implements  HydratorInterface{
 
     public function __construct(ProductGroup $productGroupHydrator)
     {
-        $this->productHydrator = $productGroupHydrator;
+        $this->productGroupHydrator = $productGroupHydrator;
 
     }
 
@@ -33,8 +33,6 @@ class ProductGroups implements  HydratorInterface{
             throw new UnsupportedObjectException();
         }
         foreach ($object as $key => $value) {
-            var_dump($key);
-            exit;
             $data[$key] = $this->productGroupHydrator->extract($value);
         }
 

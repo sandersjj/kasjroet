@@ -90,13 +90,12 @@ class ProductsController extends AbstractKasjroetRestController {
 
         $hydrator = new ProductHydtrator(new ProductGroupsHydtrator(new ProductGroupHydtrator()));
         foreach($products as $product){
-            $productsArray = $hydrator->extract($product);
-            var_dump($productsArray);
-            exit;
+            $productsArray[] = $hydrator->extract($product);
+
         }
 
 
-        return new JsonModel($data);
+        return new JsonModel($productsArray);
     }
 
 
