@@ -87,14 +87,14 @@ class ProductsController extends AbstractKasjroetRestController {
 
         $products = $repo->findAll();
         $productsArray = array();
-
+        $hydrator = $this->getServiceLocator()->get('ProductHydrator');
+////        var_dump($hydr);
+////        exit;
         $hydrator = new ProductHydtrator(new ProductGroupsHydtrator(new ProductGroupHydtrator()));
         foreach($products as $product){
             $productsArray[] = $hydrator->extract($product);
 
         }
-
-
         return new JsonModel($productsArray);
     }
 

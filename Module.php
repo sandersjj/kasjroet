@@ -9,15 +9,14 @@ class module {
     public function onBootstrap(MvcEvent $e) {
         $application = $e->getApplication();
         $serviceManager = $application->getServiceManager();
-//        $application->getServiceManager()->get('HttpRouter')->setBaseUrl('http://ums/');
         $controllerLoader = $serviceManager->get('ControllerLoader');
 
         // Add initializer to Controller Service Manager that check if controllers needs entity manager injection
         $controllerLoader->addInitializer(function ($instance) use ($serviceManager) {
-                    if (method_exists($instance, 'setEntityManager')) {
-                        $instance->setEntityManager($serviceManager->get('doctrine.entitymanager.orm_default'));
-                    }
-                });
+                if (method_exists($instance, 'setEntityManager')) {
+                    $instance->setEntityManager($serviceManager->get('doctrine.entitymanager.orm_default'));
+                }
+         });
     }
 
     public function getConfig() {
@@ -36,5 +35,7 @@ class module {
             ),
         );
     }
+
+
 
 }

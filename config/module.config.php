@@ -119,5 +119,16 @@ return array(
             'ViewJsonStrategy',
         ),
     ),
+    'service_manager' => array(
+      'factories'  => array(
+          'ProductHydrator' => function($sm)
+          {
+              return new Util\Hydrator\Product(
+                    new Util\Hydrator\ProductGroup(new Util\Hydrator\ProductGroup())
+              );
+          }
+      ),
+      'invokables' => array(),
+    ),
 
 );
