@@ -14,7 +14,7 @@ use Kasjroet\Util\Hydrator\ProductGroup as ProductGroupHydtrator;
  *
  * @author jigal
  */
-class ProductsController extends AbstractKasjroetRestController {
+class ProductsRestController extends AbstractKasjroetRestController {
 
    
 
@@ -90,7 +90,7 @@ class ProductsController extends AbstractKasjroetRestController {
         $hydrator = $this->getServiceLocator()->get('ProductHydrator');
 ////        var_dump($hydr);
 ////        exit;
-        $hydrator = new ProductHydtrator(new ProductGroupsHydtrator(new ProductGroupHydtrator()));
+
         foreach($products as $product){
             $productsArray[] = $hydrator->extract($product);
 

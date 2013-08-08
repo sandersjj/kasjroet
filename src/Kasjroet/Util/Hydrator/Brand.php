@@ -13,6 +13,10 @@ use Zend\Stdlib\Hydrator\HydratorInterface;
 
 class Brand implements HydratorInterface{
 
+
+    public function __construct(){
+
+    }
     /**
      * Extract values from an object
      *
@@ -21,8 +25,7 @@ class Brand implements HydratorInterface{
      */
     public function extract($object)
     {
-        var_dump($object);
-        exit;
+
         return array(
             'id'    => $object->getId(),
             'brandName' =>$object->getBrandName(),
