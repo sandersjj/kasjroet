@@ -174,8 +174,7 @@ class Product{
     }
 
     /**
-     * Sets the hechsherim
-     * @param ArrayCollection $hechsherim
+     * @param ArrayCollection $hechsheriem
      */
 
     public function setHechsheriem(\Doctrine\Common\Collections\ArrayCollection $hechsheriem) {

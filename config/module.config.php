@@ -5,17 +5,12 @@ namespace Kasjroet;
 return array(
     'controllers' => array(
         'invokables' => array(
-            'Kasjroet\Controller\Products' => 'Kasjroet\Controller\ProductsController',
+            'Kasjroet\Controller\ProductsRest' => 'Kasjroet\Controller\ProductsRestController',
             'Kasjroet\Controller\Brands' => 'Kasjroet\Controller\BrandsController',
             'Kasjroet\Controller\Overview' => 'Kasjroet\Controller\OverviewController',
             
         ),
     ),
-//    'view_manager' => array(
-//        'template_path_stack' => array(
-//            'user' => __DIR__ . '/../view',
-//        ),
-//    ),
    'view_manager'  => array(
      'strategies' => array(
          'ViewJsonStrategy',
@@ -58,7 +53,7 @@ return array(
                     'route' => '/products[/:id]',
                     'defaults' => array(
                       '__NAMESPACE__'   => 'Kasjroet\Controller',
-                      'controller'      => 'products'  
+                      'controller'      => 'productsRest'
                     ),
                     
                 ),
@@ -124,8 +119,10 @@ return array(
           'ProductHydrator' => function($sm)
           {
               return new Util\Hydrator\Product(
-                    new Util\Hydrator\ProductGroup(new Util\Hydrator\ProductGroup()),
-                    new Util\Hydrator\Brand()
+                    new Util\Hydrator\ProductGroups(new Util\Hydrator\ProductGroup()),
+                    new Util\Hydrator\Brand(),
+                    new Util\Hydrator\Hechsheriem(new Util\Hydrator\Hechsher())
+
               );
           }
       ),

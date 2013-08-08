@@ -2,39 +2,40 @@
 /**
  * Created by JetBrains PhpStorm.
  * User: jigal
- * Date: 8/7/13
- * Time: 11:45 PM
+ * Date: 8/8/13
+ * Time: 9:52 PM
  * To change this template use File | Settings | File Templates.
  */
 
 namespace Kasjroet\Util\Hydrator;
 
 use Zend\Stdlib\Hydrator\HydratorInterface;
+use Kasjroet\Util\Exception\UnsupportedObjectException;
 
-class Brand implements HydratorInterface{
+class Hechsher implements HydratorInterface{
 
 
-    public function __construct(){
-
-    }
 
     /**
      * @param object $object
-     * @return array
+     * @return array|void
      * @throws UnsupportedObjectException
      */
     public function extract($object)
     {
-
-        if(!$object instanceof \Kasjroet\Entity\Brand){
+        if(!$object instanceof \Kasjroet\Entity\Hechsher){
             $message = sprintf("The object '%s' is not supported", get_class($object));
             throw new UnsupportedObjectException($message);
         }
 
         return array(
-            'id'    => $object->getId(),
-            'brandName' =>$object->getBrandName(),
+            'id'                    => $object->getId(),
+            'hechsherName'          => $object->getHechsherName(),
+            'hechsherDescription'   => $object->getHechsherDescription(),
+            'hechsherStamp'         => $object->getHechsherDescription(),
+            'url'                   => $object->getUrl()
         );
+
     }
 
     /**

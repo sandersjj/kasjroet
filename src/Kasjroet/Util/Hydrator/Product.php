@@ -31,15 +31,15 @@ class Product implements HydratorInterface {
     private $memoHydtrator;
 
     /**
-     * @param HydratorInterface $brandHydrator
      * @param HydratorInterface $productGroupsHydrator
+     * @param HydratorInterface $brandHydrator
      * @param HydratorInterface $hechsherHydrator
-     * @param HydratorInterface $memoHydtrator
      */
-    public function __construct(HydratorInterface $productGroupsHydrator, HydratorInterface $brandHydrator){
+    public function __construct(HydratorInterface $productGroupsHydrator, HydratorInterface $brandHydrator,
+                                HydratorInterface $hechsherHydrator){
         $this->brandHydrator        = $brandHydrator;
         $this->productGroupsHydrator = $productGroupsHydrator;
-        //$this->hechsherHydrator     = $hechsherHydrator;
+        $this->hechsherHydrator     = $hechsherHydrator;
         //$this->memoHydtrator        = $memoHydtrator;
     }
 
@@ -61,6 +61,7 @@ class Product implements HydratorInterface {
           'visible'         => $object->getVisible(),
           'brand'           => $this->brandHydrator->extract($object->getBrand()),
           'productGroups'   => $this->productGroupsHydrator->extract($object->getProductGroups()),
+          'hechsheriem'     => $this->hechsherHydrator->extract($object->getHechsheriem())
           //'memos'           => $this->memoHydrator($object->getMemos())
 
         );

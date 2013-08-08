@@ -2,8 +2,8 @@
 /**
  * Created by JetBrains PhpStorm.
  * User: jigal
- * Date: 8/7/13
- * Time: 11:45 PM
+ * Date: 8/8/13
+ * Time: 11:48 PM
  * To change this template use File | Settings | File Templates.
  */
 
@@ -11,10 +11,18 @@ namespace Kasjroet\Util\Hydrator;
 
 use Zend\Stdlib\Hydrator\HydratorInterface;
 
-class Brand implements HydratorInterface{
+class Hechsheriem implements HydratorInterface{
 
 
-    public function __construct(){
+
+    protected $hechsherHydtrator;
+
+    /**
+     * @param Hechsher $hechsherHydrator
+     */
+    public function __construct(Hechsher $hechsherHydrator)
+    {
+        $this->hechsherHydtrator = $hechsherHydrator;
 
     }
 
@@ -25,17 +33,16 @@ class Brand implements HydratorInterface{
      */
     public function extract($object)
     {
-
-        if(!$object instanceof \Kasjroet\Entity\Brand){
-            $message = sprintf("The object '%s' is not supported", get_class($object));
-            throw new UnsupportedObjectException($message);
+        if (! $object instanceof \Doctrine\Common\Collections\Collection) {
+            throw new UnsupportedObjectException();
+        }
+        foreach ($object as $key => $value) {
+            $data[$key] = $this->hechsherHydtrator->extract($value);
         }
 
-        return array(
-            'id'    => $object->getId(),
-            'brandName' =>$object->getBrandName(),
-        );
+        return $data;
     }
+
 
     /**
      * Hydrate $object with the provided $data.
