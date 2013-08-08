@@ -33,20 +33,35 @@ class Brand {
     public function __construct() {
         $this->products = new ArrayCollection();
     }
-    
-    
+
+    /**
+     * Gets the brand ID
+     * @return mixed
+     */
     public function getId() {
         return $this->id;
     }
 
+    /**
+     * Sets the brand Id
+     * @param $id
+     */
     public function setId($id) {
         $this->id = $id;
     }
 
+    /**
+     * Gets the brandName
+     * @return mixed
+     */
     public function getBrandName() {
         return $this->brandName;
     }
 
+    /**
+     * Sets the brandName
+     * @param $brandName
+     */
     public function setBrandName($brandName) {
         $this->brandName = $brandName;
     }
@@ -55,8 +70,4 @@ class Brand {
         return $this->brandName;
     }
 
-    public function getArrayCopy()
-    {
-        return get_object_vars($this);
-    }
 }

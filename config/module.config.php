@@ -124,7 +124,8 @@ return array(
           'ProductHydrator' => function($sm)
           {
               return new Util\Hydrator\Product(
-                    new Util\Hydrator\ProductGroup(new Util\Hydrator\ProductGroup())
+                    new Util\Hydrator\ProductGroup(new Util\Hydrator\ProductGroup()),
+                    new Util\Hydrator\Brand()
               );
           }
       ),
