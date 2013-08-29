@@ -17,8 +17,18 @@ class OverviewController extends AbstractKasjroetActionController {
 
     public function indexAction() {
 
+        $flashMessages = array();
+
+        $flashMessenger = $this->flashMessenger();
+        if ($flashMessenger->hasMessages()) {
+            $flashMessages = $flashMessenger->getMessages();
+        }
+
         $repo = $this->getEntityManager()->getRepository('Kasjroet\Entity\Product');
-        return new ViewModel(array('products' => $repo->listProducts()));
+        return new ViewModel(array(
+            'products' => $repo->listProducts()
+            ,'flashMessages' => $flashMessages,
+        ));
     }
 
     /**
@@ -29,11 +39,13 @@ class OverviewController extends AbstractKasjroetActionController {
 
         $request = $this->getRequest();
 
+
         $id = $this->getEvent()->getRouteMatch()->getParam('id');
         if ($request->isPost() AND is_numeric($id))  {
 
             $repo = $this->getEntityManager()->getRepository('Kasjroet\Entity\Product');
             $repo->editProduct($id, $this->getRequest()->getPost());
+            $this->flashMessenger()->addMessage('The product was edited.');
             return $this->redirect()->toRoute('overview', array( 'controller' => 'overview', 'action' => 'index'));
         } else {
 
@@ -72,6 +84,8 @@ class OverviewController extends AbstractKasjroetActionController {
         if($request->isPost()){
             $repo = $this->getEntityManager()->getRepository('Kasjroet\Entity\Product');
             $repo->addProduct($this->getRequest()->getPost());
+            $this->flashMessenger()->addMessage('The product was added.');
+            return $this->redirect()->toRoute('overview', array( 'controller' => 'overview', 'action' => 'index'));
         }else{
             $product = new \Kasjroet\Entity\Product;
             $builder = new AnnotationBuilder($this->getEntityManager());

@@ -1,3 +1,10 @@
+<?php if(count($this->flashMessages)) : ?>
+    <ul>
+        <?php foreach ($flashMessages as $msg) : ?>
+            <li><?php echo $msg; ?></li>
+        <?php endforeach; ?>
+    </ul>
+<?php endif; ?>
 <div id="buttons">
  <a href="<?php echo $this->url('overview', array('action' => 'new')); ?>"> new </a>
  <?php echo $this->partial('overview', array('products' => $products)); ?>
