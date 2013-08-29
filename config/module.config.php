@@ -109,7 +109,8 @@ return array(
             'error/index'   => __DIR__ . '/../view/error/index.phtml',
         ),*/
         'template_path_stack' => array(
-            'application' => __DIR__ . '/../view',
+            'application' => __DIR__ . '/../view'
+            ,'kasjroet' =>__DIR__ . '/../view',
         ),
         'strategies' => array(
             'ViewJsonStrategy',
