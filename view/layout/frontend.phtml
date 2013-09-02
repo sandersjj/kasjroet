@@ -8,26 +8,48 @@
         ->prependStylesheet($this->basePath() . '/css/kasjroet.css')
         ->prependStylesheet($this->basePath() . '/css/bootstrap.min.css') ?>
 
+    <?php echo $this->headScript()->prependFile($this->basePath() . '/js/html5.js', 'text/javascript', array('conditional' => 'lt IE 9',))
+        ->prependFile($this->basePath() . '/js/bootstrap.min.js')
+        ->prependFile($this->basePath() . '/js/jquery.min.js') ?>
+
     <head>
 
 </head>
     <body>
         <div class="container">
-            <div class="content-head">
-                <h1>Productgroepen</h1>
+            <div class="row-fluid">
+                <div class="span12">Menu?</div>
             </div>
-            <div class="brands">
-                <ul>
-                    <li><img src="images/food-icon.png" alt="Bakproducten"/><span>Bakproducten</span></li>
-                    <li><img src="images/food-icon.png" alt="Dranken"/><span>Dranken</span></li>
-                    <li><img src="images/food-icon.png" alt="Vleesvervangers"/><span>Vleesvervangers</span></li>
-                    <li><img src="images/food-icon.png" alt="Chips en nootjes"/><span>Chips en nootjes</span></li>
-                    <li><img src="images/food-icon.png" alt="Babyvoeding"/><span>Babyvoeding</span></li>
-                    <li><img src="images/food-icon.png" alt="Chocolade & bonbons"/><span>Chocolade & bonbons</span></li>
-                    <li><img src="images/food-icon.png" alt="Broodbeleg"/><span>Broodbeleg</span></li>
-                    <li><img src="images/food-icon.png" alt="Chips en noten"/><span>Chips en noten</span></li>
-                    <li><img src="images/food-icon.png" alt="Drop"/><span>Drop</span></li>
-                </ul>
+            <div class="row-fluid">
+                <div class="span8">
+
+                    <?php echo $this->layout()->content; ?>
+                    <!--<h1>Product categorieën</h1>
+                    <form class="form-search search-bar">
+                        <div class="input-append">
+                            <input type="text" class="search-query" placeholder="Enter your address here...">
+                            <button type="submit" class="btn btn-primary">
+                                Search <i class="icon-search icon-white"></i></button>
+                        </div>
+                    </form>
+                    <ul class="nav nav-tabs nav-stacked">
+                        <li><a href="">Bakproducten</a></li>
+                        <li><a href="">Dranken</a></li>
+                        <li><a href="">Vleesvervangers</a></li>
+                        <li><a href="">Chips en nootjes</a></li>
+                        <li><a href="">Babyvoeding</a></li>
+                        <li><a href="">Chocolade & bonbons</a></li>
+                        <li><a href="">Broodbeleg</a></li>
+                        <li><a href="">Chips en noten</a></li>
+                        <li><a href="">Drop</a></li>
+                    </ul>-->
+                </div>
+                <div class="span4">
+                    <h2>Over deze site</h2>
+                    <p>Deze website geeft overzicht van de kosjere producten in Nederland. De lijst is samengesteld door
+                    het Nederlands Israelitisch Kerkgenootschap.</p>
+                </div>
+
             </div>
         </div>
     </body>

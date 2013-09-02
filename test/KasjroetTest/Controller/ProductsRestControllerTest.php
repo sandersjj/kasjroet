@@ -2,7 +2,7 @@
 namespace KasjroetTest\Controller;
 
 use KasjroetTest\Bootstrap;
-use Kasjroet\Controller\ProductsController;
+use Kasjroet\Controller\ProductsRestController;
 use Zend\Http\Request;
 use Zend\Http\Response;
 use Zend\Mvc\MvcEvent;
@@ -10,7 +10,7 @@ use Zend\Mvc\Router\RouteMatch;
 use Zend\Mvc\Router\Http\TreeRouteStack as HttpRouter;
 use PHPUnit_Framework_TestCase;
 
-class ProductControllerTest extends PHPUnit_Framework_TestCase
+class ProductsRestControllerTest extends PHPUnit_Framework_TestCase
 {
     protected $controller;
     protected $request;
@@ -21,7 +21,7 @@ class ProductControllerTest extends PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $serviceManager   = Bootstrap::getServiceManager();
-        $this->controller = new ProductsController();
+        $this->controller = new ProductsRestController();
         $this->request    = new Request();
         $this->routeMatch = new RouteMatch(array('controller' => 'index'));
         $this->event      = new MvcEvent();

@@ -3,10 +3,12 @@
 namespace Kasjroet\Controller;
 
 
+use Zend\View\Model\ViewModel;
+
 class BrandsController extends AbstractKasjroetActionController{
 
     public function indexAction(){
-        $this->layout('layout/frontend');
+        return new ViewModel(array());
     }
 
 }

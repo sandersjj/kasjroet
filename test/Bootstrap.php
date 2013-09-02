@@ -49,16 +49,26 @@ class Bootstrap
         $loader->registerNamespace('Kasjroet', __DIR__ . 'Kasjroet');
         $loader->register();
 
+        $configuration = include('config/application.config.php');
         $serviceManager = new ServiceManager(new ServiceManagerConfig(
-            isset($config['service_manager']) ? $config['service_manager'] : array()
+            isset($configuration['service_manager']) ? $configuration['service_manager'] : array()
         ));
-        $serviceManager->setService('ApplicationConfig', $config);
-        
+        $serviceManager->setService('ApplicationConfig', $configuration);
+        $serviceManager->setFactory('ServiceListener', 'Zend\Mvc\Service\ServiceListenerFactory');
 
         $moduleManager = $serviceManager->get('ModuleManager');
         $moduleManager->loadModules();
+        $serviceManager->setAllowOverride(true);
 
-        ServiceManagerFactory::setConfig($config);
+        $application = $serviceManager->get('Application');
+        $event  = new MvcEvent();
+        $event->setTarget($application);
+        $event->setApplication($application)
+            ->setRequest($application->getRequest())
+            ->setResponse($application->getResponse())
+            ->setRouter($serviceManager->get('Router'));
+
+
         unset($files, $file, $loader, $config);
     }
     
