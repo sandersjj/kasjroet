@@ -2,20 +2,42 @@
 namespace KasjroetTest\Controller;
 
 
-use Zend\Test\PHPUnit\Controller\AbstractHttpControllerTestCase;
+
+use Kasjroet\Controller\BrandsController;
+use KasjroetTest\Bootstrap;
+use Zend\Http\Request;
+use Zend\Http\Response;
+use Zend\Mvc\MvcEvent;
+
+use Zend\Mvc\Router\RouteMatch;
+use Zend\Mvc\Router\Http\TreeRouteStack as HttpRouter;
 
 
-class BrandsControllerTest extends AbstractHttpControllerTestCase{
+class BrandsControllerTest extends AbstractControllerTest{
+
+    public function setUp()
+    {
+        $serviceManager   = Bootstrap::getServiceManager();
+
+        $this->controller = new BrandsController();
+        $this->request    = new Request();
+        $this->routeMatch = new RouteMatch(array('controller' => 'index'));
+        $this->event      = new MvcEvent();
+        $config = $serviceManager->get('Config');
+        $routerConfig = isset($config['router']) ? $config['router'] : array();
+        $router = HttpRouter::factory($routerConfig);
+        $this->event->setRouter($router);
+        $this->event->setRouteMatch($this->routeMatch);
+        $this->controller->setEvent($this->event);
+        $this->controller->setServiceLocator($serviceManager);
+
+        parent::setUp();
+
+    }
 
     public function testIndexActionCanBeAccessed()
     {
-        $this->dispatch('/brand');
-        $this->assertResponseStatusCode(200);
 
-        $this->assertModuleName('Kasjroet');
-        $this->assertControllerName('Kasjroet\Controller\Brands');
-        $this->assertControllerClass('KasjroetCOntroller');
-        $this->assertMatchedRouteName('brands');
     }
 
 }

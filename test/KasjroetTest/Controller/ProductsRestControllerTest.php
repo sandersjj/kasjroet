@@ -10,7 +10,7 @@ use Zend\Mvc\Router\RouteMatch;
 use Zend\Mvc\Router\Http\TreeRouteStack as HttpRouter;
 use PHPUnit_Framework_TestCase;
 
-class ProductsRestControllerTest extends PHPUnit_Framework_TestCase
+class ProductsRestControllerTest extends AbstractControllerTest
 {
     protected $controller;
     protected $request;

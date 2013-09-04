@@ -53,6 +53,7 @@ class Bootstrap
         $serviceManager = new ServiceManager(new ServiceManagerConfig(
             isset($configuration['service_manager']) ? $configuration['service_manager'] : array()
         ));
+
         $serviceManager->setService('ApplicationConfig', $configuration);
         $serviceManager->setFactory('ServiceListener', 'Zend\Mvc\Service\ServiceListenerFactory');
 
@@ -60,16 +61,9 @@ class Bootstrap
         $moduleManager->loadModules();
         $serviceManager->setAllowOverride(true);
 
-        $application = $serviceManager->get('Application');
-        $event  = new MvcEvent();
-        $event->setTarget($application);
-        $event->setApplication($application)
-            ->setRequest($application->getRequest())
-            ->setResponse($application->getResponse())
-            ->setRouter($serviceManager->get('Router'));
+        ServiceManagerFactory::setApplicationConfig($config);
 
 
-        unset($files, $file, $loader, $config);
     }
     
     public static function getServiceManager()

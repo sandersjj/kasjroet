@@ -9,7 +9,7 @@ use Zend\Http\Response;
 use Zend\Mvc\MvcEvent;
 use Zend\Mvc\Router\RouteMatch;
 use \PHPUnit_Framework_TestCase; 
-use KasjroetTest\Util\ServiceManagerFactory;
+use \KasjroetTest\Util\ServiceManagerFactory;
 
 /**
  * Description of OverviewControllerTest
