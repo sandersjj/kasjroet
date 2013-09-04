@@ -28,6 +28,10 @@ class ServiceManagerFactory{
         static::$config = $config;
     }
 
+
+    /**
+     * @return array
+     */
     public static function getApplicationConfig()
     {
         return static::$config;
@@ -35,9 +39,8 @@ class ServiceManagerFactory{
 
 
     /**
-     * Builds a new service manager
-     *
-     * @return \Zend\ServiceManager\ServiceManager
+     * @param array $config
+     * @return ServiceManager
      */
     public static function getServiceManager(array $config = null)
     {
@@ -59,7 +62,7 @@ class ServiceManagerFactory{
                 $em = $sl->get('Doctrine\ORM\EntityManager');
                 $schemaTool = new SchemaTool($em);
                 $schemaTool->createSchema($em->getMetadataFactory()->getAllMetadata());
-                return new FixtureExecutor($em, new FixturePurger($em))
+                return new FixtureExecutor($em, new FixturePurger($em));
 
             }
         );

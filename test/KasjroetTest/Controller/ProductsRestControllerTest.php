@@ -1,14 +1,15 @@
 <?php
 namespace KasjroetTest\Controller;
 
-use KasjroetTest\Bootstrap;
+
+use KasjroetTest\Util\ServiceManagerFactory;
 use Kasjroet\Controller\ProductsRestController;
 use Zend\Http\Request;
 use Zend\Http\Response;
 use Zend\Mvc\MvcEvent;
 use Zend\Mvc\Router\RouteMatch;
 use Zend\Mvc\Router\Http\TreeRouteStack as HttpRouter;
-use PHPUnit_Framework_TestCase;
+
 
 class ProductsRestControllerTest extends AbstractControllerTest
 {
@@ -20,7 +21,7 @@ class ProductsRestControllerTest extends AbstractControllerTest
 
     protected function setUp()
     {
-        $serviceManager   = Bootstrap::getServiceManager();
+        $serviceManager = ServiceManagerFactory::getServiceManager();
         $this->controller = new ProductsRestController();
         $this->request    = new Request();
         $this->routeMatch = new RouteMatch(array('controller' => 'index'));

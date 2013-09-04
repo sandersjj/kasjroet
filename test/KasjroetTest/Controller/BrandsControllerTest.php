@@ -4,7 +4,7 @@ namespace KasjroetTest\Controller;
 
 
 use Kasjroet\Controller\BrandsController;
-use KasjroetTest\Bootstrap;
+use KasjroetTest\Util\ServiceManagerFactory;
 use Zend\Http\Request;
 use Zend\Http\Response;
 use Zend\Mvc\MvcEvent;
@@ -17,8 +17,8 @@ class BrandsControllerTest extends AbstractControllerTest{
 
     public function setUp()
     {
-        $serviceManager   = Bootstrap::getServiceManager();
 
+        $serviceManager = ServiceManagerFactory::getServiceManager();
         $this->controller = new BrandsController();
         $this->request    = new Request();
         $this->routeMatch = new RouteMatch(array('controller' => 'index'));
