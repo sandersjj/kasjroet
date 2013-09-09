@@ -4,7 +4,6 @@ namespace Kasjroet\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 use Zend\Form\Annotation;
-use JMS\Serializer\Annotation as JSMA;
 
 
 /**
@@ -35,7 +34,6 @@ class Product{
      * @ORM\ManyToMany(targetEntity="productGroup")
      * @Annotation\Type("Zend\Form\Element\Select")
      * @Annotation\Options({"label":"Productgroup: "})
-     * @JSMA\Type("ArrayCollection<Kasjroet\Entity\ProductGroup>")
      */
     protected $productGroups;
 
@@ -60,7 +58,6 @@ class Product{
      * @ORM\ManyToMany(targetEntity="hechsher")
      * @Annotation\Type("Zend\Form\Element\Select")
      * @Annotation\Options({"label":"Hechsherim: "})
-     * @JSMA\Type("ArrayCollection<Kasjroet\Entity\Hechsher>")
      */
     protected $hechsheriem;
 

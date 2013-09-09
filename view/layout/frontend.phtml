@@ -1,50 +1,30 @@
 <!DOCTYPE html>
-<html>
+<html lang="nl">
     <meta charset="utf8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <?php echo $this->headLink(array('rel' => 'shortcut icon', 'type' => 'image/vnd.microsoft.icon', 'href' => $this->basePath() . '/images/favicon.ico'))
-        ->prependStylesheet($this->basePath() . '/css/bootstrap-responsive.min.css')
         ->prependStylesheet($this->basePath() . '/css/kasjroet.css')
         ->prependStylesheet($this->basePath() . '/css/bootstrap.min.css') ?>
 
-    <?php echo $this->headScript()->prependFile($this->basePath() . '/js/html5.js', 'text/javascript', array('conditional' => 'lt IE 9',))
-        ->prependFile($this->basePath() . '/js/bootstrap.min.js')
-        ->prependFile($this->basePath() . '/js/jquery.min.js') ?>
+    <?php echo $this->headScript()->prependFile($this->basePath() . '/js/html5.js', 'text/javascript', array('conditional' => 'lt IE 9',));
+
+     ?>
 
     <head>
 
 </head>
     <body>
         <div class="container">
-            <div class="row-fluid">
-                <div class="span12">Menu?</div>
+            <div class="row">
+                <div class="col-lg-1">Menu?</div>
             </div>
-            <div class="row-fluid">
-                <div class="span8">
+            <div class="row">
+                <div class="col-md-8">
 
                     <?php echo $this->layout()->content; ?>
-                    <!--<h1>Product categorieën</h1>
-                    <form class="form-search search-bar">
-                        <div class="input-append">
-                            <input type="text" class="search-query" placeholder="Enter your address here...">
-                            <button type="submit" class="btn btn-primary">
-                                Search <i class="icon-search icon-white"></i></button>
-                        </div>
-                    </form>
-                    <ul class="nav nav-tabs nav-stacked">
-                        <li><a href="">Bakproducten</a></li>
-                        <li><a href="">Dranken</a></li>
-                        <li><a href="">Vleesvervangers</a></li>
-                        <li><a href="">Chips en nootjes</a></li>
-                        <li><a href="">Babyvoeding</a></li>
-                        <li><a href="">Chocolade & bonbons</a></li>
-                        <li><a href="">Broodbeleg</a></li>
-                        <li><a href="">Chips en noten</a></li>
-                        <li><a href="">Drop</a></li>
-                    </ul>-->
+
                 </div>
-                <div class="span4">
+                <div class="col-md-4 ">
                     <h2>Over deze site</h2>
                     <p>Deze website geeft overzicht van de kosjere producten in Nederland. De lijst is samengesteld door
                     het Nederlands Israelitisch Kerkgenootschap.</p>
@@ -52,5 +32,7 @@
 
             </div>
         </div>
+        <script src="//code.jquery.com/jquery.js"></script>
+        <script src="js/bootstrap.min.js"></script>
     </body>
 </html>
