@@ -1,0 +1,15 @@
+<h1>Product categorieën</h1>
+<form class="form-search search-bar">
+    <div class="input-append">
+        <input type="text" class="search-query" placeholder="Enter Your search term here....">
+        <button type="submit" class="btn btn-primary">
+            Search <i class="icon-search icon-white"></i></button>
+    </div>
+</form>
+<div id="accordion">
+<ul class="">
+    <?php foreach($this->productGroups as $productgroup): ?>
+    <li><a href="<?php echo $this->url()->fromRoute('route-name', '1'); ?>"><?php echo $productgroup->getProductGroupName(); ?></a> <i class="icon-plus"></i></li>
+    <?php endforeach; ?>
+</ul>
+</div>
