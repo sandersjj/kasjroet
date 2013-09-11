@@ -11,10 +11,10 @@ class ProductGroups extends AbstractKasjroetActionController{
 
         $router = $this->getEvent()->getRouter();
         $repo = $this->getEntityManager()->getRepository('Kasjroet\Entity\ProductGroup');
-        $url    = $router->assemble(array(), array('name' => 'brand'));
+
+
         return new ViewModel(array(
          'productGroups' => $repo->findAll()
-          ,'urls' => $url
          ));
 
 

@@ -9,7 +9,7 @@
 <div id="accordion">
 <ul class="">
     <?php foreach($this->productGroups as $productgroup): ?>
-    <li><a href="<?php echo $this->url()->fromRoute('route-name', '1'); ?>"><?php echo $productgroup->getProductGroupName(); ?></a> <i class="icon-plus"></i></li>
+    <li><a href="<?php echo $this->url('overview', array('productgroup'=> $productgroup->getId()), array(), true);  ?>"><?php echo $productgroup->getProductGroupName(); ?></a> <i class="icon-plus"></i></li>
     <?php endforeach; ?>
 </ul>
 </div>
