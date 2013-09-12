@@ -25,6 +25,11 @@ class OverviewController extends AbstractKasjroetActionController {
             $flashMessages = $flashMessenger->getMessages();
         }
 
+        if(($this->getEvent()->getRouteMatch()->getParam('productgroup'))){
+
+        }
+
+
         $repo = $this->getEntityManager()->getRepository('Kasjroet\Entity\Product');
         return new ViewModel(array(
             'products' => $repo->listProducts()

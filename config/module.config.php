@@ -8,7 +8,7 @@ return array(
             'Kasjroet\Controller\ProductsRest' => 'Kasjroet\Controller\ProductsRestController',
             'Kasjroet\Controller\Brands' => 'Kasjroet\Controller\BrandsController',
             'Kasjroet\Controller\Overview' => 'Kasjroet\Controller\OverviewController',
-            'Kasjroet\Controller\ProductGroups' => 'Kasjroet\Controller\ProductGroups',
+            'Kasjroet\Controller\ProductGroups' => 'Kasjroet\Controller\ProductGroupsController',
             
         ),
     ),
@@ -63,7 +63,7 @@ return array(
             'overview'  => array(
                 'type' => 'Segment',
                 'options' => array(
-                    'route' => '/overview[/:action][/:id]',
+                    'route' => '/overview[/productgroup/:productgroup]',
                     'defaults' => array(
                         '__NAMESPACE__' => 'Kasjroet\Controller',
                         'controller' => 'Overview',
