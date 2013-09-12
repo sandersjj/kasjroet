@@ -17,9 +17,6 @@ class OverviewController extends AbstractKasjroetActionController {
 
     public function indexAction() {
 
-        var_dump($this->getRequest()->getContent());
-        exit;
-
 
         $flashMessages = array();
 

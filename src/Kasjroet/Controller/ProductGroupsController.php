@@ -5,7 +5,7 @@ namespace Kasjroet\Controller;
 
 use Zend\View\Model\ViewModel;
 
-class ProductGroups extends AbstractKasjroetActionController{
+class ProductGroupsController extends AbstractKasjroetActionController{
 
     public function indexAction(){
 
