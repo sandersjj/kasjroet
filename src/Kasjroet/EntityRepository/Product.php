@@ -27,10 +27,23 @@ class Product extends EntityRepository{
         $qb = $this->getEntityManager()->createQueryBuilder();
         $qb->select('p')
             ->from('Kasjroet\Entity\Product', 'p');
+      return new Collections\ArrayCollection($qb->getQuery()->getResult());
+    }
 
+    /**
+     * @param $id
+     * @return Collections\ArrayCollection
+     */
+    public function getProductsByProductGroup($id){
+
+        $qb = $this->getEntityManager()->createQueryBuilder();
+        $qb->select('p')
+            ->from('Kasjroet\Entity\Product', 'p')
+            ->leftJoin('p.productGroups', 'pg')
+            ->where('pg.id = :productgroup_id')
+            ->setParameter(':productgroup_id', $id);
         return new Collections\ArrayCollection($qb->getQuery()->getResult());
     }
-    
     /**
      * 
      * @param type $id

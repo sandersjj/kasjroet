@@ -24,15 +24,17 @@ class OverviewController extends AbstractKasjroetActionController {
         if ($flashMessenger->hasMessages()) {
             $flashMessages = $flashMessenger->getMessages();
         }
-
+        $repo = $this->getEntityManager()->getRepository('Kasjroet\Entity\Product');
         if(($this->getEvent()->getRouteMatch()->getParam('productgroup'))){
-
+            $products = $repo->getProductsByProductGroup($this->getEvent()->getRouteMatch()->getParam('productgroup'));
+        }else{
+            $products = $repo->listProducts();
         }
 
 
-        $repo = $this->getEntityManager()->getRepository('Kasjroet\Entity\Product');
+
         return new ViewModel(array(
-            'products' => $repo->listProducts()
+            'products' => $products
             ,'flashMessages' => $flashMessages,
         ));
     }

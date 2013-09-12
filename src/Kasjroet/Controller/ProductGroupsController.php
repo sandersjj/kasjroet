@@ -11,9 +11,7 @@ class ProductGroupsController extends AbstractKasjroetActionController{
 
         $router = $this->getEvent()->getRouter();
         $repo = $this->getEntityManager()->getRepository('Kasjroet\Entity\ProductGroup');
-
-
-        return new ViewModel(array(
+ return new ViewModel(array(
          'productGroups' => $repo->findAll()
          ));
 
