@@ -43,7 +43,7 @@ return array(
                             'defaults' => array(
                                 'controller' => 'Kasjroet\Controller',
                                 'action' => 'index',
-                            )
+                            ),
                         ),
                     ),
                 ),
