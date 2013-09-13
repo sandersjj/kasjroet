@@ -30,6 +30,23 @@ return array(
                         'action'    => 'index',
                     ),
                 ),
+                'may_terminate' => true,
+                'child_routes' => array(
+                    'product' => array(
+                        'type'  => 'Segment',
+                        'options' => array(
+                            'route' => '/product[/action][/:id]',
+                            'constraints' => array(
+                                'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                                'id' => '[0-9]+ '
+                            ),
+                            'defaults' => array(
+                                'controller' => 'Kasjroet\Controller',
+                                'action' => 'index',
+                            )
+                        ),
+                    ),
+                ),
             ),
             'kasjroet' => array(
                 'type' => 'Literal',
