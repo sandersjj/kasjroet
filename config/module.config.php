@@ -22,6 +22,15 @@ return array(
    ),*/
     'router' => array(
         'routes' => array(
+            'zfcadmin' => array(
+                'options' => array(
+                    'defaults' => array(
+                        '__NAMESPACE__' => 'Kasjroet\Controller',
+                        'controller' => 'Overview',
+                        'action'    => 'index',
+                    ),
+                ),
+            ),
             'kasjroet' => array(
                 'type' => 'Literal',
                 'options' => array(
