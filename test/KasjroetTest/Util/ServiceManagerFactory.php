@@ -52,13 +52,14 @@ class ServiceManagerFactory{
         );
         $serviceManager->setService('ApplicationConfig', $config);
 
+
         /** @var $moduleManager \Zend\ModuleManager\ModuleManager */
         $moduleManager = $serviceManager->get('ModuleManager');
         $moduleManager->loadModules();
 
         $serviceManager->setFactory(
             'Doctrine\Common\DataFixtures\Executor\AbstractExecutor',
-            function(serviceLocatorInterface $sl){
+            function(ServiceLocatorInterface $sl){
                 $em = $sl->get('Doctrine\ORM\EntityManager');
                 $schemaTool = new SchemaTool($em);
                 $schemaTool->createSchema($em->getMetadataFactory()->getAllMetadata());

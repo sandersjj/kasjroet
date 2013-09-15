@@ -23,34 +23,8 @@ class ProductsRestController extends AbstractKasjroetRestController {
     //Als er geen producten zijn lege array
     //Return data is Json
 
-    
-//    /**
-//     * 
-//     * @return type
-//     */
-//    public function options() {
-//        $response = $this->getResponse();
-//        $headers = $response->getHeaders();
-//
-//        $model = $this->acceptableViewModelSelector($this->viewModelMap);
-//
-//
-//        if ($this->params()->fromRoute('id', false)) {
-//            $headers->addHeaderLine('Allow', implode(',', $this->allowedResourceMethods));
-//            $model->setVariables($this->getResourceDocumentationSpec());
-//            return $model();
-//        }
-//
-//
-//        $headers->addHeaderLine('Allow', implode(',', $this->allowedCollectionMethods));
-//        $model->setVariables($this->getResourceDocumentationSpec());
-//        return $model();
-//    }
-
     public function get($id) {
         $request = $this->getRequest();
-        var_dump($request->getHeaders()->get('Accept')->getFieldValue());
-        exit;
         $id = (int) $this->getEvent()->getRouteMatch()->getParam('id');
         if($id && is_numeric($id)){
 

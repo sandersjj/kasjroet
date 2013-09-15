@@ -3,13 +3,15 @@ namespace KasjroetTest\Controller;
 
 
 use KasjroetTest\Util\ServiceManagerFactory;
-use Kasjroet\Controller\ProductsRestController;
+
 use Zend\Http\Request;
 use Zend\Http\Response;
 use Zend\Mvc\MvcEvent;
 use Zend\Mvc\Router\RouteMatch;
 use Zend\Mvc\Router\Http\TreeRouteStack as HttpRouter;
 
+use Kasjroet\Controller\ProductsRestController;
+use Kasjroet\EntityRepository\Product;
 
 class ProductsRestControllerTest extends AbstractControllerTest
 {
@@ -19,8 +21,28 @@ class ProductsRestControllerTest extends AbstractControllerTest
     protected $routeMatch;
     protected $event;
 
+    /**
+     * @var ProductRepository
+     */
+    protected $repository;
+
+    /**
+     * @var \Doctrine\Common\DataFixtures\Executor\AbstractExecutor
+     */
+    protected $fixtureExectutor;
+
     protected function setUp()
     {
+
+        $sm = ServiceManagerFactory::getServiceManager();
+        var_dump($sm->get('Kasjroet\EntityRepository\Product'));
+
+        $this->repository = $sm->get('Kasjroet\EntityRepository\Product');
+        $this->fixtureExectutor = $sm->get('Doctrine\Common\DataFixtures\Executor\AbstractExecutor');
+        $this->assertInstanceOf('Kasjroet\EntityRepository\Product', $this->repository);
+
+        exit;
+
         $serviceManager = ServiceManagerFactory::getServiceManager();
         $this->controller = new ProductsRestController();
         $this->request    = new Request();

@@ -9,21 +9,16 @@ return array(
             'Kasjroet\Controller\Brands' => 'Kasjroet\Controller\BrandsController',
             'Kasjroet\Controller\Overview' => 'Kasjroet\Controller\OverviewController',
             'Kasjroet\Controller\ProductGroups' => 'Kasjroet\Controller\ProductGroupsController',
+            'Kasjroet\Controller\Products' => 'Kasjroet\Controller\ProductsController'
             
         ),
     ),
-   /*'view_manager'  => array(
-     'strategies' => array(
-         'ViewJsonStrategy',
-     ),
-       'template_path_stack' => array(
-         'kasjroet' =>   __DIR__ . '/../view',
-       ),
-   ),*/
     'router' => array(
         'routes' => array(
             'zfcadmin' => array(
+                'type'  => 'Literal',
                 'options' => array(
+                    'route' => '/admin',
                     'defaults' => array(
                         '__NAMESPACE__' => 'Kasjroet\Controller',
                         'controller' => 'Overview',
@@ -35,13 +30,14 @@ return array(
                     'product' => array(
                         'type'  => 'Segment',
                         'options' => array(
-                            'route' => '/product[/action][/:id]',
+                            'route' => '/product[/:action][/:id]',
                             'constraints' => array(
                                 'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
                                 'id' => '[0-9]+ '
                             ),
                             'defaults' => array(
-                                'controller' => 'Kasjroet\Controller',
+                                '__NAMESPACE__' => 'Kasjroet\Controller',
+                                'controller' => 'products',
                                 'action' => 'index',
                             ),
                         ),
@@ -96,6 +92,7 @@ return array(
                         'action'    => 'index',
                     ),
                 ),
+                'may_terminate' => true,
             ),
         ),
     ),
@@ -144,6 +141,7 @@ return array(
         ),
     ),
     'service_manager' => array(
+      'abstract_factories' => array('Kasjroet\AbstractEntityRepositoryFactory'),
       'factories'  => array(
           'ProductHydrator' => function($sm)
           {
@@ -156,6 +154,9 @@ return array(
           }
       ),
       'invokables' => array(),
+      'services' => array(
+          'Kasjroet\EntityRepository\Product' => 'Kasjroet\EntityRepository\Product',
+      )
     ),
 
 

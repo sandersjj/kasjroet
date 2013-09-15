@@ -18,6 +18,9 @@ class BrandsControllerTest extends AbstractControllerTest{
     public function setUp()
     {
 
+        $this->markTestIncomplete(
+            'This test has not been implemented yet.'
+        );
         $serviceManager = ServiceManagerFactory::getServiceManager();
         $this->controller = new BrandsController();
         $this->request    = new Request();
@@ -37,7 +40,9 @@ class BrandsControllerTest extends AbstractControllerTest{
 
     public function testIndexActionCanBeAccessed()
     {
-
+        $this->markTestIncomplete(
+            'This test has not been implemented yet.'
+        );
     }
 
 }
