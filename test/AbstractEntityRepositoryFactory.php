@@ -1,12 +1,12 @@
 <?php
 
-namespace Kasjroet;
+namespace KasjroetTest;
 
 use Zend\ServiceManager\AbstractFactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 
-class AbstractEntityControllerFactory implements AbstractFactoryInterface
+class AbstractEntityRepositoryFactory implements AbstractFactoryInterface
 {
     /**
      * {@inheritDoc}

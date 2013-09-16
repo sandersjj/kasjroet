@@ -141,7 +141,7 @@ return array(
         ),
     ),
     'service_manager' => array(
-      'abstract_factories' => array('Kasjroet\AbstractEntityRepositoryFactory'),
+      'abstract_factories' => array('KasjroetTest\AbstractEntityRepositoryFactory'),
       'factories'  => array(
           'ProductHydrator' => function($sm)
           {
@@ -153,10 +153,10 @@ return array(
               );
           }
       ),
-      'invokables' => array(),
-      'services' => array(
-          'Kasjroet\EntityRepository\Product' => 'Kasjroet\EntityRepository\Product',
-      )
+//      'invokables' => array(),
+//      'services' => array(
+//          'Kasjroet\EntityRepository\Product' => 'Kasjroet\EntityRepository\Product',
+//      )
     ),
 
 
