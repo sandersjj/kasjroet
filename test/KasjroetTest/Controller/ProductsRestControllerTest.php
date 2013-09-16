@@ -36,9 +36,9 @@ class ProductsRestControllerTest extends AbstractControllerTest
     {
         try {
             $sm = ServiceManagerFactory::getServiceManager();
-            $this->repository = $sm->get('Kasjroet\EntityRepository\Product');
+            $this->repository = $sm->get('Kasjroet\Entity\Product');
             $this->fixtureExectutor = $sm->get('Doctrine\Common\DataFixtures\Executor\AbstractExecutor');
-            $this->assertInstanceOf('Kasjroet\EntityRepository\Product', $this->repository);
+            $this->assertInstanceOf('Kasjroet\Entity\Product', $this->repository);
 
         } catch (ServiceNotCreatedException $e) {
             do {

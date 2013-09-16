@@ -12,7 +12,6 @@ use Doctrine\Common\DataFixtures\Executor\ORMExecutor as FixtureExecutor;
 
 use Doctrine\ORM\Tools\SchemaTool;
 
-
 class ServiceManagerFactory{
 
     /**
