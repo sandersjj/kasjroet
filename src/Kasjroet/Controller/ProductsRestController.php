@@ -63,9 +63,6 @@ class ProductsRestController extends AbstractKasjroetRestController {
         return new JsonModel($productsArray);
     }
 
-
-
-
     public function create($data) {
         $em = $this->getEntityManager();
         $repo = $em->getRepository('Kasjroet\Entity\Product');
@@ -78,10 +75,7 @@ class ProductsRestController extends AbstractKasjroetRestController {
                     ->setStatusCode(202)
                     ->setContent(__METHOD__ . ' create new item of data :');
         }
-        
-        
         return $response;
-
     }
 
     public function update($id, $data) {
