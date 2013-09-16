@@ -16,13 +16,6 @@ use Kasjroet\Util\Hydrator\ProductGroup as ProductGroupHydtrator;
  */
 class ProductsRestController extends AbstractKasjroetRestController {
 
-   
-
-    //Call Komt Binnen
-    //Systeem haalt een lijst op van producten 
-    //Als er geen producten zijn lege array
-    //Return data is Json
-
     public function get($id) {
         $request = $this->getRequest();
         $id = (int) $this->getEvent()->getRouteMatch()->getParam('id');
@@ -103,8 +96,4 @@ class ProductsRestController extends AbstractKasjroetRestController {
                 ->setContent(__METHOD__ . ' delete current data with id =  ' . $id);
         return $response;
     }
-
-
-    
-
 }

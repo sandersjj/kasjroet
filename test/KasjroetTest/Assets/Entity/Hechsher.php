@@ -1,13 +1,23 @@
 <?php
+/**
+ * Created by JetBrains PhpStorm.
+ * User: jigal
+ * Date: 9/16/13
+ * Time: 4:50 PM
+ * To change this template use File | Settings | File Templates.
+ */
 
-namespace Kasjroet\Entity;
+namespace KasjroetTest\Assets\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
+ * Class Product
+ * @package KasjroetTest\Assets\Entity
  * @ORM\Entity
- * @ORM\Entity(repositoryClass="Kasjroet\EntityRepository\Hechsher")
- * @ORM\Table(name="Hechsher")
+ * @ORM\Table(name="
+ * ")
  */
 class Hechsher {
     /**
@@ -16,12 +26,12 @@ class Hechsher {
      * @ORM\Column(type="integer")
      */
     protected $id;
-    
+
     /**
      * @ORM\Column(unique=true)
      */
     protected $hechsherName;
-    
+
     /**
      * @ORM\Column
      */
@@ -140,5 +150,5 @@ class Hechsher {
     {
         return $this->url;
     }
-}
 
+}

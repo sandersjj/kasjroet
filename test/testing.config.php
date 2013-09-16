@@ -19,27 +19,27 @@
 return array(
     'doctrine' => array(
         'driver' => array(
-            'DoctrineORMModuleTest\Assets\Entity' => array(
+            'KasjroetTest\Assets\Entity' => array(
                 'class' => 'Doctrine\ORM\Mapping\Driver\AnnotationDriver',
                 'cache' => 'array',
                 'paths' => array(
-                    __DIR__ . '/DoctrineORMModuleTest/Assets/Entity'
+                    __DIR__ . '/KasjroetTest/Assets/Entity'
                 ),
             ),
             'orm_default' => array(
                 'drivers' => array(
-                    'DoctrineORMModuleTest\Assets\Entity' => 'DoctrineORMModuleTest\Assets\Entity',
+                    'KasjroetTest\Assets\Entity' => 'KasjroetTest\Assets\Entity',
                 ),
             ),
         ),
-        'entity_resolver' => array(
-            'orm_default' => array(
-                'resolvers' => array(
-                    'DoctrineORMModuleTest\Assets\Entity\TargetInterface'
-                    => 'DoctrineORMModuleTest\Assets\Entity\TargetEntity',
-                ),
-            ),
-        ),
+//        'entity_resolver' => array(
+//            'orm_default' => array(
+//                'resolvers' => array(
+//                    'KasjroetTest\Assets\Entity\TargetInterface'
+//                    => 'KasjroetTest\Assets\Entity\TargetEntity',
+//                ),
+//            ),
+//        ),
         'connection' => array(
             'orm_default' => array(
                 'configuration' => 'orm_default',
