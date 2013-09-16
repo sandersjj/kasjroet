@@ -16,14 +16,6 @@ return array(
                 ),
             ),
         ),
-//        'entity_resolver' => array(
-//            'orm_default' => array(
-//                'resolvers' => array(
-//                    'KasjroetTest\Assets\Entity\TargetInterface'
-//                    => 'KasjroetTest\Assets\Entity\TargetEntity',
-//                ),
-//            ),
-//        ),
         'connection' => array(
             'orm_default' => array(
                 'configuration' => 'orm_default',
