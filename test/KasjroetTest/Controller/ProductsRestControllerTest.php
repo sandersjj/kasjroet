@@ -12,6 +12,7 @@ use Zend\Mvc\Router\Http\TreeRouteStack as HttpRouter;
 
 use Kasjroet\Controller\ProductsRestController;
 use Kasjroet\EntityRepository\Product;
+use Zend\ServiceManager\Exception\ServiceNotCreatedException;
 
 class ProductsRestControllerTest extends AbstractControllerTest
 {
@@ -33,21 +34,23 @@ class ProductsRestControllerTest extends AbstractControllerTest
 
     protected function setUp()
     {
+        try {
+            $sm = ServiceManagerFactory::getServiceManager();
+            $this->repository = $sm->get('Kasjroet\EntityRepository\Product');
+            $this->fixtureExectutor = $sm->get('Doctrine\Common\DataFixtures\Executor\AbstractExecutor');
+            $this->assertInstanceOf('Kasjroet\EntityRepository\Product', $this->repository);
 
-        $sm = ServiceManagerFactory::getServiceManager();
-        var_dump($sm->get('Kasjroet\EntityRepository\Product'));
-
-        $this->repository = $sm->get('Kasjroet\EntityRepository\Product');
-        $this->fixtureExectutor = $sm->get('Doctrine\Common\DataFixtures\Executor\AbstractExecutor');
-        $this->assertInstanceOf('Kasjroet\EntityRepository\Product', $this->repository);
-
-        exit;
+        } catch (ServiceNotCreatedException $e) {
+            do {
+                var_dump($e->getMessage());
+            } while ($e = $e->getPrevious());
+        }
 
         $serviceManager = ServiceManagerFactory::getServiceManager();
         $this->controller = new ProductsRestController();
-        $this->request    = new Request();
+        $this->request = new Request();
         $this->routeMatch = new RouteMatch(array('controller' => 'index'));
-        $this->event      = new MvcEvent();
+        $this->event = new MvcEvent();
         $config = $serviceManager->get('Config');
         $routerConfig = isset($config['router']) ? $config['router'] : array();
         $router = HttpRouter::factory($routerConfig);
@@ -59,7 +62,7 @@ class ProductsRestControllerTest extends AbstractControllerTest
 
     public function testGetListCanBeAccessed()
     {
-        $result   = $this->controller->dispatch($this->request);
+        $result = $this->controller->dispatch($this->request);
         $response = $this->controller->getResponse();
 
         $this->assertEquals(200, $response->getStatusCode());
@@ -69,7 +72,7 @@ class ProductsRestControllerTest extends AbstractControllerTest
     {
         $this->routeMatch->setParam('id', '1');
 
-        $result   = $this->controller->dispatch($this->request);
+        $result = $this->controller->dispatch($this->request);
         $response = $this->controller->getResponse();
 
         $this->assertEquals(200, $response->getStatusCode());
@@ -81,7 +84,7 @@ class ProductsRestControllerTest extends AbstractControllerTest
         $this->request->getPost()->set('artist', 'foo');
         $this->request->getPost()->set('title', 'bar');
 
-        $result   = $this->controller->dispatch($this->request);
+        $result = $this->controller->dispatch($this->request);
         $response = $this->controller->getResponse();
 
         $this->assertEquals(200, $response->getStatusCode());
@@ -92,7 +95,7 @@ class ProductsRestControllerTest extends AbstractControllerTest
         $this->routeMatch->setParam('id', '1');
         $this->request->setMethod('put');
 
-        $result   = $this->controller->dispatch($this->request);
+        $result = $this->controller->dispatch($this->request);
         $response = $this->controller->getResponse();
 
         $this->assertEquals(200, $response->getStatusCode());
@@ -103,7 +106,7 @@ class ProductsRestControllerTest extends AbstractControllerTest
         $this->routeMatch->setParam('id', '1');
         $this->request->setMethod('delete');
 
-        $result   = $this->controller->dispatch($this->request);
+        $result = $this->controller->dispatch($this->request);
         $response = $this->controller->getResponse();
 
         $this->assertEquals(200, $response->getStatusCode());
