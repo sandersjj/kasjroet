@@ -75,7 +75,11 @@ class Product{
      * @ORM\ManyToMany(targetEntity="\Kasjroet\Entity\Memo")
      */
     protected $memos;
-    
+
+    /**
+     * @ORM\OneToMany(targetEntity="\Kasjroet\Entity\Update ")
+     */
+
     public function __construct() {
         $this->memos = new ArrayCollection();
         $this->hechsheriem = new ArrayCollection();

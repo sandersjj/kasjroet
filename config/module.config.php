@@ -9,26 +9,32 @@ return array(
             'Kasjroet\Controller\Brands' => 'Kasjroet\Controller\BrandsController',
             'Kasjroet\Controller\Overview' => 'Kasjroet\Controller\OverviewController',
             'Kasjroet\Controller\ProductGroups' => 'Kasjroet\Controller\ProductGroupsController',
-            'Kasjroet\Controller\Products' => 'Kasjroet\Controller\ProductsController'
-            
+            'Kasjroet\Controller\Products' => 'Kasjroet\Controller\ProductsController',
         ),
+        'abstract_factories' => array(
+            'Kasjroet\AbstractEntityControllerFactory' => 'Kasjroet\AbstractEntityControllerFactory',
+        ),
+    ),
+    'entity_controllers' => array(
+        'Products' => 'Kasjroet\Controller\ProductsController',
+        'Overview' => 'Kasjroet\Controller\OverviewController'
     ),
     'router' => array(
         'routes' => array(
             'zfcadmin' => array(
-                'type'  => 'Literal',
+                'type' => 'Literal',
                 'options' => array(
                     'route' => '/admin',
                     'defaults' => array(
                         '__NAMESPACE__' => 'Kasjroet\Controller',
                         'controller' => 'Overview',
-                        'action'    => 'index',
+                        'action' => 'index',
                     ),
                 ),
                 'may_terminate' => true,
                 'child_routes' => array(
                     'product' => array(
-                        'type'  => 'Segment',
+                        'type' => 'Segment',
                         'options' => array(
                             'route' => '/product[/:action][/:id]',
                             'constraints' => array(
@@ -50,8 +56,8 @@ return array(
                     'route' => '/productgroup',
                     'defaults' => array(
                         '__NAMESPACE__' => 'Kasjroet\Controller'
-                        ,'controller' => 'ProductGroups'
-                        ,'action'    => 'index'
+                    , 'controller' => 'ProductGroups'
+                    , 'action' => 'index'
                     ),
                 ),
                 'may_terminate' => true,
@@ -71,25 +77,25 @@ return array(
                     ),
                 ),
             ),
-            'products'  => array(
-                'type'      => 'Segment',
-                'options'   => array(
+            'products' => array(
+                'type' => 'Segment',
+                'options' => array(
                     'route' => '/products[/:id]',
                     'defaults' => array(
-                      '__NAMESPACE__'   => 'Kasjroet\Controller',
-                      'controller'      => 'productsRest'
+                        '__NAMESPACE__' => 'Kasjroet\Controller',
+                        'controller' => 'productsRest'
                     ),
-                    
+
                 ),
             ),
-            'overview'  => array(
+            'overview' => array(
                 'type' => 'Segment',
                 'options' => array(
                     'route' => '/overview[/productgroup/:productgroup]',
                     'defaults' => array(
                         '__NAMESPACE__' => 'Kasjroet\Controller',
                         'controller' => 'Overview',
-                        'action'    => 'index',
+                        'action' => 'index',
                     ),
                 ),
                 'may_terminate' => true,
@@ -99,11 +105,11 @@ return array(
 // Doctrine config
     'doctrine' => array(
         'driver' => array(
-                __NAMESPACE__ . '_driver' => array(
-                    'class' => 'Doctrine\ORM\Mapping\Driver\AnnotationDriver',
-                    'cache' => 'array',
-                    'paths' => array(__DIR__ . '/../src/' . __NAMESPACE__ . '/Entity')
-                ),
+            __NAMESPACE__ . '_driver' => array(
+                'class' => 'Doctrine\ORM\Mapping\Driver\AnnotationDriver',
+                'cache' => 'array',
+                'paths' => array(__DIR__ . '/../src/' . __NAMESPACE__ . '/Entity')
+            ),
             'orm_default' => array(
                 'drivers' => array(
                     __NAMESPACE__ . '\Entity' => __NAMESPACE__ . '_driver'
@@ -112,51 +118,49 @@ return array(
         )
     ),
     'kasjroet_form_extra' => array(
-      array(
-        'name'  => 'send',
-          'attributes' => array(
-              'type' => 'submit',
-              'value' => 'Submit',
-          ),
-      ),
+        array(
+            'name' => 'send',
+            'attributes' => array(
+                'type' => 'submit',
+                'value' => 'Submit',
+            ),
+        ),
     ),
     'view_manager' => array(
         'display_not_found_reason' => true,
-        'display_exceptions'       => true,
-        'doctype'                  => 'HTML5',
-        'not_found_template'       => 'error/404',
-        'exception_template'       => 'error/index',
+        'display_exceptions' => true,
+        'doctype' => 'HTML5',
+        'not_found_template' => 'error/404',
+        'exception_template' => 'error/index',
         'template_map' => array(
             'layout/fromtend' => __DIR__ . '/../view/layout/frontend.phtml'
             // 'index/index'   => __DIR__ . '/../view/index/index.phtml',
-           // 'error/404'     => __DIR__ . '/../view/error/404.phtml',
-           // 'error/index'   => __DIR__ . '/../view/error/index.phtml',
+            // 'error/404'     => __DIR__ . '/../view/error/404.phtml',
+            // 'error/index'   => __DIR__ . '/../view/error/index.phtml',
         ),
         'template_path_stack' => array(
             'application' => __DIR__ . '/../view'
-            ,'kasjroet' =>__DIR__ . '/../view',
+        , 'kasjroet' => __DIR__ . '/../view',
         ),
         'strategies' => array(
             'ViewJsonStrategy',
         ),
     ),
     'service_manager' => array(
-     // 'abstract_factories' => array('KasjroetTest\AbstractEntityRepositoryFactory'),
-      'factories'  => array(
-          'ProductHydrator' => function($sm)
-          {
-              return new Util\Hydrator\Product(
+        // 'abstract_factories' => array('KasjroetTest\AbstractEntityRepositoryFactory'),
+        'factories' => array(
+            'ProductHydrator' => function ($sm) {
+                return new Util\Hydrator\Product(
                     new Util\Hydrator\ProductGroups(new Util\Hydrator\ProductGroup()),
                     new Util\Hydrator\Brand(),
                     new Util\Hydrator\Hechsheriem(new Util\Hydrator\Hechsher())
 
-              );
-          }
-      ),
-//      'invokables' => array(),
-      'services' => array(
-          'Kasjroet\EntityRepository\Product' => 'Kasjroet\EntityRepository\Product',
-      )
+                );
+            }
+        ),
+        /*'abstract_factories' => array(
+            'Kasjroet\AbstractEntityControllerFactory' => 'Kasjroet\AbstractEntityControllerFactory',
+        )*/
     ),
 
 

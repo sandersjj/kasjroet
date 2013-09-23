@@ -23,6 +23,7 @@
 
            <td> <?php echo $product->getVisible() ? 'Yes' : "No"; ?></td>
            <td> <a href="<?php echo $this->url('overview', array('action' => 'edit', 'id' => $product->getId())); ?>" title="edit">Edit</a></td>
+           <td> <a href="<?php echo $this->url('overview', array('action' => 'delete', 'id' => $product->getId())); ?>" title="delete">Mark for Update</a></td>
            <td> <a href="<?php echo $this->url('overview', array('action' => 'delete', 'id' => $product->getId())); ?>" title="delete">delete</a></td>
        </tr>
        <?php endforeach ?>

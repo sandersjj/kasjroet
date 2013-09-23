@@ -36,9 +36,9 @@ class ProductsRestControllerTest extends AbstractControllerTest
     {
         try {
             $sm = ServiceManagerFactory::getServiceManager();
-            $this->repository = $sm->get('Kasjroet\Entity\Product');
-            $this->fixtureExectutor = $sm->get('Doctrine\Common\DataFixtures\Executor\AbstractExecutor');
-            $this->assertInstanceOf('Kasjroet\Entity\Product', $this->repository);
+            $this->repository = $sm->get('ControllerLoader')->get('Products');
+            //$this->fixtureExectutor = $sm->get('Doctrine\Common\DataFixtures\Executor\AbstractExecutor');
+            //s$this->assertInstanceOf('Kasjroet\Entity\Product', $this->repository);
 
         } catch (ServiceNotCreatedException $e) {
             do {
@@ -46,18 +46,14 @@ class ProductsRestControllerTest extends AbstractControllerTest
             } while ($e = $e->getPrevious());
         }
 
-        $serviceManager = ServiceManagerFactory::getServiceManager();
-        $this->controller = new ProductsRestController();
-        $this->request = new Request();
-        $this->routeMatch = new RouteMatch(array('controller' => 'index'));
-        $this->event = new MvcEvent();
-        $config = $serviceManager->get('Config');
+        $config = $sm->get('Config');
+
         $routerConfig = isset($config['router']) ? $config['router'] : array();
         $router = HttpRouter::factory($routerConfig);
         $this->event->setRouter($router);
         $this->event->setRouteMatch($this->routeMatch);
         $this->controller->setEvent($this->event);
-        $this->controller->setServiceLocator($serviceManager);
+        $this->controller->setServiceLocator($sm);
     }
 
     public function testGetListCanBeAccessed()

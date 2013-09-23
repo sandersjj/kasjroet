@@ -12,6 +12,7 @@ use KasjroetTest\Util\ServiceManagerFactory;
 error_reporting(E_ALL | E_STRICT);
 chdir(__DIR__);
 
+
 class Bootstrap
 {
     protected static $serviceManager;
@@ -41,6 +42,7 @@ class Bootstrap
         static::initAutoloader();
 
         if (!$config = @include __DIR__ . '/TestConfiguration.php') {
+
             $config = require __DIR__ . '/TestConfiguration.php.dist';
         }
 
@@ -107,6 +109,7 @@ class Bootstrap
                     __NAMESPACE__ => __DIR__ . '/' . __NAMESPACE__,
                 ),
             ),
+
         ));
     }
 

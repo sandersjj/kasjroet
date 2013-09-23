@@ -1,2 +1,6 @@
 <?php
-return array();
+return array(
+
+    'Kajsroet\AbstractEntityControllerFactory' => __DIR__, 'AbstractEntityControllerFactory'
+
+);

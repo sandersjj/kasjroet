@@ -34,6 +34,8 @@ class module {
         }, 100);
     }
 
+
+
     public function getAutoloaderConfig() {
         return array(
             'Zend\Loader\ClassMapAutoloader' => array(
@@ -46,6 +48,8 @@ class module {
             ),
         );
     }
+
+
 
 
 
