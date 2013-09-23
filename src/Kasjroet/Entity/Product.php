@@ -72,19 +72,20 @@ class Product{
 
     /**
      * memos -> this is only for backend.
-     * @ORM\ManyToMany(targetEntity="\Kasjroet\Entity\Memo")
+     * @ORM\OneToMany(targetEntity="\Kasjroet\Entity\Memo", mappedBy="productID")
      */
     protected $memos;
 
     /**
-     * @ORM\OneToMany(targetEntity="\Kasjroet\Entity\Update ")
+     * @ORM\OneToMany(targetEntity="\Kasjroet\Entity\Update", mappedBy="productID")
      */
+    protected $update;
 
     public function __construct() {
         $this->memos = new ArrayCollection();
         $this->hechsheriem = new ArrayCollection();
         $this->productGroups = new ArrayCollection();
-          
+        $this->updates = new ArrayCollection();
     }
 
     public function getId() {

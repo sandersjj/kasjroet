@@ -21,10 +21,16 @@ class Update {
     protected $id;
 
     /**
-     * @ORM\
+     * @ORM\Column(type="boolean")
      */
-    protected $product;
     protected $processed;
+
+    /**
+     * @ORM\Column(type="integer")
+     */
+    protected $productID;
+
+
     public function __construct() {
         $this->products = new ArrayCollection();
     }

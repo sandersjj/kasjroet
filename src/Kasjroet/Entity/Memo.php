@@ -24,6 +24,11 @@ class Memo {
      * @ORM\Column 
      */
     protected $memo;
+
+    /**
+     * @ORM\Column(type="integer")
+     */
+    protected $productID;
     
     
 
