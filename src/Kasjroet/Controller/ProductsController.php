@@ -2,7 +2,9 @@
 namespace Kasjroet\Controller;
 
 use DoctrineORMModule\Form\Annotation\AnnotationBuilder;
+use DoctrineModule\Stdlib\Hydrator\DoctrineObject as DoctrineHydrator;
 use Zend\View\Model\ViewModel;
+
 
 class ProductsController extends AbstractKasjroetActionController
 {
@@ -46,7 +48,6 @@ class ProductsController extends AbstractKasjroetActionController
     public function editAction()
     {
 
-        die('editAction');
         $request = $this->getRequest();
 
 
