@@ -24,12 +24,13 @@ class Brand {
      * 
      */
     protected $brandName;
-    
+
     /**
-     * @ORM\OneToMany(targetEntity="Product", mappedBy="brand")
+     * @var Collection
+     * ORM\OneToMany(targetEntity="Kasjroet\Entity\Product", mappedBy="brand")
      */
     protected $products;
-    
+
     public function __construct() {
         $this->products = new ArrayCollection();
     }

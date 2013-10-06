@@ -58,7 +58,6 @@ class ProductsRestController extends AbstractKasjroetRestController {
 
         foreach($products as $product){
             $productsArray[] = $hydrator->extract($product);
-
         }
         return new JsonModel($productsArray);
     }

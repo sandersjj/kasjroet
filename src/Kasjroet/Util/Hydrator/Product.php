@@ -37,9 +37,9 @@ class Product implements HydratorInterface {
      */
     public function __construct(HydratorInterface $productGroupsHydrator, HydratorInterface $brandHydrator,
                                 HydratorInterface $hechsherHydrator){
-        $this->brandHydrator        = $brandHydrator;
-        $this->productGroupsHydrator = $productGroupsHydrator;
-        $this->hechsherHydrator     = $hechsherHydrator;
+        $this->brandHydrator            = $brandHydrator;
+        $this->productGroupsHydrator    = $productGroupsHydrator;
+        $this->hechsherHydrator         = $hechsherHydrator;
         //$this->memoHydtrator        = $memoHydtrator;
     }
 

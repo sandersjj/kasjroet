@@ -6,6 +6,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Zend\Form\Annotation;
 
 
+
 /**
  * @ORM\Entity(repositoryClass="Kasjroet\EntityRepository\Product")
  * @ORM\Table(name="product")
@@ -24,7 +25,8 @@ class Product{
 
     /**
      *  brandId -> bolletje, John West
-     *  @ORM\ManyToOne(targetEntity="Brand", inversedBy="products")
+     *  @ORM\ManyToOne(targetEntity="Kasjroet\Entity\Brand", inversedBy="products")
+     *  @ORM\JoinColumn(name="brand_id", referencedColumnName="id", nullable=false)
      *  @Annotation\Options({"label":"Brand: "})
      */
     protected $brand;
@@ -72,12 +74,12 @@ class Product{
 
     /**
      * memos -> this is only for backend.
-     * @ORM\OneToMany(targetEntity="\Kasjroet\Entity\Memo", mappedBy="productID")
+     * @ORM\OneToMany(targetEntity="memo", mappedBy="productID", cascade={"persist", "remove"})
      */
     protected $memos;
 
     /**
-     * @ORM\OneToMany(targetEntity="\Kasjroet\Entity\Update", mappedBy="productID")
+     * @ORM\OneToMany(targetEntity="Kasjroet\Entity\Update", mappedBy="productID")
      */
     protected $update;
 
@@ -101,7 +103,7 @@ class Product{
     }
 
     public function setBrand($brand) {
-        $this->brand = $brand;
+
     }
 
 
@@ -189,13 +191,6 @@ class Product{
     public function unsetHechsheriem() {
         unset($this->hechsheriem);
     }
-
-    public function getArrayCopy()
-    {
-        return get_object_vars($this);
-    }
-
-
 
 }
 

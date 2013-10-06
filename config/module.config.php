@@ -147,7 +147,7 @@ return array(
         ),
     ),
     'service_manager' => array(
-        // 'abstract_factories' => array('KasjroetTest\AbstractEntityRepositoryFactory'),
+
         'factories' => array(
             'ProductHydrator' => function ($sm) {
                 return new Util\Hydrator\Product(
@@ -158,7 +158,7 @@ return array(
                 );
             }
         ),
-        /*'abstract_factories' => array(
+/*        'abstract_factories' => array(
             'Kasjroet\AbstractEntityControllerFactory' => 'Kasjroet\AbstractEntityControllerFactory',
         )*/
     ),

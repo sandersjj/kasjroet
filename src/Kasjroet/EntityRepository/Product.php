@@ -4,6 +4,8 @@ namespace Kasjroet\EntityRepository;
 
 use \Doctrine\ORM\EntityRepository as EntityRepository;
 use Doctrine\Common\Collections;
+use Kasjroet\Entity\Product as EntityProduct;
+use Kasjroet\Entity\Brand;
 /**
  * Description of Product
  *
@@ -90,25 +92,22 @@ class Product extends EntityRepository{
      */
     public function addProduct($productData){
         $em = $this->getEntityManager();
-        //Check if product exists
-        $model = new \Kasjroet\Entity\Product();
+
+        $model = new EntityProduct();
+        $brand = $em->find('Kasjroet\Entity\Brand',$productData['brand']);
+        $model->setBrand($brand);
         $model->setProductName($productData['productName']);
         $model->setDescription($productData['description']);
+        $model->setBrand($productData['brand']);
         $model->setVisible(false);
-        
-        if(isset($productData['brand'])){
-            $brand = new \Kasjroet\Entity\Brand();
-            $brand->setId($productData['brand']['id']);
-            $brand->setBrandName($productData['brand']['id']);
-            $model->setBrand($brand);
-        }
 
         try{
             $em->persist($model);
             $em->flush();
         }catch(\Doctrine\ORM\UnexpectedResultException $e){
 
-            
+            var_dump($e);
+            exit;
         }
         
         return;

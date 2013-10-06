@@ -19,18 +19,19 @@ class ProductsController extends AbstractKasjroetActionController
      */
     public function newAction()
     {
+        $em = $this->getEntityManager();
 
         $request = $this->getRequest();
-        if ($request->isPost()) {
+        $product = new \Kasjroet\Entity\Product;
+        $builder = new AnnotationBuilder($em);
+        $form = $builder->createForm($product);
+
+        if ($request->isPost() && $this->request->getPost()) {
             $repo = $this->getEntityManager()->getRepository('Kasjroet\Entity\Product');
             $repo->addProduct($this->getRequest()->getPost());
             $this->flashMessenger()->addMessage('The product was added.');
-            return $this->redirect()->toRoute('overview', array('controller' => 'overview', 'action' => 'index'));
+            return $this->redirect()->toRoute('zfcadmin/product', array('controller' => 'overview', 'action' => 'index'));
         } else {
-            $product = new \Kasjroet\Entity\Product;
-            $builder = new AnnotationBuilder($this->getEntityManager());
-            $form = $builder->createForm($product);
-
             $config = $this->getModuleConfig();
             if (isset($config['kasjroet_form_extra'])) {
                 foreach ($config['kasjroet_form_extra'] as $field) {
@@ -57,7 +58,7 @@ class ProductsController extends AbstractKasjroetActionController
             $repo = $this->getEntityManager()->getRepository('Kasjroet\Entity\Product');
             $repo->editProduct($id, $this->getRequest()->getPost());
             $this->flashMessenger()->addMessage('The product was edited.');
-            return $this->redirect()->toRoute('overview', array('controller' => 'overview', 'action' => 'index'));
+            return $this->redirect()->toRoute('zfcadmin/product', array('controller' => 'overview', 'action' => 'index'));
         } else {
 
             try {

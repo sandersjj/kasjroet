@@ -4,11 +4,8 @@ namespace Kasjroet\Controller;
 
 use Zend\View\Model\ViewModel;
 use Doctrine\ORM\EntityManager;
-use DoctrineModule\Stdlib\Hydrator\DoctrineObject as DoctrineHydrator;
-use DoctrineORMModule\Form\Annotation\AnnotationBuilder;
-use Kasjroet\Entity\Product as Product;
 use Kasjroet\Controller\AbstractKasjroetActionController;
-use ZendTest\XmlRpc\Server\Exception;
+
 
 class OverviewController extends AbstractKasjroetActionController {
 
