@@ -4,6 +4,7 @@ namespace Kasjroet\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 use Zend\Form\Annotation;
+use Kasjroet\Entity\Brand;
 
 
 
@@ -30,6 +31,7 @@ class Product{
      *  @Annotation\Options({"label":"Brand: "})
      */
     protected $brand;
+    protected $brands;
 
     /**
      * productGroupId -> Vis / Groente / Vlees enz.
@@ -88,6 +90,7 @@ class Product{
         $this->hechsheriem = new ArrayCollection();
         $this->productGroups = new ArrayCollection();
         $this->updates = new ArrayCollection();
+        $this->brands = new ArrayCollection();
     }
 
     public function getId() {
@@ -191,6 +194,15 @@ class Product{
     public function unsetHechsheriem() {
         unset($this->hechsheriem);
     }
+
+    public function addBrand($brand){
+        if(!$brand instanceof Brand){
+            throw new \ClassNotFoundException('Not type of class Brand');
+        }
+
+        $this->brands->add($brand);
+    }
+
 
 }
 

@@ -95,10 +95,9 @@ class Product extends EntityRepository{
 
         $model = new EntityProduct();
         $brand = $em->find('Kasjroet\Entity\Brand',$productData['brand']);
-        $model->setBrand($brand);
+        $model->addBrand($brand);
         $model->setProductName($productData['productName']);
         $model->setDescription($productData['description']);
-        $model->setBrand($productData['brand']);
         $model->setVisible(false);
 
         try{
