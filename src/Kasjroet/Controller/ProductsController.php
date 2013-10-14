@@ -46,6 +46,8 @@ class ProductsController extends AbstractKasjroetActionController
                     $form->add($field);
                 }
             }
+            $form->setHydrator(new DoctrineHydrator($this->getEntityManager(), 'Kasjroet\Entity\Product'));
+            $form->bind($product);
             return new ViewModel(array('form' => $form));
         }
     }

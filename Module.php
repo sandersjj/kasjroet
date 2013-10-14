@@ -40,11 +40,10 @@ class module {
               'memoForm' => 'Kasjroet\View\Helper\Memo'
         ),
         'factories' => array(
-            'memoForm' => function($sm){
-                $em =$sm->get('doctrine.entitymanager.orm_default');
-
+            'getMemoForm' => function($helperPluginManager){
+                $serviceLocator = $helperPluginManager->getServiceLocator();
                 $viewHelper = new View\Helper\Memo();
-                $viewHelper->setEntityManager($em);
+                $viewHelper->setServiceLocator($serviceLocator);
                 return $viewHelper;
             }
         ));
