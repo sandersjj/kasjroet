@@ -31,7 +31,6 @@ class Product{
      *  @Annotation\Options({"label":"Brand: "})
      */
     protected $brand;
-    protected $brands;
 
     /**
      * productGroupId -> Vis / Groente / Vlees enz.
@@ -106,6 +105,12 @@ class Product{
     }
 
     public function setBrand($brand) {
+
+        if(!$brand instanceof Brand){
+            throw new \ClassNotFoundException('Not type of class Brand');
+        }
+
+        $this->brand = $brand;
 
     }
 
@@ -194,15 +199,6 @@ class Product{
     public function unsetHechsheriem() {
         unset($this->hechsheriem);
     }
-
-    public function addBrand($brand){
-        if(!$brand instanceof Brand){
-            throw new \ClassNotFoundException('Not type of class Brand');
-        }
-
-        $this->brands->add($brand);
-    }
-
 
 }
 

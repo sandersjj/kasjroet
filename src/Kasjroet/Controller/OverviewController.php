@@ -1,5 +1,4 @@
 <?php
-
 namespace Kasjroet\Controller;
 
 use Zend\View\Model\ViewModel;
@@ -15,6 +14,7 @@ class OverviewController extends AbstractKasjroetActionController {
     public function indexAction() {
 
         $flashMessages = array();
+
 
         $flashMessenger = $this->flashMessenger();
         if ($flashMessenger->hasMessages()) {

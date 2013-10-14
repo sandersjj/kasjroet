@@ -7,6 +7,8 @@
             <th>Brand name</th>
             <th>Visible</th>
             <th>&nbsp;</th>
+            <th>&nbsp;</th>
+            <th>&nbsp;</th>
         </tr>
    </thead>
    <tbody>
@@ -14,17 +16,17 @@
        
        <tr>
            <td> <?php echo $product->getId(); ?></td>
-           <td> <?php echo $product->getProductName(); ?></td>
+           <td> <a href="<?php echo $this->url('zfcadmin/product', array('action' => 'index', 'id' => $product->getId())); ?>" data-toggle="modal" title="edit"> <?php echo $product->getProductName(); ?></a></td>
            <?php if($product->getBrand()): ?>
                 <td> <?php echo $product->getBrand()->getBrandName(); ?></td>
            <?php else:?>
                <td> &nbsp;</td>
            <?php endif; ?>
 
-           <td> <?php echo $product->getVisible() ? 'Yes' : "No"; ?></td>
+           <td> <?php echo $product->getVisible() ? '<span class="label label-success">Yes</span>' : '<span class="label label-default">No</span>'; ?></td>
            <td> <a href="<?php echo $this->url('zfcadmin/product', array('action' => 'edit', 'id' => $product->getId())); ?>" title="edit">Edit</a></td>
-           <td> <a href="<?php echo $this->url('overview', array('action' => 'delete', 'id' => $product->getId())); ?>" title="delete">Mark for Update</a></td>
-           <td> <a href="<?php echo $this->url('overview', array('action' => 'delete', 'id' => $product->getId())); ?>" title="delete">delete</a></td>
+           <td> <a href="<?php echo $this->url('zfcadmin/product', array('action' => 'delete', 'id' => $product->getId())); ?>" title="delete">delete</a></td>
+           <td> <a href="<?php echo $this->url('zfcadmin/product', array('action' => 'delete', 'id' => $product->getId())); ?>" title="delete">Mark for Update</a></td>
        </tr>
        <?php endforeach ?>
    </tbody>

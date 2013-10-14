@@ -11,7 +11,15 @@ class ProductsController extends AbstractKasjroetActionController
 
     public function indexAction()
     {
+        $request = $this->getRequest();
+        $id = $this->getEvent()->getRouteMatch()->getParam('id');
+        if(isset($id)){
+            $em = $this->getEntityManager();
+            $product = $this->getEntityManager()->getRepository('Kasjroet\Entity\Product')->find($id);
 
+            return new ViewModel(array('product' => $product));
+
+        }
     }
 
     /**
@@ -30,7 +38,7 @@ class ProductsController extends AbstractKasjroetActionController
             $repo = $this->getEntityManager()->getRepository('Kasjroet\Entity\Product');
             $repo->addProduct($this->getRequest()->getPost());
             $this->flashMessenger()->addMessage('The product was added.');
-            return $this->redirect()->toRoute('zfcadmin/overview');
+            return $this->redirect()->toRoute('zfcadmin');
         } else {
             $config = $this->getModuleConfig();
             if (isset($config['kasjroet_form_extra'])) {
@@ -50,15 +58,13 @@ class ProductsController extends AbstractKasjroetActionController
     {
 
         $request = $this->getRequest();
-
-
         $id = $this->getEvent()->getRouteMatch()->getParam('id');
         if ($request->isPost() AND is_numeric($id)) {
 
             $repo = $this->getEntityManager()->getRepository('Kasjroet\Entity\Product');
             $repo->editProduct($id, $this->getRequest()->getPost());
             $this->flashMessenger()->addMessage('The product was edited.');
-            return $this->redirect()->toRoute('zfcadmin/product', array('controller' => 'overview', 'action' => 'index'));
+            return $this->redirect()->toRoute('zfcadmin');
         } else {
 
             try {
@@ -95,7 +101,17 @@ class ProductsController extends AbstractKasjroetActionController
 
     public function deleteAction()
     {
-
+        $request = $this->getRequest();
+        $id = $this->getEvent()->getRouteMatch()->getParam('id');
+        if (is_numeric($id))
+        {
+            $em = $this->getEntityManager();
+            $product = $this->getEntityManager()->getRepository('Kasjroet\Entity\Product')->find($id);
+            $em->remove($product);
+            $em->flush();
+            $this->flashMessenger()->addMessage('The product was removed.');
+        }
+        return $this->redirect()->toRoute('zfcadmin');
     }
 
 }

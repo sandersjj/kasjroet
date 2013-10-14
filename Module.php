@@ -34,6 +34,21 @@ class module {
         }, 100);
     }
 
+    public function getViewHelperConfig(){
+        return array(
+          'invokables' => array(
+              'Kasjroet\View\Helper\Memo'
+        ),
+        'factories' => array(
+            'memoForm' => function($sm){
+                $em =$sm->get('doctrine.entitymanager.orm_default');
+                $viewHelper = new View\Helper\Memo();
+                $viewHelper->setEntityManager($em);
+                return $viewHelper;
+            }
+        ));
+
+    }
 
 
     public function getAutoloaderConfig() {
