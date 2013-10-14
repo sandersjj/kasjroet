@@ -12,6 +12,7 @@ class Memo extends AbstractHelper
     protected $entityManager;
 
     public function __invoke(){
+        echo '123';
        $memo = $this->entityManager->get('Product\Entity\Memo');
        $builder = new AnnotationBuilder($this->entityManager);
        $form = $builder->createForm($memo);
