@@ -1,35 +1,8 @@
-<div id="buttons">
-    <a href="<?php echo $this->url('overview', array('action' => 'new')); ?>"> new </a>
-</div>
-<div class="panel panel-default">
-    <div class="panel-heading">
-        <h2 class="panel-title"><?php echo $product->getProductName();?></h2>
-    </div>
 
-    <div class="panel-body">
-        <dl>
-            <dt>Description</dt>
-            <dd><?php echo $product->getDescription(); ?></dd>
-            <dt>Merk</dt>
-            <dd><?php echo $product->getBrand()->getBrandName(); ?></dd>
-            <dt>Productgroups</dt>
-            <dd>
-                <?php
-                foreach( $product->getProductGroups() as $productGroup):
-                    echo $productGroup->getProductGroupName();
-                endforeach;
-                ?>
 
-            </dd>
-            <dt>Hechsheriem</dt>
-            <dd>
-                <?php
-                foreach( $product->getHechsheriem() as $hechsher):
-                    echo $hechsher->getHechsherName() . '<br/>';
-                endforeach;
-                ?>
-            </dd>
-        </dl>
-    </div>
+<div class="row content">
+    <?php echo $this->product ?>
+
+    <?php echo $this->memo_form ?>
+
 </div>
-<?php echo $this->partial('partial/memoForm.phtml', $this->getMemoForm()); ?>

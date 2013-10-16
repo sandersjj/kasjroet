@@ -11,15 +11,27 @@ class ProductsController extends AbstractKasjroetActionController
 
     public function indexAction()
     {
+
+        $view = new ViewModel();
+
         $request = $this->getRequest();
         $id = $this->getEvent()->getRouteMatch()->getParam('id');
         if(isset($id)){
             $em = $this->getEntityManager();
             $product = $this->getEntityManager()->getRepository('Kasjroet\Entity\Product')->find($id);
 
-            return new ViewModel(array('product' => $product));
+            $productView = new  ViewModel(array('product' => $product));
+            $productView->setTemplate('kasjroet/products/product');
+
+
+            $memoView = new ViewModel();
+            $memoView->
+
+            $view->addChild($productView, 'product');
 
         }
+
+        return $view;
     }
 
     /**
