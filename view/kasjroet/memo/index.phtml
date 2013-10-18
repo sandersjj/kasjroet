@@ -1,0 +1,16 @@
+<?php
+$form = $this->form;
+$form->setAttribute('method','post');
+$form->setAttribute('class', 'well');
+$form->prepare();
+
+echo $this->form()->openTag($form);
+
+echo $this->formRow($form->get('memo'));
+
+echo $this->formSubmit(
+
+ $form->get('send'));
+echo $this->form()->closeTag($form);
+
+

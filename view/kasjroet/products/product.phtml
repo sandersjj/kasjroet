@@ -30,5 +30,11 @@
                 ?>
             </dd>
         </dl>
+
+        <?php if($product->getMemos()){
+            foreach($product->getMemos() as $memo){
+                echo $memo->getMemo();
+            }
+        }?>
     </div>
 </div>

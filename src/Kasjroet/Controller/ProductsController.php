@@ -23,11 +23,20 @@ class ProductsController extends AbstractKasjroetActionController
             $productView = new  ViewModel(array('product' => $product));
             $productView->setTemplate('kasjroet/products/product');
 
+            $formElementManager = $this->getServiceLocator()->get('FormElementManager');
+            $memoForm = $formElementManager->get('Kasjroet\Form\MemoForm');
+            $memoView = new ViewModel(array('form' => $memoForm));
+            $config = $this->getModuleConfig();
+            if (isset($config['kasjroet_form_extra'])) {
+                foreach ($config['kasjroet_form_extra'] as $field) {
+                    $memoForm->add($field);
+                }
+            }
+            $memoView->setTemplate('Kasjroet\Memo\index');
 
-            $memoView = new ViewModel();
-            $memoView->
 
             $view->addChild($productView, 'product');
+            $view->addChild($memoView, 'memo');
 
         }
 
