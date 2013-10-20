@@ -2,6 +2,12 @@
 $form = $this->form;
 $form->setAttribute('method','post');
 $form->setAttribute('class', 'well');
+$form->setAttribute('action', $this->url('zfcadmin/memo',
+        array(
+             'action' => 'postmemo',
+            'conroller' => 'memo'
+        )
+));
 $form->prepare();
 
 echo $this->form()->openTag($form);

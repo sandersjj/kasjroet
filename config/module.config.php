@@ -48,6 +48,22 @@ return array(
                             ),
                         ),
                     ),
+                    'memo' => array(
+                        'type' => 'segment',
+                        'options' => array(
+                            'route' => '/memos[/:action][/:id]',
+                            'constraints' => array(
+                                'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                                'id' => '[0-9]+',
+                            ),
+                            'defaults' => array(
+                                '__NAMESPACE__' => 'Kasjroet\Controller',
+                                'controller' => 'Memo',
+                                'action' => 'index',
+                            ),
+                        ),
+
+                    )
                 ),
             ),
             'kasjroet' => array(
