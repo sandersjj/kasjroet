@@ -26,7 +26,8 @@ class Memo {
     protected $memo;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\ManyToOne(targetEntity="Kasjroet\Entity\Product", inversedBy="memos")
+     * @ORM\JoinColumn(name="productID", referencedColumnName="id")
      */
     protected $productID;
 
