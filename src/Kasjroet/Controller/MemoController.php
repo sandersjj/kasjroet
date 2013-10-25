@@ -2,14 +2,16 @@
 namespace Kasjroet\Controller;
 
 
-use Zend\Mvc\Controller\AbstractActionController;
+use Zend\View\Model\JsonModel;
+use Kasjroet\Entity\Memo;
+use Zend\Json\Json;
 
 class MemoController extends AbstractKasjroetActionController
 {
     public function memoAction(){
         $em = $this->getEntityManager();
 
-        $Memo = new \Kasjroet\Entity\Memo;
+        $Memo = new Memo();
         $builder = new AnnotationBuilder($em);
         $form = $builder->createForm($Memo);
 
@@ -23,4 +25,31 @@ class MemoController extends AbstractKasjroetActionController
         $form->bind($Memo);
         return new ViewModel(array('form' => $form));
     }
+
+
+	public function validatepostajaxAction(){
+		$result = array();
+
+		if($this->getRequest()->isPost()){
+			$data = $this->getRequest()->getPost();
+
+			/**
+			 * @var \Doctrine\ORM\EntityManager
+			 */
+			$em = $this->getEntityManager();
+			$product = $em->getRepository('\Kasjroet\Entity\Product')->find($data['product_id']);
+			$memo = new Memo();
+			$memo->setMemo($data['message']);
+			$memo->setProduct($product);
+			$em->persist($memo);
+			$em->flush();
+			$id = $memo->getId();
+			$memo = $em->getRepository('\Kasjroet\Entity\Memo')->find($id);
+var_dump(JSON::encode($memo));
+			$result['memo'] = $memo;
+
+
+		}
+		return new JsonModel($result);
+	}
 }

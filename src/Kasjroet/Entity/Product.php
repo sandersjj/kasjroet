@@ -75,7 +75,7 @@ class Product{
 
     /**
      * memos -> this is only for backend.
-     * @ORM\OneToMany(targetEntity="Kasjroet\Entity\Memo", mappedBy="productID", cascade={"all"})
+     * @ORM\OneToMany(targetEntity="Kasjroet\Entity\Memo", mappedBy="product", cascade={"all"})
      */
     protected $memos;
 

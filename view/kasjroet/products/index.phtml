@@ -1,8 +1,84 @@
+<?php $this->inlineScript()->appendFile($this->basePath() . '/js/memo-form.js'); ?>
+
+<script type="text/javascript">
+    var isXmlHttpRequest    = <?php echo $this->isXmlHttpRequest; ?>;
+    var urlform             = '<?php echo $this->url('zfcadmin/memo', array('controller'=>'memo', 'action'=>'validatepostajax')); ?>';
+	var productId			= <?php echo $product->getId(); ?>
+</script>
+ 
+<div id="buttons">
+    <a href="<?php echo $this->url('overview', array('action' => 'new')); ?>"> new </a>
+    <span class="glyphicon .glyphicon-plus"></span>
+</div>
+
+<ul class="nav nav-tabs">
+    <li class="active"><a href="#general" data-toggle="tab">General</a></li>
+    <li><a href="#memos" data-toggle="tab">Notes</a></li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane active" id="general">
+        <dl>
+            <dt>Description</dt>
+            <dd><?php echo $product->getDescription(); ?></dd>
+            <dt>Merk</dt>
+            <dd><?php echo $product->getBrand()->getBrandName(); ?></dd>
+            <dt>Productgroups</dt>
+            <dd>
+                <?php
+                foreach( $product->getProductGroups() as $productGroup):
+                    echo $productGroup->getProductGroupName();
+                endforeach;
+                ?>
+
+            </dd>
+            <dt>Hechsheriem</dt>
+            <dd>
+                <?php
+                foreach( $product->getHechsheriem() as $hechsher):
+                    echo $hechsher->getHechsherName() . '<br/>';
+                endforeach;
+                ?>
+            </dd>
+        </dl>
+    </div>
+    <div class="tab-pane" id="memos">
+        <?php
+        $form = $this->memoForm;
+        $form->setAttribute('method','post');
+        $form->setAttribute('class', 'well memoForm');
+        $form->setAttribute('name', 'memoForm');
+        $form->setAttribute('action', $this->url('zfcadmin/memo',
+        array(
+        'action' => 'postmemo',
+        'conroller' => 'memo'
+        )
+        ));
+        $form->prepare();
+
+        echo $this->form()->openTag($form);
+
+        echo $this->formRow($form->get('memo'));
+
+        echo $this->formSubmit(
+
+        $form->get('send'));
+        echo $this->form()->closeTag($form);
 
 
-<div class="row content">
-    <?php echo $this->product ?>
+         echo $this->memo ?>
+		<div class="memos">
+			<?php if($product->getMemos()){
+				foreach($product->getMemos() as $memo){
+					?>
+					<div id="<?php echo $memo->getId(); ?>">
+						<?php echo trim($memo->getMemo()); ?>
+					</div>
+					<?php
+				}
+			}?>
+		</div>
 
-    <?php echo $this->memo ?>
 
+    </div>
 </div>

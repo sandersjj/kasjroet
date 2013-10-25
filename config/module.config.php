@@ -5,11 +5,12 @@ namespace Kasjroet;
 return array(
     'controllers' => array(
         'invokables' => array(
-            'Kasjroet\Controller\ProductsRest' => 'Kasjroet\Controller\ProductsRestController',
-            'Kasjroet\Controller\Brands' => 'Kasjroet\Controller\BrandsController',
-            'Kasjroet\Controller\Overview' => 'Kasjroet\Controller\OverviewController',
+            'Kasjroet\Controller\ProductsRest' 	=> 'Kasjroet\Controller\ProductsRestController',
+            'Kasjroet\Controller\Brands' 		=> 'Kasjroet\Controller\BrandsController',
+            'Kasjroet\Controller\Overview' 		=> 'Kasjroet\Controller\OverviewController',
             'Kasjroet\Controller\ProductGroups' => 'Kasjroet\Controller\ProductGroupsController',
-            'Kasjroet\Controller\Products' => 'Kasjroet\Controller\ProductsController',
+            'Kasjroet\Controller\Products' 		=> 'Kasjroet\Controller\ProductsController',
+			'Kasjroet\Controller\Memo' 			=> 'Kasjroet\Controller\MemoController',
         ),
         'abstract_factories' => array(
             'Kasjroet\AbstractEntityControllerFactory' => 'Kasjroet\AbstractEntityControllerFactory',
@@ -149,14 +150,14 @@ return array(
         'not_found_template' => 'error/404',
         'exception_template' => 'error/index',
         'template_map' => array(
-            'layout/fromtend' => __DIR__ . '/../view/layout/frontend.phtml'
+            'layout/frontend' => __DIR__ . '/../view/layout/frontend.phtml'
             // 'index/index'   => __DIR__ . '/../view/index/index.phtml',
             // 'error/404'     => __DIR__ . '/../view/error/404.phtml',
             // 'error/index'   => __DIR__ . '/../view/error/index.phtml',
         ),
         'template_path_stack' => array(
             'application' => __DIR__ . '/../view'
-        , 'kasjroet' => __DIR__ . '/../view',
+            ,'kasjroet' => __DIR__ . '/../view'
         ),
         'strategies' => array(
             'ViewJsonStrategy',

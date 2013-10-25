@@ -12,7 +12,9 @@ class ProductsController extends AbstractKasjroetActionController
     public function indexAction()
     {
 
+
         $view = new ViewModel();
+        $viewValues = array();
 
         $request = $this->getRequest();
         $id = $this->getEvent()->getRouteMatch()->getParam('id');
@@ -20,27 +22,21 @@ class ProductsController extends AbstractKasjroetActionController
             $em = $this->getEntityManager();
             $product = $this->getEntityManager()->getRepository('Kasjroet\Entity\Product')->find($id);
 
-            $productView = new  ViewModel(array('product' => $product));
-            $productView->setTemplate('kasjroet/products/product');
-
             $formElementManager = $this->getServiceLocator()->get('FormElementManager');
             $memoForm = $formElementManager->get('Kasjroet\Form\MemoForm');
-            $memoView = new ViewModel(array('form' => $memoForm));
             $config = $this->getModuleConfig();
             if (isset($config['kasjroet_form_extra'])) {
                 foreach ($config['kasjroet_form_extra'] as $field) {
                     $memoForm->add($field);
                 }
             }
-            $memoView->setTemplate('Kasjroet\Memo\index');
-
-
-            $view->addChild($productView, 'product');
-            $view->addChild($memoView, 'memo');
-
         }
 
-        return $view;
+        return new ViewModel(array(
+            'product'           => $product,
+            'memoForm'          => $memoForm,
+            'isXmlHttpRequest'  => 1
+        ));
     }
 
     /**

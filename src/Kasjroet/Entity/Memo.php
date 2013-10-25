@@ -29,7 +29,16 @@ class Memo {
      * @ORM\ManyToOne(targetEntity="Kasjroet\Entity\Product", inversedBy="memos")
      * @ORM\JoinColumn(name="productID", referencedColumnName="id")
      */
-    protected $productID;
+    protected $product;
+
+	/**
+	 * @ORM\Column(type="datetime") */
+	protected $created;
+
+
+	public function __construct(){
+		$this->created = new \DateTime();
+	}
 
     /**
      * @param mixed $id
@@ -63,20 +72,22 @@ class Memo {
         return $this->memo;
     }
 
-    /**
-     * @param mixed $productID
-     */
-    public function setProductID($productID)
-    {
-        $this->productID = $productID;
-    }
+	/**
+	 * @param mixed $product
+	 */
+	public function setProduct($product)
+	{
+		$this->product = $product;
+	}
 
-    /**
-     * @return mixed
-     */
-    public function getProductID()
-    {
-        return $this->productID;
-    }
+	/**
+	 * @return mixed
+	 */
+	public function getProduct()
+	{
+		return $this->product;
+	}
+
+
 
 }
