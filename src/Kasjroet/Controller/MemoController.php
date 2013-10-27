@@ -30,6 +30,8 @@ class MemoController extends AbstractKasjroetActionController
 	public function validatepostajaxAction(){
 		$result = array();
 
+		$jsonModel = new JsonModel();
+
 		if($this->getRequest()->isPost()){
 			$data = $this->getRequest()->getPost();
 
@@ -45,11 +47,11 @@ class MemoController extends AbstractKasjroetActionController
 			$em->flush();
 			$id = $memo->getId();
 			$memo = $em->getRepository('\Kasjroet\Entity\Memo')->find($id);
-var_dump(JSON::encode($memo));
-			$result['memo'] = $memo;
-
-
+			$aMemo = array();
+			$aMemo['id'] = $memo->getId();
+			$aMemo['message'] = $memo->getMemo();
+			return $this->getResponse()->setContent(Json::encode($aMemo));
 		}
-		return new JsonModel($result);
+
 	}
 }

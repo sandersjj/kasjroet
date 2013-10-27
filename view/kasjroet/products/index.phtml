@@ -72,7 +72,8 @@
 				foreach($product->getMemos() as $memo){
 					?>
 					<div id="<?php echo $memo->getId(); ?>">
-						<?php echo trim($memo->getMemo()); ?>
+						 <?php echo $memo->getMemo(); ?>
+						<b><?php echo $memo->getCreated()->format('d-m-Y H:i')?></b>
 					</div>
 					<?php
 				}

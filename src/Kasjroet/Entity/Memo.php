@@ -40,6 +40,22 @@ class Memo {
 		$this->created = new \DateTime();
 	}
 
+	/**
+	 * @param mixed $created
+	 */
+	public function setCreated($created)
+	{
+		$this->created = $created;
+	}
+
+	/**
+	 * @return mixed
+	 */
+	public function getCreated()
+	{
+		return $this->created;
+	}
+
     /**
      * @param mixed $id
      */
