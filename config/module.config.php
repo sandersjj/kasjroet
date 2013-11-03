@@ -127,6 +127,10 @@ return array(
                 'cache' => 'array',
                 'paths' => array(__DIR__ . '/../src/' . __NAMESPACE__ . '/Entity')
             ),
+			'zfcuser_entity' => array(
+				'class' => 'Doctrine\ORM\Mapping\Driver\AnnotationDriver',
+				'paths' => array(__DIR__ . '/../src/' . __NAMESPACE__ . '/Entity')
+			),
             'orm_default' => array(
                 'drivers' => array(
                     __NAMESPACE__ . '\Entity' => __NAMESPACE__ . '_driver'
@@ -179,6 +183,15 @@ return array(
             'Kasjroet\AbstractEntityControllerFactory' => 'Kasjroet\AbstractEntityControllerFactory',
         )*/
     ),
+	'zfcuser' => array(
+		'user_entity_class'       => 'Kasjroet\Entity\User',
+		'enable_default_entities' => false,
+		'enable_username'		=> true,
+		'enable_display_name'	=> true,
+		'enable_user_state' 	=> true,
+		'default_user_state' 	=> 1
+
+	),
 
 
 );

@@ -4,10 +4,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 	<?php echo $this->headLink(array('rel' => 'shortcut icon', 'type' => 'image/vnd.microsoft.icon', 'href' => $this->basePath() . '/images/favicon.ico'))
-        ->prependStylesheet($this->basePath() . '/css/kasjroet.css')
-        ->prependStylesheet($this->basePath() . '/css/bootstrap.min.css') ?>
+        ->headLink(array('rel'=>'stylesheet/less','href'=> '/Bootstrap/custom/main.less'),'PREPEND');
+      //  ->prependStylesheet($this->basePath() . '/css/bootstrap.min.css')
+	?>
+	<!-- @todo fix me later-->
+
+
 
 	<?php echo $this->headScript()->prependFile($this->basePath() . '/js/html5.js', 'text/javascript', array('conditional' => 'lt IE 9',))
+			->prependFile($this->basePath() . '/less.js')
 			->prependFile($this->basePath() . '/js/bootstrap.min.js')
 			->prependFile($this->basePath() . '/js/jquery.min.js')
 
@@ -17,26 +22,47 @@
 
 </head>
     <body>
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-1">Menu?</div>
-            </div>
-            <div class="row">
-                <div class="col-md-8">
-
-                    <?php echo $this->layout()->content; ?>
-
-                </div>
-                <div class="col-md-4
-                ">
-                    <h2>Over deze site</h2>
-                    <p>Deze website geeft overzicht van de kosjere producten in Nederland. De lijst is samengesteld door
-                    het Nederlands Israelitisch Kerkgenootschap.</p>
-                </div>
-
-            </div>
-        </div>
-
+        <div id="wrap">
+			<div class="mainmenu">
+				<div class="navbar navbar-inverse navbar-fixed-top">
+					<div class="container">
+						<div class="navbar-header">
+							<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+								<span class="icon-bar"></span>
+								<span class="icon-bar"></span>
+								<span class="icon-bar"></span>
+							</button>
+							<a class="navbar-brand" href="#">Project name</a>
+						</div>
+						<div class="collapse navbar-collapse">
+							<ul class="nav navbar-nav">
+								<li class="active"><a href="#">Home</a></li>
+								<li><a href="#about">About</a></li>
+								<li><a href="#contact">Contact</a></li>
+								<li class="dropdown">
+									<a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <b class="caret"></b></a>
+									<ul class="dropdown-menu">
+										<li><a href="#">Action</a></li>
+										<li><a href="#">Another action</a></li>
+										<li><a href="#">Something else here</a></li>
+										<li class="divider"></li>
+										<li class="dropdown-header">Nav header</li>
+										<li><a href="#">Separated link</a></li>
+										<li><a href="#">One more separated link</a></li>
+									</ul>
+								</li>
+							</ul>
+						</div><!--/.nav-collapse -->
+					</div>
+				</div>
+			</div> <--/end main menu -->
+				<div id="left-side">
+					<?php echo $this->zfcUserLoginWidget(); ?>
+				</div>
+				<div id="right-side">
+					<?php echo $this->layout()->content; ?>
+				</div>
+		</div>
 		<?php echo $this->inlineScript() ?>
     </body>
 </html>

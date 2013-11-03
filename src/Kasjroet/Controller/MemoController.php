@@ -42,6 +42,7 @@ class MemoController extends AbstractKasjroetActionController
 			$product = $em->getRepository('\Kasjroet\Entity\Product')->find($data['product_id']);
 			$memo = new Memo();
 			$memo->setMemo($data['message']);
+			$memo->setPublic($data['public']);
 			$memo->setProduct($product);
 			$em->persist($memo);
 			$em->flush();

@@ -24,6 +24,13 @@ class MemoForm extends Form
 			)
 		));
 
+		$this->add(array(
+			'type' => 'Zend\Form\Element\Checkbox',
+			'name' => 'public',
+			'options' =>array(
+				'label' => 'Publiek'
+			),
+		));
 	}
 
 }

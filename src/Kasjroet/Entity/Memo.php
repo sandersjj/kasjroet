@@ -32,8 +32,14 @@ class Memo {
     protected $product;
 
 	/**
-	 * @ORM\Column(type="datetime") */
+	 * @ORM\Column(type="datetime")
+	 */
 	protected $created;
+
+	/**
+	 * @ORM\Column(type="boolean", options={"default": false})
+	 */
+	protected $public;
 
 
 	public function __construct(){
@@ -102,6 +108,22 @@ class Memo {
 	public function getProduct()
 	{
 		return $this->product;
+	}
+
+	/**
+	 * @param mixed $public
+	 */
+	public function setPublic($public)
+	{
+		$this->public = $public;
+	}
+
+	/**
+	 * @return mixed
+	 */
+	public function getPublic()
+	{
+		return $this->public;
 	}
 
 

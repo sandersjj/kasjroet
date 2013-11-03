@@ -1,7 +1,7 @@
 <?php
 namespace Kasjroet\Entity;
 
-Use Doctrine\Orm\Mapping as ORM;
+Use Doctrine\ORM\Mapping as ORM;
 
 /**
  * Class User
