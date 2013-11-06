@@ -40,6 +40,14 @@ class Product{
      */
     protected $productGroups;
 
+	/**
+	 * tags like: Melkkost, Parve, vegetarisch enz..
+	 * @ORM\ManyToMany(targetEntity="tag")
+	 * @Annotation\Type("Zend\Form\Element\Select")
+	 * @Annotation\Options({"label":"Tags: "})
+	 */
+	protected $tags;
+
     /**
      * productName -> Gerookte zalm
      * @ORM\Column(nullable=false)
@@ -90,6 +98,7 @@ class Product{
         $this->productGroups = new ArrayCollection();
         $this->updates = new ArrayCollection();
         $this->brands = new ArrayCollection();
+		$this->tags = new ArrayCollection();
     }
 
     public function getId() {
@@ -169,6 +178,24 @@ class Product{
         $this->productGroups = $productGroups;
     }
 
+
+	/**
+	 * Returns all related product groups
+	 * @return ArrayCollection
+	 */
+	public function getTags() {
+		return $this->tags;
+	}
+
+	/**
+	 * Sets the product tags
+	 * @param ArrayCollection $tags
+	 */
+	public function setTags(\Doctrine\Common\Collections\ArrayCollection $tags) {
+		$this->productGroups = $tags;
+	}
+
+
     /**
      * This function unsets a product group
      */
@@ -198,6 +225,7 @@ class Product{
      */
     public function unsetHechsheriem() {
         unset($this->hechsheriem);
+
     }
 
 }

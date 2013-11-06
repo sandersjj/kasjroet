@@ -11,6 +11,7 @@ return array(
             'Kasjroet\Controller\ProductGroups' => 'Kasjroet\Controller\ProductGroupsController',
             'Kasjroet\Controller\Products' 		=> 'Kasjroet\Controller\ProductsController',
 			'Kasjroet\Controller\Memo' 			=> 'Kasjroet\Controller\MemoController',
+			'Kasjroet\Controller\Index' 		=> 'Kasjroet\Controller\IndexController',
         ),
         'abstract_factories' => array(
             'Kasjroet\AbstractEntityControllerFactory' => 'Kasjroet\AbstractEntityControllerFactory',
@@ -22,6 +23,17 @@ return array(
     ),
     'router' => array(
         'routes' => array(
+			'home' => array(
+				'type' => 'Literal',
+				'options' => array(
+					'route' => '/',
+					'defaults' => array(
+						'__NAMESPACE__' => 'Kasjroet\Controller',
+						'controller' => 'Index',
+						'action' => 'index',
+					),
+				)
+			),
             'zfcadmin' => array(
                 'type' => 'Literal',
                 'options' => array(
@@ -70,16 +82,28 @@ return array(
             'kasjroet' => array(
                 'type' => 'Literal',
                 'options' => array(
-                    'route' => '/productgroup',
+                    'route' => '/',
                     'defaults' => array(
                         '__NAMESPACE__' => 'Kasjroet\Controller'
-                    , 'controller' => 'ProductGroups'
+                    , 'controller' => 'index'
                     , 'action' => 'index'
                     ),
                 ),
                 'may_terminate' => true,
                 'child_routes' => array(
-                    'client' => array(
+                    'productgroup' => array(
+						'type' => 'Literal',
+						'options' => array(
+							'route' => '/productgroup',
+							'defaults' => array(
+								'__NAMESPACE__' => 'Kasjroet\Controller'
+							, 'controller' => 'ProductGroups'
+							, 'action' => 'index'
+							),
+						),
+					),
+
+					'client' => array(
                         'type' => 'Segment',
                         'options' => array(
                             'route' => '/client[/:action]',

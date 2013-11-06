@@ -11,32 +11,33 @@ class ProductsController extends AbstractKasjroetActionController
 
     public function indexAction()
     {
+		if($this->zfcUserAuthentication()->hasIdentity()){
 
+			$view = new ViewModel();
+			$viewValues = array();
 
-        $view = new ViewModel();
-        $viewValues = array();
+			$request = $this->getRequest();
+			$id = $this->getEvent()->getRouteMatch()->getParam('id');
+			if(isset($id)){
+				$em = $this->getEntityManager();
+				$product = $this->getEntityManager()->getRepository('Kasjroet\Entity\Product')->find($id);
 
-        $request = $this->getRequest();
-        $id = $this->getEvent()->getRouteMatch()->getParam('id');
-        if(isset($id)){
-            $em = $this->getEntityManager();
-            $product = $this->getEntityManager()->getRepository('Kasjroet\Entity\Product')->find($id);
+				$formElementManager = $this->getServiceLocator()->get('FormElementManager');
+				$memoForm = $formElementManager->get('Kasjroet\Form\MemoForm');
+				$config = $this->getModuleConfig();
+				if (isset($config['kasjroet_form_extra'])) {
+					foreach ($config['kasjroet_form_extra'] as $field) {
+						$memoForm->add($field);
+					}
+				}
+			}
 
-            $formElementManager = $this->getServiceLocator()->get('FormElementManager');
-            $memoForm = $formElementManager->get('Kasjroet\Form\MemoForm');
-            $config = $this->getModuleConfig();
-            if (isset($config['kasjroet_form_extra'])) {
-                foreach ($config['kasjroet_form_extra'] as $field) {
-                    $memoForm->add($field);
-                }
-            }
-        }
-
-        return new ViewModel(array(
-            'product'           => $product,
-            'memoForm'          => $memoForm,
-            'isXmlHttpRequest'  => 1
-        ));
+			return new ViewModel(array(
+				'product'           => $product,
+				'memoForm'          => $memoForm,
+				'isXmlHttpRequest'  => 1
+			));
+		}
     }
 
     /**

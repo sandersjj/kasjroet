@@ -1,7 +1,8 @@
 <?php
 namespace Kasjroet\Entity;
 
-Use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Mapping as ORM;
+use \ZfcUser\Entity\UserInterface;
 
 /**
  * Class User
@@ -9,7 +10,7 @@ Use Doctrine\ORM\Mapping as ORM;
  * @ORM\Entity
  * @ORM\Table(name="User")
  */
-class User
+class User implements UserInterface
 {
     /**
      * @var int

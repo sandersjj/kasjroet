@@ -5,7 +5,8 @@
             <th>#</th>
             <th>Product name</th>
             <th>Brand name</th>
-            <th>Visible</th>
+			<th>Tags</th>
+			<th>Visible</th>
             <th>&nbsp;</th>
             <th>&nbsp;</th>
             <th>&nbsp;</th>
@@ -22,7 +23,9 @@
            <?php else:?>
                <td> &nbsp;</td>
            <?php endif; ?>
-
+		   <td> <?php foreach($product->getTags() as $tag){
+				   echo $tag->getTag();
+			   } ?> </td>
            <td> <?php echo $product->getVisible() ? '<span class="label label-success">Yes</span>' : '<span class="label label-default">No</span>'; ?></td>
            <td> <a href="<?php echo $this->url('zfcadmin/product', array('action' => 'edit', 'id' => $product->getId())); ?>" title="edit">Edit</a></td>
            <td> <a href="<?php echo $this->url('zfcadmin/product', array('action' => 'delete', 'id' => $product->getId())); ?>" title="delete">delete</a></td>

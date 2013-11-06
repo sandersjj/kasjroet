@@ -52,7 +52,13 @@
 					?>
 
 					<div class="panel panel-default">
-						<div class="panel-heading">	<b><?php echo $memo->getCreated()->format('d-m-Y H:i')?></b></div>
+						<div class="panel-heading">
+							<span>#<?php echo $memo->getId(); ?></span>
+							<b><?php echo $memo->getCreated()->format('d-m-Y H:i')?></b>
+							<?php $publiek = ($memo->getPublic() == 1) ? "Publiek" : "Prive";
+								echo $publiek;
+							?>
+						</div>
 						<div class="panel-body">
 							<?php echo $memo->getMemo(); ?>
 						</div>

@@ -1,0 +1,24 @@
+<h1>Index. Met Intelizoek</h1>
+
+
+<?php
+$form = $this->form;
+$form->setAttribute('method','post');
+$form->setAttribute('class', 'form-horizontal');
+$form->setAttribute('name', 'memoForm');
+$form->setAttribute('action', $this->url('zfcadmin/memo',
+	array(
+		'action' => 'postmemo',
+		'conroller' => 'memo'
+	)
+));
+$form->prepare();
+
+echo $this->form()->openTag($form);
+?>
+<div class="form-group">
+	<?php
+	echo $this->formRow($form->get('search'));
+	?>
+<?php
+echo $this->form()->closeTag($form);
