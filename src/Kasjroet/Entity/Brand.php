@@ -6,12 +6,13 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Zend\Form\Annotation;
 
 /**
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Kasjroet\EntityRepository\Brand")
  * @ORM\Table(name="brand")
  * @Annotation\Hydrator("Zend\Stdlib\Hydrator\ArraySerializable")
  * @Annotation\Name("Brand")
  */
-class Brand {
+class Brand
+{
     /**
      * @ORM\id
      * @ORM\GeneratedValue(strategy="AUTO")

@@ -4,6 +4,7 @@ namespace Kasjroet\Controller;
 use DoctrineORMModule\Form\Annotation\AnnotationBuilder;
 use DoctrineModule\Stdlib\Hydrator\DoctrineObject as DoctrineHydrator;
 use Zend\View\Model\ViewModel;
+use Kasjroet\Entity\Product;
 
 
 class ProductsController extends AbstractKasjroetActionController
@@ -13,18 +14,14 @@ class ProductsController extends AbstractKasjroetActionController
     {
 		if($this->zfcUserAuthentication()->hasIdentity()){
 
-			$view = new ViewModel();
-			$viewValues = array();
-
-			$request = $this->getRequest();
 			$id = $this->getEvent()->getRouteMatch()->getParam('id');
 			if(isset($id)){
-				$em = $this->getEntityManager();
 				$product = $this->getEntityManager()->getRepository('Kasjroet\Entity\Product')->find($id);
-
 				$formElementManager = $this->getServiceLocator()->get('FormElementManager');
+
 				$memoForm = $formElementManager->get('Kasjroet\Form\MemoForm');
 				$config = $this->getModuleConfig();
+
 				if (isset($config['kasjroet_form_extra'])) {
 					foreach ($config['kasjroet_form_extra'] as $field) {
 						$memoForm->add($field);
@@ -48,9 +45,12 @@ class ProductsController extends AbstractKasjroetActionController
         $em = $this->getEntityManager();
 
         $request = $this->getRequest();
-        $product = new \Kasjroet\Entity\Product;
-        $builder = new AnnotationBuilder($em);
-        $form = $builder->createForm($product);
+        $product = new Product();
+
+		$forms = $this->getServiceLocator()->get('FormElementManager');
+		$form = $forms->get('Kasjroet\Form\ProductForm');
+		$hydrator = new DoctrineHydrator($em, '\Kasjroet\Entity\Product');
+		$form->setHydrator($hydrator);
 
         if ($request->isPost() && $this->request->getPost()) {
             $repo = $this->getEntityManager()->getRepository('Kasjroet\Entity\Product');
@@ -64,7 +64,7 @@ class ProductsController extends AbstractKasjroetActionController
                     $form->add($field);
                 }
             }
-            $form->setHydrator(new DoctrineHydrator($this->getEntityManager(), 'Kasjroet\Entity\Product'));
+
             $form->bind($product);
             return new ViewModel(array('form' => $form));
         }
@@ -97,17 +97,14 @@ class ProductsController extends AbstractKasjroetActionController
             $id = (int)$this->getEvent()->getRouteMatch()->getParam('id');
             $product = $repo->find($id);
 
-            $builder = new AnnotationBuilder($this->getEntityManager());
-            $form = $builder->createForm($product);
 
-            $config = $this->getModuleConfig();
-            if (isset($config['kasjroet_form_extra'])) {
-                foreach ($config['kasjroet_form_extra'] as $field) {
-                    $form->add($field);
-                }
-            }
-            $form->setHydrator(new DoctrineHydrator($this->getEntityManager(), 'Kasjroet\Entity\Product'));
-            $form->bind($product);
+			$forms = $this->getServiceLocator()->get('FormElementManager');
+			$form = $forms->get('Kasjroet\Form\Produc\Formt');
+			//$hydrator = new DoctrineHydrator($this->getEntityManager(), $product);
+			$hydrator = $this->getServiceLocator()->get('ProductHydrator');
+			$form->setHydrator($hydrator);
+
+
             return new ViewModel(array('form' => $form));
 
         }

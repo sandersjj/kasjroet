@@ -3,16 +3,16 @@ namespace Kasjroet\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
-use Zend\Form\Annotation;
+
+
 use Kasjroet\Entity\Brand;
+
 
 
 
 /**
  * @ORM\Entity(repositoryClass="Kasjroet\EntityRepository\Product")
  * @ORM\Table(name="product")
- * @Annotation\Hydrator("Zend\Stdlib\Hydrator\ArraySerializable")
- * @Annotation\Name("Product")
  */
 class Product{
 
@@ -20,7 +20,6 @@ class Product{
      * @ORM\id
      * @ORM\GeneratedValue(strategy="AUTO")
      * @ORM\Column(type="integer")
-     * @Annotation\Attributes({"type":"hidden"})
      */
     protected $id;
 
@@ -28,38 +27,29 @@ class Product{
      *  brandId -> bolletje, John West
      *  @ORM\ManyToOne(targetEntity="Kasjroet\Entity\Brand", inversedBy="products")
      *  @ORM\JoinColumn(name="brand_id", referencedColumnName="id", nullable=false)
-     *  @Annotation\Options({"label":"Brand: "})
      */
     protected $brand;
 
     /**
      * productGroupId -> Vis / Groente / Vlees enz.
      * @ORM\ManyToMany(targetEntity="productGroup")
-     * @Annotation\Type("Zend\Form\Element\Select")
-     * @Annotation\Options({"label":"Productgroup: "})
      */
     protected $productGroups;
 
 	/**
 	 * tags like: Melkkost, Parve, vegetarisch enz..
 	 * @ORM\ManyToMany(targetEntity="tag")
-	 * @Annotation\Type("Zend\Form\Element\Select")
-	 * @Annotation\Options({"label":"Tags: "})
 	 */
 	protected $tags;
 
     /**
      * productName -> Gerookte zalm
      * @ORM\Column(nullable=false)
-     * @Annotation\Attributes({"type":"text"})
-     * @Annotation\Options({"label":"Product name:"})
      */
     protected $productName;
 
     /**
      * description -> Only kosher if Xyz.
-     * @Annotation\Attributes({"type":"textarea"})
-     * @Annotation\Options({"label":"Product description: "})
      * @ORM\Column
      */
     protected $description;
@@ -67,17 +57,12 @@ class Product{
     /**
      * hechsheriem -> Multiple hechsherim should be possible
      * @ORM\ManyToMany(targetEntity="hechsher")
-     * @Annotation\Type("Zend\Form\Element\Select")
-     * @Annotation\Options({"label":"Hechsherim: "})
      */
     protected $hechsheriem;
 
     /**
      *
      * @ORM\Column(type="boolean")
-     * @Annotation\Type("Zend\Form\Element\Radio");
-     * @Annotation\Attributes({"1":"Yes", "0":"No", "class":"checkbox"})
-     * @Annotation\Options({"label":"Visible:"})
      */
     protected $visible;
 

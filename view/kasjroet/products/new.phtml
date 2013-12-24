@@ -1,12 +1,22 @@
-<?php
-$form = $this->form; 
-$form->setAttribute('method','post');
-echo $this->form()->openTag($form);
+<div id="section">
+	<?php
+	$form = $this->form;
+	$form->setAttribute('method','post')->prepare();
+?>
 
-echo $this->formRow($form->get('productName'));
-echo $this->formRow($form->get('description'));
-echo $this->formRow($form->get('brand'));
-echo $this->formRow($form->get('productGroups'));
-echo $this->formRow($form->get('hechsheriem'));
-echo $this->formInput($form->get('send'));
-echo $this->form()->closeTag($form);
+	<div id="form-full-width form-group">
+		<?php
+			echo $this->form()->openTag($form);
+
+			echo $this->formRow($form->get('productName'));
+			echo $this->formRow($form->get('description'));
+			echo $this->formRow($form->get('brand'));
+			echo $this->formRow($form->get('productGroups'));
+			echo $this->formRow($form->get('tags'));
+			echo $this->formRow($form->get('hechsheriem'));
+			echo $this->formRow($form->get('visible'));
+			echo $this->formInput($form->get('send'));
+			echo $this->form()->closeTag($form);
+		?>
+	</div>
+</div>

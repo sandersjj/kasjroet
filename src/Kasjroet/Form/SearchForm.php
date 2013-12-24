@@ -7,10 +7,13 @@ use Zend\Form\Form;
 class SearchForm extends Form
 {
 
-	public function __construct()
+	public function __construct($name = null)
 	{
 
-		parent::__construct();
+		parent::__construct('search-form');
+
+		$this->setAttribute('method', 'POST');
+
 		$this->add(array(
 			'type' => 'Zend\Form\Element\Text',
 			'name' => 'search',
@@ -21,6 +24,15 @@ class SearchForm extends Form
 				'class' => 'search',
 				'id' => 'search'
 
+			)
+		));
+
+		$this->add(array(
+			'type'	=> 'Zend\Form\Element\Submit',
+			'name' => 'submit',
+			'attributes' => array(
+				'type' 	=> 'Submit',
+				'value'	=> 'Opslaan'
 			)
 		));
 

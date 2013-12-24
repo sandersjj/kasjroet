@@ -61,6 +61,21 @@ return array(
                             ),
                         ),
                     ),
+					'brands' => array(
+						'type' => 'segment',
+						'options' => array(
+							'route' => '/brands[/:action][/:id]',
+							'constraints' => array(
+								'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
+								'id' => '[0-9]+',
+							),
+							'defaults' => array(
+								'__NAMESPACE' => 'Kasjroet\Controller',
+								'controller' => 'Brands',
+								'action' => 'index'
+							)
+						)
+					),
                     'memo' => array(
                         'type' => 'segment',
                         'options' => array(
@@ -143,6 +158,7 @@ return array(
             ),
         ),
     ),
+
 // Doctrine config
     'doctrine' => array(
         'driver' => array(
@@ -191,9 +207,21 @@ return array(
             'ViewJsonStrategy',
         ),
     ),
+	'navigation' => array(
+		'adminmenu' => array(
+			array(
+					'label' => 'Home',
+					'route' => 'zfcadmin',
+				),
+			array(
+					'label' => 'Brands',
+					'route' => 'zfcadmin/brands'
+				),
+		),
+	),
     'service_manager' => array(
-
-        'factories' => array(
+		'factories' => array(
+			'admin_navigation' => 'Kasjroet\Navigation\Service\AdminNavigationFactory',
             'ProductHydrator' => function ($sm) {
                 return new Util\Hydrator\Product(
                     new Util\Hydrator\ProductGroups(new Util\Hydrator\ProductGroup()),
@@ -213,7 +241,8 @@ return array(
 		'enable_username'		=> true,
 		'enable_display_name'	=> true,
 		'enable_user_state' 	=> true,
-		'default_user_state' 	=> 1
+		'default_user_state' 	=> 1,
+		'login_redirect_route'	=> "zfcadmin"
 
 	),
 

@@ -1,3 +1,4 @@
+<?php $this->inlineScript()->appendFile($this->basePath() . '/js/search.js'); ?>
 <h1>Index. Met Intelizoek</h1>
 
 
@@ -6,12 +7,7 @@ $form = $this->form;
 $form->setAttribute('method','post');
 $form->setAttribute('class', 'form-horizontal');
 $form->setAttribute('name', 'memoForm');
-$form->setAttribute('action', $this->url('zfcadmin/memo',
-	array(
-		'action' => 'postmemo',
-		'conroller' => 'memo'
-	)
-));
+
 $form->prepare();
 
 echo $this->form()->openTag($form);
@@ -19,6 +15,7 @@ echo $this->form()->openTag($form);
 <div class="form-group">
 	<?php
 	echo $this->formRow($form->get('search'));
+	echo $this->formSubmit($form->get('submit'));
 	?>
 <?php
 echo $this->form()->closeTag($form);

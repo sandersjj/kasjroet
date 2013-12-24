@@ -4,10 +4,13 @@ namespace Kasjroet;
 
 use Zend\Mvc\MvcEvent;
 use Zend\ModuleManager\ModuleManager;
+use DoctrineModule\Persistence\ObjectManagerAwareInterface;
 
-class module {
+class module
+{
 
-    public function onBootstrap(MvcEvent $e) {
+    public function onBootstrap(MvcEvent $e)
+    {
         $application = $e->getApplication();
         $serviceManager = $application->getServiceManager();
         $controllerLoader = $serviceManager->get('ControllerLoader');
@@ -20,11 +23,13 @@ class module {
          });
     }
 
-    public function getConfig() {
+    public function getConfig()
+    {
         return include __DIR__ . '/config/module.config.php';
     }
 
-    public function init(ModuleManager $moduleManager){
+    public function init(ModuleManager $moduleManager)
+    {
         $sharedEvents = $moduleManager->getEventManager()->getSharedManager();
         $sharedEvents->attach(__NAMESPACE__, 'dispatch', function($e) {
             $controller = $e->getTarget();
@@ -34,7 +39,8 @@ class module {
         }, 100);
     }
 
-    public function getViewHelperConfig(){
+    public function getViewHelperConfig()
+    {
         return array(
           'invokables' => array(
               'memoForm' => 'Kasjroet\View\Helper\Memo'
@@ -50,8 +56,36 @@ class module {
 
     }
 
+	public function getFormElementConfig()
+    {
+		return array(
+			'initializers' => array(
+				'ObjectManagerInitializer' => function ($element, $formElements) {
+						if ($element instanceof ObjectManagerAwareInterface) {
 
-    public function getAutoloaderConfig() {
+							$services      = $formElements->getServiceLocator();
+							$entityManager = $services->get('Doctrine\ORM\EntityManager');
+							$element->setObjectManager($entityManager);
+						}
+					},
+			),
+		);
+
+	}
+
+    public function getServiceConfig()
+    {
+        return array(
+            'factories' => array(
+                'brandForm' => function($sm){
+                        return new \Kasjroet\Form\BrandsForm($sm);
+                }
+            )
+        );
+    }
+
+    public function getAutoloaderConfig()
+    {
         return array(
             'Zend\Loader\ClassMapAutoloader' => array(
                 __DIR__ . '/autoload_classmap.php',
@@ -63,9 +97,4 @@ class module {
             ),
         );
     }
-
-
-
-
-
 }

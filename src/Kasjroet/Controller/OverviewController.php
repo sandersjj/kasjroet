@@ -13,9 +13,11 @@ class OverviewController extends AbstractKasjroetActionController {
 
     public function indexAction() {
 
+		if(!$this->zfcUserAuthentication()->hasIdentity()){
+			return $this->redirect()->toRoute('zfcuser/login');
+		}
+
         $flashMessages = array();
-
-
         $flashMessenger = $this->flashMessenger();
         if ($flashMessenger->hasMessages()) {
             $flashMessages = $flashMessenger->getMessages();
@@ -26,8 +28,6 @@ class OverviewController extends AbstractKasjroetActionController {
         }else{
             $products = $repo->listProducts();
         }
-
-
 
         return new ViewModel(array(
             'products' => $products
@@ -46,19 +46,6 @@ class OverviewController extends AbstractKasjroetActionController {
         }
         return $this->redirect()->toRoute('overview', array( 'controller' => 'overview', 'action' => 'index'));
     }
-    
-    /**
-     * @return type
-     */
-    public function getEntityManager() {
-        return $this->_entityManager;
-    }
 
-    /**
-     * @param EntityManager $entityManager
-     */
-    public function setEntityManager(EntityManager $entityManager) {
-        $this->_entityManager = $entityManager;
-    }
 
 }

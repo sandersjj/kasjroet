@@ -23,9 +23,11 @@
            <?php else:?>
                <td> &nbsp;</td>
            <?php endif; ?>
-		   <td> <?php foreach($product->getTags() as $tag){
-				   echo $tag->getTag();
-			   } ?> </td>
+
+		    <?php
+			$tagsStr = implode(', ', array_map(function ($tag) { return $tag->getTag(); }, $product->getTags()->toArray()));
+			?>
+		   <td> <?php echo $tagsStr ?></td>
            <td> <?php echo $product->getVisible() ? '<span class="label label-success">Yes</span>' : '<span class="label label-default">No</span>'; ?></td>
            <td> <a href="<?php echo $this->url('zfcadmin/product', array('action' => 'edit', 'id' => $product->getId())); ?>" title="edit">Edit</a></td>
            <td> <a href="<?php echo $this->url('zfcadmin/product', array('action' => 'delete', 'id' => $product->getId())); ?>" title="delete">delete</a></td>

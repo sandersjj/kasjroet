@@ -40,7 +40,7 @@ class Product implements HydratorInterface {
         $this->brandHydrator            = $brandHydrator;
         $this->productGroupsHydrator    = $productGroupsHydrator;
         $this->hechsherHydrator         = $hechsherHydrator;
-        //$this->memoHydtrator        = $memoHydtrator;
+
     }
 
 
