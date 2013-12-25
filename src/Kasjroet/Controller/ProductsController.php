@@ -83,7 +83,7 @@ class ProductsController extends AbstractKasjroetActionController
 
             $repo = $this->getEntityManager()->getRepository('Kasjroet\Entity\Product');
             $repo->editProduct($id, $this->getRequest()->getPost());
-            $this->flashMessenger()->addMessage('The product was edited.');
+            $this->flashMessenger()->addMessage('The product was updated.');
             return $this->redirect()->toRoute('zfcadmin');
         } else {
 
@@ -94,16 +94,17 @@ class ProductsController extends AbstractKasjroetActionController
                 throw new Exception('Object not found!');
             }
 
+            //@todo review
             $id = (int)$this->getEvent()->getRouteMatch()->getParam('id');
             $product = $repo->find($id);
 
 
-			$forms = $this->getServiceLocator()->get('FormElementManager');
-			$form = $forms->get('Kasjroet\Form\Produc\Formt');
-			//$hydrator = new DoctrineHydrator($this->getEntityManager(), $product);
-			$hydrator = $this->getServiceLocator()->get('ProductHydrator');
-			$form->setHydrator($hydrator);
+			$formManager = $this->getServiceLocator()->get('FormElementManager');
+			$form = $formManager->get('Kasjroet\Form\ProductForm');
+            
 
+            $hydrator = $this->getServiceLocator()->get('ProductHydrator');
+			$form->setHydrator($hydrator);
 
             return new ViewModel(array('form' => $form));
 

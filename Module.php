@@ -2,6 +2,7 @@
 
 namespace Kasjroet;
 
+use Kasjroet\Form\ProductForm;
 use Zend\Mvc\MvcEvent;
 use Zend\ModuleManager\ModuleManager;
 use DoctrineModule\Persistence\ObjectManagerAwareInterface;
@@ -61,13 +62,13 @@ class module
 		return array(
 			'initializers' => array(
 				'ObjectManagerInitializer' => function ($element, $formElements) {
-						if ($element instanceof ObjectManagerAwareInterface) {
+                    if ($element instanceof ObjectManagerAwareInterface) {
 
-							$services      = $formElements->getServiceLocator();
-							$entityManager = $services->get('Doctrine\ORM\EntityManager');
-							$element->setObjectManager($entityManager);
-						}
-					},
+                        $services      = $formElements->getServiceLocator();
+                        $entityManager = $services->get('Doctrine\ORM\EntityManager');
+                        $element->setObjectManager($entityManager);
+                    }
+				},
 			),
 		);
 
@@ -77,8 +78,11 @@ class module
     {
         return array(
             'factories' => array(
-                'brandForm' => function($sm){
-                        return new \Kasjroet\Form\BrandsForm($sm);
+                'productForm' => function($sm){
+                    return new ProductForm();
+                 },
+                'brandForm'   => function($sm){
+                        return new BrandsForm($sm);
                 }
             )
         );

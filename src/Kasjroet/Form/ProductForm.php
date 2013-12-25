@@ -12,8 +12,8 @@ class ProductForm extends Form implements ObjectManagerAwareInterface
 {
 	protected $objectManager;
 
-	public function init($name = null
-	){
+	public function init($name = null)
+    {
 
 		$this->setAttribute('method', 'POST');
 
@@ -100,7 +100,6 @@ class ProductForm extends Form implements ObjectManagerAwareInterface
 			)
 		));
 
-
 		$this->add(array(
 			'name' => 'update',
 			'type' => 'Zend\Form\Element\Checkbox',
@@ -108,6 +107,15 @@ class ProductForm extends Form implements ObjectManagerAwareInterface
 				'label' => 'Mark for update'
 		)
 		));
+
+        $this->add(array(
+                'name' => 'send',
+                'type' => 'Zend\Form\Element\Submit',
+                'attributes' => array(
+                    'type' => 'submit',
+                    'value' => 'Submit',
+                ),
+            ));
 
 	}
 

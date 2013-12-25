@@ -2,6 +2,7 @@
 
 namespace Kasjroet\Controller;
 
+use DoctrineModule\Stdlib\Hydrator\DoctrineObject;
 use Zend\View\Model\ViewModel;
 use Kasjroet\Entity\Brand as Brand;
 use DoctrineModule\Stdlib\Hydrator\DoctrineObject as DoctrineHydrator;
@@ -63,8 +64,28 @@ class BrandsController extends AbstractKasjroetActionController{
 
 	public function editAction()
 	{
+        $request = $this->getRequest();
+        $repo = $this->getEntityManager()->getRepository('Kasjroet\Entity\Brand');
+        $id = $this->getEvent()->getRouteMatch()->getParam('id');
 
-	}
+        if ($request->isPost() AND is_numeric($id)) {
+
+            //@todo fixme!
+            $repo->editProduct($id, $this->getRequest()->getPost());
+            $this->flashMessenger()->addMessage('The product was updated.');
+            return $this->redirect()->toRoute('zfcadmin');
+
+        } else {
+
+            $form = $this->getBrandsForm();
+            $hydrator = new DoctrineHydrator($this->getEntityManager(), '\Kasjroet\Entity\Brand');
+            $form->setHydrator($hydrator);
+            $form->bind();
+
+            return new ViewModel(array('form' => $form));
+
+        }
+    }
 
 	public function deleteAction()
 	{

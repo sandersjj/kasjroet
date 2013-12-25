@@ -19,25 +19,6 @@ class Brand extends EntityRepository
 		$this->em = $em;
 	}
 
-//    public function getInputFilter()
-//    {
-//        $inputFilter = new InputFilter();
-//        $factory = new Factory();
-//
-//        $inputFilter->add($factory->createInput(array(
-//                'name' => 'brandName',
-//                'validators' => array(
-//                    'name' => '\DoctrineModule\Validator\NoObjectExists',
-//                    'options' => array(
-//                      'object_repository' => $this,
-//                      'fields' => array('brandName')
-//                    ),
-//                ),
-//        )));
-//
-//        return $inputFilter;
-//    }
-
 	public function addBrand($data)
 	{
         try {
