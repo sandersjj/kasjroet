@@ -8,9 +8,9 @@ use Zend\ServiceManager\ServiceManager;
 
 class BrandsForm extends Form
 {
-	public function __construct(ServiceManager $serviceManager, $name = null)
+    public function init()
 	{
-        parent::__construct($name);
+
 
 		$this->add(array(
 			'name' => 'brandName',
@@ -28,6 +28,16 @@ class BrandsForm extends Form
 			)
 		));
 
+        $this->add(array(
+                'name' => 'send',
+                'type' => 'Zend\Form\Element\Submit',
+                'attributes' => array(
+                    'type' => 'submit',
+                    'value' => 'Submit',
+                ),
+            ));
+
+        $serviceManager = $this->getFormFactory()->getFormElementManager()->getServiceLocator();
         $entityManager = $serviceManager->get('Doctrine\Orm\EntityManager');
 
         $noObjectExistsValidator = new NoObjectExistsValidator(array(

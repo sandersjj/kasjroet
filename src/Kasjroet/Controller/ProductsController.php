@@ -95,13 +95,11 @@ class ProductsController extends AbstractKasjroetActionController
             }
 
             //@todo review
-            $id = (int)$this->getEvent()->getRouteMatch()->getParam('id');
+
             $product = $repo->find($id);
-
-
 			$formManager = $this->getServiceLocator()->get('FormElementManager');
 			$form = $formManager->get('Kasjroet\Form\ProductForm');
-            
+
 
             $hydrator = $this->getServiceLocator()->get('ProductHydrator');
 			$form->setHydrator($hydrator);

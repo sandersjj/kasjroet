@@ -76,11 +76,12 @@ class BrandsController extends AbstractKasjroetActionController{
             return $this->redirect()->toRoute('zfcadmin');
 
         } else {
+            $brand = $this->getEntityManager()->getRepository('Kasjroet\Entity\Brand');
+            $formManager = $this->getServiceLocator()->get('FormElementManager');
+            $form = $formManager->get('Kasjroet\Form\BrandsForm');
 
-            $form = $this->getBrandsForm();
-            $hydrator = new DoctrineHydrator($this->getEntityManager(), '\Kasjroet\Entity\Brand');
+            $hydrator = new DoctrineHydrator($this->getEntityManager(), 'Kasjroet\Entity\Brand');
             $form->setHydrator($hydrator);
-            $form->bind();
 
             return new ViewModel(array('form' => $form));
 

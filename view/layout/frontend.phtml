@@ -21,19 +21,29 @@
 
 </head>
     <body>
-        <div id="wrap">
-
-				<div id="left-side">
-					<?php echo $this->zfcUserLoginWidget(); ?>
-				</div>
-				<div id="right-side">
-					<?php
-					echo $this->navigation('admin_navigation')->menu();
-
-
-					echo $this->layout()->content; ?>
-				</div>
-		</div>
+        <header>
+            <div class="header-left-content"></div>
+            <div class="header-right-content">
+                <div class="login"> <?php //echo $this->zfcUserLoginWidget();?> </div>
+                <div class="topmenu">
+                    <ul class="topNav">
+                        <li><span class="glyphicon glyphicon-cog"></span></li>
+                        <li>test</li>
+                        <li>test</li>
+                     </ul>
+                </div>
+            </div>
+        </header>
+        <div class="content-container">
+            <div class="content">
+                <aside>
+                        <?php  echo $this->navigation('admin_navigation')->render(null, array('ulClass' => 'nav nav-pills nav-stacked')); ?>
+                </aside>
+                <div class="right-side">
+                    <?php echo $this->layout()->content; ?>
+                </div>
+            </div>
+        </div>
 		<?php echo $this->inlineScript() ?>
     </body>
 </html>

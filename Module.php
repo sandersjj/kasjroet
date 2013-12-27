@@ -81,7 +81,7 @@ class module
                 'productForm' => function($sm){
                     return new ProductForm();
                  },
-                'brandForm'   => function($sm){
+                'BrandsForm'   => function($sm){
                         return new BrandsForm($sm);
                 }
             )
