@@ -69,19 +69,19 @@ class BrandsController extends AbstractKasjroetActionController{
         $id = $this->getEvent()->getRouteMatch()->getParam('id');
 
         if ($request->isPost() AND is_numeric($id)) {
-
             //@todo fixme!
-            $repo->editProduct($id, $this->getRequest()->getPost());
+            $repo->editBrand($id, $this->getRequest()->getPost());
             $this->flashMessenger()->addMessage('The product was updated.');
             return $this->redirect()->toRoute('zfcadmin');
 
         } else {
-            $brand = $this->getEntityManager()->getRepository('Kasjroet\Entity\Brand');
+            $brand = $this->getEntityManager()->find('Kasjroet\Entity\Brand', $id);
             $formManager = $this->getServiceLocator()->get('FormElementManager');
             $form = $formManager->get('Kasjroet\Form\BrandsForm');
 
-            $hydrator = new DoctrineHydrator($this->getEntityManager(), 'Kasjroet\Entity\Brand');
+            $hydrator = $this->getServiceLocator()->get('BrandHydrator');
             $form->setHydrator($hydrator);
+            $form->bind($brand);
 
             return new ViewModel(array('form' => $form));
 

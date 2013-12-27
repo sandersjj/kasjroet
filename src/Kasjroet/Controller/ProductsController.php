@@ -103,6 +103,7 @@ class ProductsController extends AbstractKasjroetActionController
 
             $hydrator = $this->getServiceLocator()->get('ProductHydrator');
 			$form->setHydrator($hydrator);
+            $form->bind($product);
 
             return new ViewModel(array('form' => $form));
 

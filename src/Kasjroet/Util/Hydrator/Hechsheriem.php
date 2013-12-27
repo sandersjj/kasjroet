@@ -36,6 +36,7 @@ class Hechsheriem implements HydratorInterface{
         if (! $object instanceof \Doctrine\Common\Collections\Collection) {
             throw new UnsupportedObjectException();
         }
+        $data = array();
         foreach ($object as $key => $value) {
             $data[$key] = $this->hechsherHydtrator->extract($value);
         }

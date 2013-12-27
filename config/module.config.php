@@ -229,7 +229,10 @@ return array(
                     new Util\Hydrator\Hechsheriem(new Util\Hydrator\Hechsher())
 
                 );
-            }
+            },
+            'BrandHydrator' => function($sm){
+                    return new Util\Hydrator\Brand();
+             }
         ),
 /*        'abstract_factories' => array(
             'Kasjroet\AbstractEntityControllerFactory' => 'Kasjroet\AbstractEntityControllerFactory',

@@ -71,7 +71,6 @@ class module
 				},
 			),
 		);
-
 	}
 
     public function getServiceConfig()
