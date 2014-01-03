@@ -6,12 +6,14 @@ use Doctrine\ORM\EntityManager;
 use Kasjroet\Controller\AbstractKasjroetActionController;
 
 
-class OverviewController extends AbstractKasjroetActionController {
+class OverviewController extends AbstractKasjroetActionController
+{
 
     protected $_entityManager;
 
 
-    public function indexAction() {
+    public function indexAction()
+    {
 
 		if(!$this->zfcUserAuthentication()->hasIdentity()){
 			return $this->redirect()->toRoute('zfcuser/login');
@@ -19,31 +21,37 @@ class OverviewController extends AbstractKasjroetActionController {
 
         $flashMessages = array();
         $flashMessenger = $this->flashMessenger();
+
         if ($flashMessenger->hasMessages()) {
             $flashMessages = $flashMessenger->getMessages();
         }
+
         $repo = $this->getEntityManager()->getRepository('Kasjroet\Entity\Product');
-        if(($this->getEvent()->getRouteMatch()->getParam('productgroup'))){
+
+        if (($this->getEvent()->getRouteMatch()->getParam('productgroup'))) {
             $products = $repo->getProductsByProductGroup($this->getEvent()->getRouteMatch()->getParam('productgroup'));
-        }else{
+        } else{
             $products = $repo->listProducts();
         }
 
         return new ViewModel(array(
-            'products' => $products
-            ,'flashMessages' => $flashMessages,
+            'products' => $products,
+            'flashMessages' => $flashMessages,
         ));
     }
 
     /**
      * @return \Zend\Http\Response
      */
-    public function deleteAction(){
+    public function deleteAction()
+    {
         $id = (int) $this->getEvent()->getRouteMatch()->getParam('id');
-        if($id && is_numeric($id)){
+
+        if ($id && is_numeric($id)) {
              $repo = $this->getEntityManager()->getRepository('Kasjroet\Entity\Product');
              $repo->removeProduct($id);
         }
+
         return $this->redirect()->toRoute('overview', array( 'controller' => 'overview', 'action' => 'index'));
     }
 

@@ -57,6 +57,7 @@ class ProductsController extends AbstractKasjroetActionController
             $repo->addProduct($this->getRequest()->getPost());
             $this->flashMessenger()->addMessage('The product was added.');
             return $this->redirect()->toRoute('zfcadmin');
+
         } else {
             $config = $this->getModuleConfig();
             if (isset($config['kasjroet_form_extra'])) {

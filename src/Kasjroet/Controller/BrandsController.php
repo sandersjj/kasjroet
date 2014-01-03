@@ -26,7 +26,10 @@ class BrandsController extends AbstractKasjroetActionController{
 		);
     }
 
-	public function newAction()
+    /**
+     * @return \Zend\Http\Response|ViewModel
+     */
+    public function newAction()
 	{
 		if($this->zfcUserAuthentication()->hasIdentity()){
 
@@ -50,33 +53,32 @@ class BrandsController extends AbstractKasjroetActionController{
                 $form->setHydrator($hydrator);
 				$form->bind($brand);
 			}
-
-            $config = $this->getModuleConfig();
-            if (isset($config['kasjroet_form_extra'])) {
-                foreach ($config['kasjroet_form_extra'] as $field) {
-                    $form->add($field);
-                }
-            }
-
             return new ViewModel(array('form' => $form));
-		}
+		} else {
+            return $this->redirect()->toRoute($this->getOptions()->getLoginRedirectRoute());
+        }
 	}
 
-	public function editAction()
+    /**
+     * @return \Zend\Http\Response|ViewModel
+     */
+    public function editAction()
 	{
         $request = $this->getRequest();
         $repo = $this->getEntityManager()->getRepository('Kasjroet\Entity\Brand');
         $id = $this->getEvent()->getRouteMatch()->getParam('id');
+        $formManager = $this->getServiceLocator()->get('FormElementManager');
+        $form = $formManager->get('Kasjroet\Form\BrandsForm');
 
-        if ($request->isPost() AND is_numeric($id)) {
-            //@todo fixme!
-            $repo->editBrand($id, $this->getRequest()->getPost());
-            $this->flashMessenger()->addMessage('The product was updated.');
-            return $this->redirect()->toRoute('zfcadmin');
-
+        if ($request->isPost()) {
+            $form->setData($request->getPost());
+            if ($form->isValid()) {
+                $repo->updateBrand($id, $this->params()->fromPost());
+                $this->flashMessenger()->addMessage('The Brand was updated.');
+                return $this->redirect()->toRoute('zfcadmin/brands');
+            }
         } else {
             $brand = $this->getEntityManager()->find('Kasjroet\Entity\Brand', $id);
-            $formManager = $this->getServiceLocator()->get('FormElementManager');
             $form = $formManager->get('Kasjroet\Form\BrandsForm');
 
             $hydrator = $this->getServiceLocator()->get('BrandHydrator');
@@ -84,15 +86,30 @@ class BrandsController extends AbstractKasjroetActionController{
             $form->bind($brand);
 
             return new ViewModel(array('form' => $form));
-
         }
     }
 
-	public function deleteAction()
+    /**
+     * @todo to be implemented
+     */
+    public function deleteAction()
 	{
+        $repo = $this->getEntityManager()->getRepository('Kasjroet\Entity\Brand');
+        $id = $this->getEvent()->getRouteMatch()->getParam('id');
+        $result = $repo->removeBrand($id);
+        if (!$result) {
+            $this->flashMessenger()->addErrorMessage($result);
 
+            return $this->redirect()->toRoute('zfcadmin/brands');
+        }
+
+        $this->flashMessenger()->addMessage('The Brand was deleted.');
+        return $this->redirect()->toRoute('zfcadmin/brands');
 	}
 
+    /**
+     * @todo to be implemented
+     */
 	private function getBrandsForm()
 	{
 		return $this->getServiceLocator()->get('brandForm');
