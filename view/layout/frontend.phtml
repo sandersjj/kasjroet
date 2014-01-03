@@ -41,7 +41,17 @@
                 </aside>
                 <div class="right-side">
 
+                    <?php if(count($this->flashMessages)) : ?>
+                        <ul class="messages">
+                            <?php foreach ($flashMessages as $msg) : ?>
+                                <li><?php echo $msg; ?></li>
+                            <?php endforeach; ?>
+                        </ul>
+                    <?php endif; ?>
+
                     <?php echo $this->layout()->content; ?>
+
+
                 </div>
             </div>
         </div>

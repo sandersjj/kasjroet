@@ -33,10 +33,10 @@ class OverviewController extends AbstractKasjroetActionController
         } else{
             $products = $repo->listProducts();
         }
+        $this->layout()->setVariable('flashMessages', $flashMessages);
 
         return new ViewModel(array(
             'products' => $products,
-            'flashMessages' => $flashMessages,
         ));
     }
 

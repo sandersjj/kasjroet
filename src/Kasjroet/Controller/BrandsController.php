@@ -1,5 +1,4 @@
 <?php
-
 namespace Kasjroet\Controller;
 
 use DoctrineModule\Stdlib\Hydrator\DoctrineObject;
@@ -15,11 +14,19 @@ class BrandsController extends AbstractKasjroetActionController{
 	 */
 	public function indexAction()
 	{
+        $flashMessages = array();
+        $flashMessenger = $this->flashMessenger();
+
+        if ($flashMessenger->hasMessages()) {
+            $flashMessages = $flashMessenger->getMessages();
+        }
 
 		$em = $this->getEntityManager();
 		$brands = $em->getRepository('Kasjroet\Entity\Brand')->findAll();
 
-		return new ViewModel(
+        $this->layout()->setVariable('flashMessages', $flashMessages);
+
+        return new ViewModel(
 			array(
 				'brands' => $brands,
 			)
@@ -90,15 +97,19 @@ class BrandsController extends AbstractKasjroetActionController{
     }
 
     /**
-     * @todo to be implemented
+     * @return \Zend\Http\Response
      */
     public function deleteAction()
 	{
+
+
         $repo = $this->getEntityManager()->getRepository('Kasjroet\Entity\Brand');
         $id = $this->getEvent()->getRouteMatch()->getParam('id');
         $result = $repo->removeBrand($id);
-        if (!$result) {
-            $this->flashMessenger()->addErrorMessage($result);
+
+
+        if (is_string($result)) {
+            $this->flashMessenger()->addMessage($result);
 
             return $this->redirect()->toRoute('zfcadmin/brands');
         }
