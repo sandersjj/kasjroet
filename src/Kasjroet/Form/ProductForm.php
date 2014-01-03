@@ -34,10 +34,6 @@ class ProductForm extends Form implements ObjectManagerAwareInterface
                     'target_class' => 'Kasjroet\Entity\Brand',
                     'property' => 'brandName'
                 ),
-                'attributes' => array(
-                    'multiple' => 'multiple',
-                ),
-
             )
         );
 
