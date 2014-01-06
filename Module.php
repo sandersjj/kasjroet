@@ -82,7 +82,18 @@ class module
                  },
                 'BrandsForm'   => function($sm){
                         return new BrandsForm($sm);
-                }
+                },
+                'ProductHydrator' => function ($sm) {
+                        return new Util\Hydrator\Product(
+                            new Util\Hydrator\ProductGroups(new Util\Hydrator\ProductGroup()),
+                            new Util\Hydrator\Brand(),
+                            new Util\Hydrator\Hechsheriem(new Util\Hydrator\Hechsher())
+
+                        );
+                    },
+                'BrandHydrator' => function($sm){
+                        return new Util\Hydrator\Brand();
+                    }
             )
         );
     }

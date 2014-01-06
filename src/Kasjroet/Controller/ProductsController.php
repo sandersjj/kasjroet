@@ -89,21 +89,19 @@ class ProductsController extends AbstractKasjroetActionController
         } else {
 
             try {
+
                 $repo = $this->getEntityManager()->getRepository('Kasjroet\Entity\Product');
+                $product = $repo->find($id);
 
             } catch (ObjectNotFoundException $e) {
                 throw new Exception('Object not found!');
             }
-
             //@todo review
-
-            $product = $repo->find($id);
 			$formManager = $this->getServiceLocator()->get('FormElementManager');
 			$form = $formManager->get('Kasjroet\Form\ProductForm');
 
-
             $hydrator = $this->getServiceLocator()->get('ProductHydrator');
-			$form->setHydrator($hydrator);
+            $form->setHydrator(new DoctrineHydrator($this->getEntityManager(), 'Kasjroet\Entity\Product'));
             $form->bind($product);
 
             return new ViewModel(array('form' => $form));

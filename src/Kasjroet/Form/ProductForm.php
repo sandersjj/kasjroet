@@ -1,6 +1,4 @@
 <?php
-
-
 namespace Kasjroet\Form;
 
 use Doctrine\Common\Persistence\ObjectManager;

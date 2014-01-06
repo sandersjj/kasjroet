@@ -76,6 +76,21 @@ return array(
 							)
 						)
 					),
+                    'products' => array(
+                        'type' => 'segment',
+                        'options' => array(
+                            'route' => '/products[/:action][/:id]',
+                            'constraints' => array(
+                                'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                                'id' => '[0-9]+',
+                            ),
+                            'defaults' => array(
+                                '__NAMESPACE' => 'Kasjroet\Controller',
+                                'controller' => 'Products',
+                                'action' => 'index'
+                            )
+                        )
+                    ),
                     'memo' => array(
                         'type' => 'segment',
                         'options' => array(
@@ -213,6 +228,10 @@ return array(
 					'label' => 'Home',
 					'route' => 'zfcadmin',
 				),
+            array(
+                'label' => 'Products',
+                'route' => 'zfcadmin/products',
+            ),
 			array(
 					'label' => 'Brands',
 					'route' => 'zfcadmin/brands'
@@ -222,17 +241,17 @@ return array(
     'service_manager' => array(
 		'factories' => array(
 			'admin_navigation' => 'Kasjroet\Navigation\Service\AdminNavigationFactory',
-            'ProductHydrator' => function ($sm) {
-                return new Util\Hydrator\Product(
-                    new Util\Hydrator\ProductGroups(new Util\Hydrator\ProductGroup()),
-                    new Util\Hydrator\Brand(),
-                    new Util\Hydrator\Hechsheriem(new Util\Hydrator\Hechsher())
-
-                );
-            },
-            'BrandHydrator' => function($sm){
-                    return new Util\Hydrator\Brand();
-             }
+//            'ProductHydrator' => function ($sm) {
+//    return new Util\Hydrator\Product(
+//        new Util\Hydrator\ProductGroups(new Util\Hydrator\ProductGroup()),
+//        new Util\Hydrator\Brand(),
+//        new Util\Hydrator\Hechsheriem(new Util\Hydrator\Hechsher())
+//
+//    );
+//},
+//            'BrandHydrator' => function($sm){
+//    return new Util\Hydrator\Brand();
+//}
         ),
 /*        'abstract_factories' => array(
             'Kasjroet\AbstractEntityControllerFactory' => 'Kasjroet\AbstractEntityControllerFactory',
