@@ -123,6 +123,7 @@ class BrandsController extends AbstractKasjroetActionController{
      */
 	private function getBrandsForm()
 	{
-		return $this->getServiceLocator()->get('brandForm');
+        $formManager = $this->getServiceLocator()->get('FormElementManager');
+        return $formManager->get('Kasjroet\Form\BrandsForm');
 	}
 }
