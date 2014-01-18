@@ -173,7 +173,9 @@ return array(
             ),
         ),
     ),
-
+    'hydrators' => array(
+      'invokables' => array('BrandHydrator' => 'Kasjroet\Util\Hydrator\Brand'),
+    ),
 // Doctrine config
     'doctrine' => array(
         'driver' => array(
@@ -193,15 +195,8 @@ return array(
             )
         )
     ),
-    'kasjroet_form_extra' => array(
-        array(
-            'name' => 'send',
-            'attributes' => array(
-                'type' => 'submit',
-                'value' => 'Submit',
-            ),
-        ),
-    ),
+
+
     'view_manager' => array(
         'display_not_found_reason' => true,
         'display_exceptions' => true,
@@ -240,7 +235,7 @@ return array(
 	),
     'service_manager' => array(
 		'factories' => array(
-			'admin_navigation' => 'Kasjroet\Navigation\Service\AdminNavigationFactory',
+                'admin_navigation' => 'Kasjroet\Navigation\Service\AdminNavigationFactory',
 //            'ProductHydrator' => function ($sm) {
 //    return new Util\Hydrator\Product(
 //        new Util\Hydrator\ProductGroups(new Util\Hydrator\ProductGroup()),
@@ -249,9 +244,9 @@ return array(
 //
 //    );
 //},
-//            'BrandHydrator' => function($sm){
-//    return new Util\Hydrator\Brand();
-//}
+            'BrandHydrator' => function($sm){
+    return new Util\Hydrator\Brand();
+}
         ),
 /*        'abstract_factories' => array(
             'Kasjroet\AbstractEntityControllerFactory' => 'Kasjroet\AbstractEntityControllerFactory',

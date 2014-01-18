@@ -4,7 +4,7 @@ namespace Kasjroet\Controller;
 use DoctrineModule\Stdlib\Hydrator\DoctrineObject;
 use Zend\View\Model\ViewModel;
 use Kasjroet\Entity\Brand as Brand;
-use DoctrineModule\Stdlib\Hydrator\DoctrineObject as DoctrineHydrator;
+
 
 class BrandsController extends AbstractKasjroetActionController{
 
@@ -40,13 +40,11 @@ class BrandsController extends AbstractKasjroetActionController{
 	{
 		if($this->zfcUserAuthentication()->hasIdentity()){
 
-			$em = $this->getEntityManager();
 			$request = $this->getRequest();
 			$form = $this->getBrandsForm();
 			$brand = new Brand();
 
             $repo = $this->getEntityManager()->getRepository('Kasjroet\Entity\Brand');
-			$hydrator = new DoctrineHydrator($em, '\Kasjroet\Entity\Brand');
 
 			if ($request->isPost()) {
                 $form->setData($request->getPost());
@@ -56,9 +54,7 @@ class BrandsController extends AbstractKasjroetActionController{
                     return $this->redirect()->toRoute('zfcadmin/brands');
                 }
 			} else 	{
-
-                $form->setHydrator($hydrator);
-				$form->bind($brand);
+        		$form->bind($brand);
 			}
             return new ViewModel(array('form' => $form));
 		} else {
@@ -74,8 +70,9 @@ class BrandsController extends AbstractKasjroetActionController{
         $request = $this->getRequest();
         $repo = $this->getEntityManager()->getRepository('Kasjroet\Entity\Brand');
         $id = $this->getEvent()->getRouteMatch()->getParam('id');
-        $formManager = $this->getServiceLocator()->get('FormElementManager');
-        $form = $formManager->get('Kasjroet\Form\BrandsForm');
+
+        $form = $this->getBrandsForm();
+
 
         if ($request->isPost()) {
             $form->setData($request->getPost());
@@ -86,10 +83,6 @@ class BrandsController extends AbstractKasjroetActionController{
             }
         } else {
             $brand = $this->getEntityManager()->find('Kasjroet\Entity\Brand', $id);
-            $form = $formManager->get('Kasjroet\Form\BrandsForm');
-
-            $hydrator = $this->getServiceLocator()->get('BrandHydrator');
-            $form->setHydrator($hydrator);
             $form->bind($brand);
 
             return new ViewModel(array('form' => $form));
@@ -124,6 +117,6 @@ class BrandsController extends AbstractKasjroetActionController{
 	private function getBrandsForm()
 	{
         $formManager = $this->getServiceLocator()->get('FormElementManager');
-        return $formManager->get('Kasjroet\Form\BrandsForm');
+        return $formManager->get('BrandsForm');
 	}
 }

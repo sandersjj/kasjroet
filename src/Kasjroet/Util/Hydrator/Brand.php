@@ -14,9 +14,6 @@ use Zend\Stdlib\Hydrator\HydratorInterface;
 class Brand implements HydratorInterface{
 
 
-    public function __construct(){
-
-    }
 
     /**
      * @param object $object

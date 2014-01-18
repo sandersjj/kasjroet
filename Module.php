@@ -2,13 +2,17 @@
 
 namespace Kasjroet;
 
+use Kasjroet\Controller\AbstractKasjroetActionController;
 use Kasjroet\Form\ProductForm;
 use Zend\Mvc\MvcEvent;
+use Zend\Mvc\Router\RouteMatch;
 use Zend\ModuleManager\ModuleManager;
 use DoctrineModule\Persistence\ObjectManagerAwareInterface;
 
 class module
 {
+
+    protected $whitelist = array( 'kasjroet' , 'zfcuser/login',);
 
     public function onBootstrap(MvcEvent $e)
     {
@@ -22,7 +26,51 @@ class module
                     $instance->setEntityManager($serviceManager->get('doctrine.entitymanager.orm_default'));
                 }
          });
+
+
+
+        $app = $e->getApplication();
+        $em  = $app->getEventManager();
+        $sm  = $app->getServiceManager();
+
+        $list = $this->whitelist;
+        $auth = $sm->get('zfcuser_auth_service');
+
+        $em->attach(MvcEvent::EVENT_ROUTE, function($e) use ($list, $auth) {
+
+                $match = $e->getRouteMatch();
+
+                // No route match, this is a 404
+                if (!$match instanceof RouteMatch) {
+                    return;
+                }
+
+                // Route is whitelisted
+                $name = $match->getMatchedRouteName();
+                if (in_array($name, $list)) {
+                    return;
+                }
+
+                // User is authenticated
+                if ($auth->hasIdentity()) {
+                    return;
+                }
+
+                // Redirect to the user login page, as an example
+                $router   = $e->getRouter();
+                $url      = $router->assemble(array(), array(
+                        'name' => 'zfcuser/login'
+                    ));
+
+                $response = $e->getResponse();
+                $response->getHeaders()->addHeaderLine('Location', $url);
+                $response->setStatusCode(302);
+
+                return $response;
+        }, -100);
     }
+
+
 
     public function getConfig()
     {
@@ -63,13 +111,22 @@ class module
 			'initializers' => array(
 				'ObjectManagerInitializer' => function ($element, $formElements) {
                     if ($element instanceof ObjectManagerAwareInterface) {
-
                         $services      = $formElements->getServiceLocator();
                         $entityManager = $services->get('Doctrine\ORM\EntityManager');
                         $element->setObjectManager($entityManager);
                     }
 				},
 			),
+            'factories' => array(
+//                'Kasjroet\Form\BrandsForm' => function($sm) {
+//                    $form = new \Kasjroet\Form\BrandsForm();
+//                    $form->setServiceLocator($sm);
+//                    return $form;
+//
+//                }
+
+
+            ),
 		);
 	}
 
@@ -79,21 +136,17 @@ class module
             'factories' => array(
                 'productForm' => function($sm){
                     return new ProductForm();
-                 },
+                },
                 'BrandsForm'   => function($sm){
-                        return new BrandsForm($sm);
+                       return new Form\BrandsForm($sm);
                 },
                 'ProductHydrator' => function ($sm) {
                         return new Util\Hydrator\Product(
                             new Util\Hydrator\ProductGroups(new Util\Hydrator\ProductGroup()),
                             new Util\Hydrator\Brand(),
                             new Util\Hydrator\Hechsheriem(new Util\Hydrator\Hechsher())
-
                         );
-                    },
-                'BrandHydrator' => function($sm){
-                        return new Util\Hydrator\Brand();
-                    }
+                },
             )
         );
     }
