@@ -2,7 +2,7 @@
 namespace Kasjroet\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\ArrayCollection as ArrayCollection;
 
 
 use Kasjroet\Entity\Brand;
@@ -14,6 +14,8 @@ use Kasjroet\Entity\Brand;
  * @ORM\Entity(repositoryClass="Kasjroet\EntityRepository\Product")
  * @ORM\Table(name="product")
  */
+
+
 class Product{
 
     /**
@@ -25,7 +27,7 @@ class Product{
 
     /**
      *  brandId -> bolletje, John West
-     *  @ORM\ManyToOne(targetEntity="Kasjroet\Entity\Brand", inversedBy="products")
+     *  @ORM\ManyToOne(targetEntity="Kasjroet\Entity\Brand")
      *  @ORM\JoinColumn(name="brand_id", referencedColumnName="id", nullable=false)
      */
     protected $brand;
@@ -60,6 +62,12 @@ class Product{
      */
     protected $hechsheriem;
 
+	/**
+	 * hechsheriem -> Multiple Shops should be possible
+	 * @ORM\ManyToMany(targetEntity="Shop")
+	 */
+	protected $shops;
+
     /**
      *
      * @ORM\Column(type="boolean")
@@ -73,7 +81,7 @@ class Product{
     protected $memos;
 
     /**
-     * @ORM\OneToMany(targetEntity="Kasjroet\Entity\Update", mappedBy="productID")
+     * 234@ORM\OneToMany(targetEntity="Kasjroet\Entity\Update", mappedBy="productID")
      */
     protected $update;
 
@@ -82,7 +90,7 @@ class Product{
         $this->hechsheriem = new ArrayCollection();
         $this->productGroups = new ArrayCollection();
         $this->updates = new ArrayCollection();
-        $this->brands = new ArrayCollection();
+        $this->shop = new ArrayCollection();
 		$this->tags = new ArrayCollection();
     }
 
@@ -141,11 +149,6 @@ class Product{
         $this->memos = $memos;
     }
 
-    public function addHechsher(Hechsher $hechsher){
-        if (!$this->hechsheriem->contains($hechsher)){
-            $this->hechsheriem  ->add($hechsher);
-        }
-    }
 
     /**
      * Returns all related product groups
@@ -159,7 +162,8 @@ class Product{
      * Sets the product groups
      * @param ArrayCollection $productGroups
      */
-    public function setProductGroups(\Doctrine\Common\Collections\ArrayCollection $productGroups) {
+    public function setProductGroups(ArrayCollection $productGroups)
+	{
         $this->productGroups = $productGroups;
     }
 
@@ -176,7 +180,8 @@ class Product{
 	 * Sets the product tags
 	 * @param ArrayCollection $tags
 	 */
-	public function setTags(\Doctrine\Common\Collections\ArrayCollection $tags) {
+	public function setTags(ArrayCollection $tags)
+	{
 		$this->productGroups = $tags;
 	}
 
@@ -184,7 +189,8 @@ class Product{
     /**
      * This function unsets a product group
      */
-    public function unsetProductsGroups() {
+    public function unsetProductsGroups()
+	{
         unset($this->productGroups);
     }
 
@@ -193,7 +199,8 @@ class Product{
      * Returns all related product groups
      * @return ArrayCollection
      */
-    public function getHechsheriem() {
+    public function getHechsheriem()
+	{
         return $this->hechsheriem;
     }
 
@@ -201,17 +208,11 @@ class Product{
      * @param ArrayCollection $hechsheriem
      */
 
-    public function setHechsheriem(\Doctrine\Common\Collections\ArrayCollection $hechsheriem) {
+    public function setHechsheriem(ArrayCollection $hechsheriem)
+	{
         $this->hechsheriem = $hechsheriem;
     }
 
-    /**
-     * This function unsets hechsherim
-     */
-    public function unsetHechsheriem() {
-        unset($this->hechsheriem);
-
-    }
 
 }
 

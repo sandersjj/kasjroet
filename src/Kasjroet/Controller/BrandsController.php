@@ -38,8 +38,6 @@ class BrandsController extends AbstractKasjroetActionController{
      */
     public function newAction()
 	{
-		if($this->zfcUserAuthentication()->hasIdentity()){
-
 			$request = $this->getRequest();
 			$form = $this->getBrandsForm();
 			$brand = new Brand();
@@ -57,9 +55,6 @@ class BrandsController extends AbstractKasjroetActionController{
         		$form->bind($brand);
 			}
             return new ViewModel(array('form' => $form));
-		} else {
-            return $this->redirect()->toRoute($this->getOptions()->getLoginRedirectRoute());
-        }
 	}
 
     /**

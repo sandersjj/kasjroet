@@ -244,13 +244,10 @@ return array(
 //
 //    );
 //},
-            'BrandHydrator' => function($sm){
-    return new Util\Hydrator\Brand();
-}
+
+
         ),
-/*        'abstract_factories' => array(
-            'Kasjroet\AbstractEntityControllerFactory' => 'Kasjroet\AbstractEntityControllerFactory',
-        )*/
+
     ),
 	'zfcuser' => array(
 		'user_entity_class'       => 'Kasjroet\Entity\User',

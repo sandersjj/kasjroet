@@ -59,26 +59,26 @@ class Product extends EntityRepository
     {
         $em = $this->getEntityManager();
 
-        $productGroupsArray = $productData->productGroups;
-        $hechsheriemArray = $productData->hechsheriem;
+        $productGroups =  $productData['productGroups'];
+		$hechsheriem =    $productData['hechsheriem'];
 
         $product = $this->find($id);
 
-        $product->setProductName($productData->productName);
-        $product->setDescription($productData->description);
-        $product->setVisible($productData->visible);
-        if (!empty($productGroupsArray)) {
-            $productGroups = $this->getEntityManager()->getRepository('Kasjroet\Entity\ProductGroup')->findList(
-                $productGroupsArray
+		$product->setProductName($productData['productName']);
+        $product->setDescription($productData['description']);
+        $product->setVisible($productData['visible']);
+        if (!empty($productGroups)) {
+			$productGroups = $this->getEntityManager()->getRepository('Kasjroet\Entity\ProductGroup')->findList(
+				$productGroups
             );
             $product->setProductGroups($productGroups);
         } else {
             $product->unsetProductsGroups();
         }
 
-        if (!empty($hechsheriemArray)) {
-            $hechsheriem = $this->getEntityManager()->getRepository('Kasjroet\Entity\Hechsher')->findList(
-                $hechsheriemArray
+        if (!empty($hechsheriem)) {
+			$hechsheriem = $this->getEntityManager()->getRepository('Kasjroet\Entity\Hechsher')->findList(
+				$hechsheriem
             );
             $product->setHechsheriem($hechsheriem);
         } else {
@@ -165,22 +165,22 @@ class Product extends EntityRepository
     }
 
 
-    public function searchProduct($searchString)
-    {
-        if (empty($searchString)) {
-            return false;
-        }
-
-
-        $sql = "
-			SELECT p.id, p.productName
-			FROM \Kasjroet\Entity\Product p
-			WHERE p.productName LIKE :search
-		";
-        $query = $this->getEntityManager()->createQuery($sql);
-        $str = '%' . $searchString . '%';
-        $query->setParameter('search', $str);
-        return $query->getResult();
-
-    }
+//    public function searchProduct\($searchString)
+//    {
+//        if (empty($searchString)) {
+//            return false;
+//        }
+//
+//
+//        $sql = "
+//			SELECT p.id, p.productName
+//			FROM \Kasjroet\Entity\Product p
+//			WHERE p.productName LIKE :search
+//		";
+//        $query = $this->getEntityManager()->createQuery($sql);
+//        $str = '%' . $searchString . '%';
+//        $query->setParameter('search', $str);
+//        return $query->getResult();
+//
+//    }
 }

@@ -3,6 +3,8 @@ namespace Kasjroet\Form;
 
 use Doctrine\Common\Persistence\ObjectManager;
 use DoctrineModule\Persistence\ObjectManagerAwareInterface;
+use DoctrineModule\Stdlib\Hydrator\DoctrineObject;
+use Zend\ServiceManager\ServiceManager;
 use Zend\Form\Form;
 
 
@@ -10,15 +12,19 @@ class ProductForm extends Form implements ObjectManagerAwareInterface
 {
     protected $objectManager;
 
-    public function init($name = null)
+    public function init()
     {
+
+        parent::__construct('productForm');
 
         $this->setAttribute('method', 'POST');
 
+        $this->setHydrator(new DoctrineObject($this->getObjectManager(), 'Kasjroet\entity\Product'));
 
         $this->add(
             array(
                 'name' => 'id',
+                'type' => 'Zend\Form\Element\Hidden',
             )
         );
 
@@ -103,6 +109,22 @@ class ProductForm extends Form implements ObjectManagerAwareInterface
             )
         );
 
+		$this->add(
+			array(
+				'name' => 'shops',
+				'type' => 'DoctrineModule\Form\Element\ObjectSelect',
+				'options' => array(
+					'label' => 'Available at',
+					'object_manager' => $this->getObjectManager(),
+					'target_class' => 'Kasjroet\Entity\Shop',
+					'property' => 'shopName'
+				),
+				'attributes' => array(
+					'multiple' => 'multiple',
+				),
+			)
+		);
+
         $this->add(
             array(
                 'name' => 'visible',
@@ -135,7 +157,6 @@ class ProductForm extends Form implements ObjectManagerAwareInterface
         );
 
     }
-
 
     /**
      * Get the object manager

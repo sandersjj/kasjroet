@@ -11,6 +11,7 @@ class ProductsController extends AbstractKasjroetActionController
 
     public function indexAction()
     {
+
         $products = $this->getEntityManager()->getRepository('Kasjroet\Entity\Product')->findAll();
         return new ViewModel(array(
             'products' => $products
@@ -60,24 +61,27 @@ class ProductsController extends AbstractKasjroetActionController
             $request = $this->getRequest();
             $repo = $this->getEntityManager()->getRepository('Kasjroet\Entity\Product');
             $id = $this->getEvent()->getRouteMatch()->getParam('id');
+            $form = $this->getProductsForm();
             $formElementManager = $this->getServiceLocator()->get('FormElementManager');
-            $form = $formElementManager->get('Kasjroet\Form\ProductForm');
-            $memoForm = $formElementManager->get('Kasjroet\Form\MemoForm');
+            //$memoForm = $formElementManager->get('memoForm');
+        	$memoForm = null;
 
-            if ($request->isPost()) {
+		if ($request->isPost() && $this->request->getPost()) {
                 $form->setData($request->getPost());
                 if($form->isValid()){
-                    $repo->updateProduct($id, $this->params()->fromPost());
+                    $repo->editProduct($id, $this->params()->fromPost());
                     $this->flashMessenger()->addMessage('The Product was updated');
                     return $this->redirect()->toRoute('zfcadmin/products');
-                }
+                } else {
+					$product = $this->getEntityManager()->find('Kasjroet\Entity\Product', $id);
+					$form->bind($product);
+				}
 
             } else {
                 $product = $this->getEntityManager()->find('Kasjroet\Entity\Product', $id);
-                $hydrator = $this->getServiceLocator()->get('ProductHydrator');
-                $form->setHydrator($hydrator);
                 $form->bind($product);
             }
+
         return new ViewModel(array(
             'product' => $product,
             'memoForm' => $memoForm,
@@ -87,36 +91,7 @@ class ProductsController extends AbstractKasjroetActionController
 
     }
 
-//        $request = $this->getRequest();
-//        $id = $this->getEvent()->getRouteMatch()->getParam('id');
-//        if ($request->isPost() AND is_numeric($id)) {
-//
-//            $repo = $this->getEntityManager()->getRepository('Kasjroet\Entity\Product');
-//            $repo->editProduct($id, $this->getRequest()->getPost());
-//            $this->flashMessenger()->addMessage('The product was updated.');
-//            return $this->redirect()->toRoute('zfcadmin');
-//        } else {
-//
-//            try {
-//
-//                $repo = $this->getEntityManager()->getRepository('Kasjroet\Entity\Product');
-//                $product = $repo->find($id);
-//
-//            } catch (ObjectNotFoundException $e) {
-//                throw new Exception('Object not found!');
-//            }
-//            //@todo review
-//			$formManager = $this->getServiceLocator()->get('FormElementManager');
-//			$form = $formManager->get('Kasjroet\Form\ProductForm');
-//
-//            $hydrator = $this->getServiceLocator()->get('ProductHydrator');
-//            $form->setHydrator(new DoctrineHydrator($this->getEntityManager(), 'Kasjroet\Entity\Product'));
-//            $form->bind($product);
-//
-//            return new ViewModel(array('form' => $form));
-//
-//        }
-//    }
+
 
 
     public function updateAction()
@@ -136,6 +111,16 @@ class ProductsController extends AbstractKasjroetActionController
             $this->flashMessenger()->addMessage('The product was removed.');
         }
         return $this->redirect()->toRoute('zfcadmin');
+    }
+
+    /**
+     * Returns the product form
+     * @return mixed
+     */
+    private function getProductsForm()
+    {
+        $formElementManager = $this->getServiceLocator()->get('FormElementManager');
+        return $formElementManager->get('ProductForm');
     }
 
 }

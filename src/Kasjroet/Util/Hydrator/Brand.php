@@ -28,7 +28,7 @@ class Brand implements HydratorInterface{
             throw new UnsupportedObjectException($message);
         }
 
-        return $object->getBrandName();
+
         return array(
             'id'    => $object->getId(),
             'brandName' => $object->getBrandName(),

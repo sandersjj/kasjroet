@@ -27,7 +27,7 @@ class Brand
     protected $brandName;
 
     /**
-     * @var Collection
+     *
      * ORM\OneToMany(targetEntity="Kasjroet\Entity\Product", mappedBy="brand")
      */
     protected $products;
@@ -40,7 +40,8 @@ class Brand
      * Gets the brand ID
      * @return mixed
      */
-    public function getId() {
+    public function getId()
+	{
         return $this->id;
     }
 
@@ -48,7 +49,8 @@ class Brand
      * Sets the brand Id
      * @param $id
      */
-    public function setId($id) {
+    public function setId($id)
+	{
         $this->id = $id;
     }
 
@@ -56,7 +58,8 @@ class Brand
      * Gets the brandName
      * @return mixed
      */
-    public function getBrandName() {
+    public function getBrandName()
+	{
         return $this->brandName;
     }
 
@@ -64,11 +67,13 @@ class Brand
      * Sets the brandName
      * @param $brandName
      */
-    public function setBrandName($brandName) {
+    public function setBrandName($brandName)
+	{
         $this->brandName = $brandName;
     }
 
-    public function __toString() {
+    public function __toString()
+	{
         return $this->brandName;
     }
 

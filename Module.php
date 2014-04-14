@@ -4,6 +4,7 @@ namespace Kasjroet;
 
 use Kasjroet\Controller\AbstractKasjroetActionController;
 use Kasjroet\Form\ProductForm;
+use Zend\Mvc\Controller\Plugin\FlashMessenger;
 use Zend\Mvc\MvcEvent;
 use Zend\Mvc\Router\RouteMatch;
 use Zend\ModuleManager\ModuleManager;
@@ -68,6 +69,42 @@ class module
 
                 return $response;
         }, -100);
+		$em->attach(MvcEvent::EVENT_RENDER, function($e) {
+				$flashMessenger = new FlashMessenger();
+
+				$messages = array();
+
+				$flashMessenger->setNamespace('success');
+		 		if ($flashMessenger->hasMessages()) {
+					$messages['success'] = $flashMessenger->getMessages();
+				}
+				$flashMessenger->clearMessages();
+
+				$flashMessenger->setNamespace('info');
+				if ($flashMessenger->hasMessages()) {
+					$messages['info'] = $flashMessenger->getMessages();
+				}
+				$flashMessenger->clearMessages();
+
+				$flashMessenger->setNamespace('default');
+				if ($flashMessenger->hasMessages()) {
+					if (isset($messages['info'])) {
+						$messages['info'] = array_merge($messages['info'], $flashMessenger->getMessages());
+					}
+					else {
+						$messages['info'] = $flashMessenger->getMessages();
+					}
+				}
+				$flashMessenger->clearMessages();
+
+				$flashMessenger->setNamespace('error');
+				if ($flashMessenger->hasMessages()) {
+					$messages['error'] = $flashMessenger->getMessages();
+				}
+				$flashMessenger->clearMessages();
+
+				$e->getViewModel()->setVariable('flashMessages', $messages);
+			});
     }
 
 
@@ -105,38 +142,40 @@ class module
 
     }
 
-	public function getFormElementConfig()
+    public function getFormElementConfig()
     {
-		return array(
-			'initializers' => array(
-				'ObjectManagerInitializer' => function ($element, $formElements) {
-                    if ($element instanceof ObjectManagerAwareInterface) {
-                        $services      = $formElements->getServiceLocator();
-                        $entityManager = $services->get('Doctrine\ORM\EntityManager');
-                        $element->setObjectManager($entityManager);
-                    }
-				},
+        return array(
+			'invokables' => array(
+				'productForm' => 'Kasjroet\Form\ProductForm'
 			),
-            'factories' => array(
-//                'Kasjroet\Form\BrandsForm' => function($sm) {
-//                    $form = new \Kasjroet\Form\BrandsForm();
-//                    $form->setServiceLocator($sm);
-//                    return $form;
-//
-//                }
-
-
+            'initializers' => array(
+                'ObjectManagerInitializer' => function ($element, $formElements) {
+                        if ($element instanceof ObjectManagerAwareInterface) {
+                            $services = $formElements->getServiceLocator();
+                            $entityManager = $services->get('Doctrine\ORM\EntityManager');
+                            $element->setObjectManager($entityManager);
+                        }
+                    },
             ),
-		);
-	}
+//            'factories' => array(
+//                'ProductForm' => function ($sm) {
+//                        $productForm = new ProductForm($sm);
+//                        return $productForm;
+//                    }
+//            ),
+
+        );
+    }
 
     public function getServiceConfig()
     {
         return array(
             'factories' => array(
-                'productForm' => function($sm){
-                    return new ProductForm();
-                },
+//                'productForm' => function($sm){
+//
+//						$productForm->setObjectManager($sm->get('Doctrine\ORM\EntityManager'));
+//                        return $productForm;
+//                },
                 'BrandsForm'   => function($sm){
                        return new Form\BrandsForm($sm);
                 },
