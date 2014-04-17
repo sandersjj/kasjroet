@@ -1,0 +1,52 @@
+<h3>Product View</h3>
+<?php $this->inlineScript()->appendFile($this->basePath() . '/js/memo-form.js'); ?>
+
+
+ 
+<div id="buttons">
+	<a href="<?php echo $this->url('overview', array('action' => 'new')); ?>"> new </a>
+	<span class="glyphicon .glyphicon-plus"></span>
+</div>
+<div class="page-header">
+
+	<h1><?php echo $this->product->getProductName(); ?></h1>
+</div>
+<header>
+	<ul class="nav nav-tabs">
+		<li class="active"><a href="#general" data-toggle="tab">General</a></li>
+		<li><a href="#memos" data-toggle="tab">Notes</a></li>
+	</ul>
+</header>
+<div class="tab-content body">
+	<div class="tab-pane active" id="general">
+		<?php
+		$productForm = $this->form;
+		$productForm->setAttribute('method','post');
+		$productForm->setAttribute('class', 'form-horizontal');
+		$productForm->setAttribute('name', 'productForm');
+		$productForm->prepare();
+		echo $this->form()->openTag($productForm);
+		?>
+
+
+		<?php echo $this->formRow($productForm->get('productName')); ?>
+
+		<?php echo $this->formRow($productForm->get('description')); ?>
+
+		<?php echo $this->formRow($productForm->get('brand'));  ?>
+		<?php echo $this->formRow($productForm->get('productGroups'));  ?>
+		<?php echo $this->formRow($productForm->get('hechsheriem'));  ?>
+		<?php echo $this->formRow($productForm->get('shops'));  ?>
+		<button class="btn btn-primary btn-xs" data-toggle="modal" data-target="#myModal">
+			Add shop
+		</button>
+
+		<?php echo $this->formRow($productForm->get('tags'));  ?>
+		<?php echo $this->formRow($productForm->get('visible'));?>
+		<?php echo $this->formRow($productForm->get('update'));?>
+		<?php echo $this->forminput($productForm->get('send'));?>
+
+		<?php echo $this->form()->closeTag($productForm); ?>
+	</div>
+</div>
+

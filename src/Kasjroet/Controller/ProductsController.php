@@ -82,12 +82,23 @@ class ProductsController extends AbstractKasjroetActionController
                 $form->bind($product);
             }
 
-        return new ViewModel(array(
-            'product' => $product,
-            'memoForm' => $memoForm,
-            'form' => $form,
-            'isXmlHttpRequest' => 1
-        ));
+		$view = new viewModel();
+		$productView = new ViewModel();
+		$aViewVars = array(
+			'product' => $product,
+			'memoForm' => $memoForm,
+			'form' => $form,
+			'isXmlHttpRequest' => 1
+		);
+		$productView->setVariables($aViewVars);
+		$productView->setTemplate('kasjroet/products/product');
+		$shopView = new ViewModel();
+		$shopView->setTemplate('kasjroet/shops/new');
+
+		$view->addChild($shopView, 'shop')
+		     ->addChild($productView, 'productView')
+		;
+        return $view;
 
     }
 
