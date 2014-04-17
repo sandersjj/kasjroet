@@ -146,7 +146,8 @@ class module
     {
         return array(
 			'invokables' => array(
-				'productForm' => 'Kasjroet\Form\ProductForm'
+				'productForm' => 'Kasjroet\Form\ProductForm',
+				'shopForm' => 'Kasjroet\Form\ShopForm'
 			),
             'initializers' => array(
                 'ObjectManagerInitializer' => function ($element, $formElements) {

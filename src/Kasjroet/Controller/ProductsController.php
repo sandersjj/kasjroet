@@ -3,6 +3,7 @@ namespace Kasjroet\Controller;
 
 use DoctrineModule\Stdlib\Hydrator\DoctrineObject as DoctrineHydrator;
 use Kasjroet\Entity\Product;
+use Kasjroet\Form\ShopForm;
 use Zend\View\Model\ViewModel;
 
 
@@ -82,6 +83,8 @@ class ProductsController extends AbstractKasjroetActionController
                 $form->bind($product);
             }
 
+
+
 		$view = new viewModel();
 		$productView = new ViewModel();
 		$aViewVars = array(
@@ -93,6 +96,7 @@ class ProductsController extends AbstractKasjroetActionController
 		$productView->setVariables($aViewVars);
 		$productView->setTemplate('kasjroet/products/product');
 		$shopView = new ViewModel();
+		$shopView->setVariable('shopForm' , $this->getShopForm());
 		$shopView->setTemplate('kasjroet/shops/new');
 
 		$view->addChild($shopView, 'shop')
@@ -133,5 +137,11 @@ class ProductsController extends AbstractKasjroetActionController
         $formElementManager = $this->getServiceLocator()->get('FormElementManager');
         return $formElementManager->get('ProductForm');
     }
+
+	private function getShopForm()
+	{
+		$formElementManager = $this->getServiceLocator()->get('FormElementManager');
+		return $formElementManager->get('ShopForm');
+	}
 
 }

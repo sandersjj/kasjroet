@@ -9,10 +9,14 @@ namespace Kasjroet\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
+/**
+ * @todo add Geo Location
+ */
+
 
 /**
  * Class Shop
- * @ORM\Entity
+ * @ORM\Entity$this
  * @ORM\Table(name="Shop")
  */
 class Shop {
@@ -59,7 +63,7 @@ class Shop {
 	 * @ORM\Column(type="string", length=50, unique=true, nullable=false)
 	 *
 	 */
-	protected $coutry;
+	protected $country;
 
 
 	/**
@@ -81,6 +85,12 @@ class Shop {
 	protected $email;
 
 	/**
+	 * @ORM\Column(type="string", length=50, unique=true, nullable=false)
+	 *
+	 */
+	protected $website;
+
+	/**
 	 * @param mixed $city
 	 */
 	public function setCity($city)
@@ -97,19 +107,19 @@ class Shop {
 	}
 
 	/**
-	 * @param mixed $coutry
+	 * @param mixed $country
 	 */
-	public function setCoutry($coutry)
+	public function setCountry($country)
 	{
-		$this->coutry = $coutry;
+		$this->country = $country;
 	}
 
 	/**
 	 * @return mixed
 	 */
-	public function getCoutry()
+	public function getCountry()
 	{
-		return $this->coutry;
+		return $this->country;
 	}
 
 	/**

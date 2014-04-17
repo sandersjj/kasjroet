@@ -1,13 +1,37 @@
-<!-- Modal -->
+
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 	<div class="modal-dialog">
 		<div class="modal-content">
 			<div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-				<h4 class="modal-title" id="myModalLabel">Modal title</h4>
+				<h4 class="modal-title" id="myModalLabel">Create new Shop</h4>
 			</div>
 			<div class="modal-body">
-				<?php echo $this->shop;?>
+
+				<?php
+				$shopForm = $this->shopForm;
+				$shopForm->setAttribute('method','post');
+				$shopForm->setAttribute('class', 'form-horizontal');
+				$shopForm->setAttribute('name', 'shopForm');
+				$shopForm->prepare();
+				echo $this->form()->openTag($shopForm);
+				echo $this->formRow($shopForm->get('shopName'));
+				echo $this->formRow($shopForm->get('street'));
+				echo $this->formRow($shopForm->get('houseNo'));
+				echo $this->formRow($shopForm->get('zipcode'));
+				echo $this->formRow($shopForm->get('city'));
+				echo $this->formRow($shopForm->get('country'));
+				echo $this->formRow($shopForm->get('phoneNumber'));
+				echo $this->formRow($shopForm->get('fax'));
+				echo $this->formRow($shopForm->get('email'));
+				echo $this->formRow($shopForm->get('website'));
+				echo $this->formRow($shopForm->get('send'));
+				echo $this->form()->closeTag($shopForm);
+				?>
+
+
+
+
 			</div>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
