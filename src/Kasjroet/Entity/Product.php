@@ -14,8 +14,6 @@ use Kasjroet\Entity\Brand;
  * @ORM\Entity(repositoryClass="Kasjroet\EntityRepository\Product")
  * @ORM\Table(name="product")
  */
-
-
 class Product{
 
     /**
@@ -85,14 +83,36 @@ class Product{
      */
     protected $update;
 
+	/**
+	 * @ORM\OneToMany(targetEntity="Kasjroet\Entity\ProductVariant", mappedBy="productId")
+	 */
+	protected $productVariants;
+
     public function __construct() {
         $this->memos = new ArrayCollection();
         $this->hechsheriem = new ArrayCollection();
         $this->productGroups = new ArrayCollection();
+	    $this->productVariants = new ArrayCollection();
         $this->updates = new ArrayCollection();
         $this->shop = new ArrayCollection();
 		$this->tags = new ArrayCollection();
     }
+
+	/**
+	 * @param mixed $productVariants
+	 */
+	public function setProductVariants($productVariants)
+	{
+		$this->productVariants = $productVariants;
+	}
+
+	/**
+	 * @return mixed
+	 */
+	public function getProductVariants()
+	{
+		return $this->productVariants;
+	}
 
     public function getId() {
         return $this->id;

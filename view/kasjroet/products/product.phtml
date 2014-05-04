@@ -1,7 +1,5 @@
 <h3>Product View</h3>
 <?php $this->inlineScript()->appendFile($this->basePath() . '/js/memo-form.js'); ?>
-
-
  
 <div id="buttons">
 	<a href="<?php echo $this->url('overview', array('action' => 'new')); ?>"> new </a>
@@ -11,17 +9,17 @@
 
 	<h1><?php echo $this->product->getProductName(); ?></h1>
 </div>
-<header>
-	<ul class="nav nav-tabs">
-		<li class="active"><a href="#general" data-toggle="tab">General</a></li>
-		<li><a href="#memos" data-toggle="tab">Notes</a></li>
-	</ul>
-</header>
-<div class="tab-content body">
+
+<ul class="nav nav-tabs" id="productTabs">
+	<li class="active"><a href="#general" data-toggle="tab">General</a></li>
+	<li><a href="#memos" data-toggle="tab">Notes</a></li>
+</ul>
+
+<div class="tab-content">
 	<div class="tab-pane active" id="general">
 		<?php
 		$productForm = $this->form;
-		$productForm->setAttribute('method','post');
+		$productForm->setAttribute('method', 'post');
 		$productForm->setAttribute('class', 'form-horizontal');
 		$productForm->setAttribute('name', 'productForm');
 		$productForm->prepare();
@@ -33,20 +31,46 @@
 
 		<?php echo $this->formRow($productForm->get('description')); ?>
 
-		<?php echo $this->formRow($productForm->get('brand'));  ?>
-		<?php echo $this->formRow($productForm->get('productGroups'));  ?>
-		<?php echo $this->formRow($productForm->get('hechsheriem'));  ?>
-		<?php echo $this->formRow($productForm->get('shops'));  ?>
+		<?php echo $this->formRow($productForm->get('brand')); ?>
+		<?php echo $this->formRow($productForm->get('productGroups')); ?>
+		<?php echo $this->formRow($productForm->get('hechsheriem')); ?>
+		<?php echo $this->formRow($productForm->get('shops')); ?>
 		<button class="btn btn-primary btn-xs" data-toggle="modal" data-target="#myModal">
 			Add shop
 		</button>
 
-		<?php echo $this->formRow($productForm->get('tags'));  ?>
-		<?php echo $this->formRow($productForm->get('visible'));?>
-		<?php echo $this->formRow($productForm->get('update'));?>
-		<?php echo $this->forminput($productForm->get('send'));?>
+		<?php echo $this->formRow($productForm->get('tags')); ?>
+		<?php echo $this->formRow($productForm->get('visible')); ?>
+		<?php echo $this->formRow($productForm->get('update')); ?>
+		<?php echo $this->forminput($productForm->get('send')); ?>
 
 		<?php echo $this->form()->closeTag($productForm); ?>
+	</div>
+	<div class="tab-pane active" id="memos">
+		<div class="panel panel-default">
+<!--			<table class="table">-->
+<!--				<thead>-->
+<!--					<tr>-->
+<!--						<th>id</th>-->
+<!--						<th>Variant</th>-->
+<!--						<th>Tags</th>-->
+<!--						<th>Opmerkingen</th>-->
+<!--						<th>Zichtbaar</th>-->
+<!--					</tr>-->
+<!--					--><?php //foreach($this->product->getProductVariants() as $variant): ?>
+<!--						<tr>-->
+<!--							<td>--><?php //echo $this->escapeHtml($variant->getId());?><!--</td>-->
+<!--							<td>--><?php //echo $this->escapeHtml($variant->getName());?><!--</td>-->
+<!--							<td>&nbsp;</td>-->
+<!--							<td>&nbsp;</td>-->
+<!--							<td>--><?php //echo $this->escapeHtml($variant->getVisible());?><!--</td>-->
+<!--						</tr>-->
+<!---->
+<!--					--><?php //endforeach ?>
+<!--				</thead>-->
+<!--			</table>-->
+			<?php echo $this->overview($this->product->getProductVariants(), array('id', 'name', 'visible' ), null, true); ?>
+		</div>
 	</div>
 </div>
 

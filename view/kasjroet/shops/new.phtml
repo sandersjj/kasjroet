@@ -26,10 +26,13 @@
 				echo $this->formRow($shopForm->get('fax'));
 				echo $this->formRow($shopForm->get('email'));
 				echo $this->formRow($shopForm->get('website'));
-				echo $this->form()->closeTag($shopForm);
 				?>
 			</div>
 			<div class="modal-footer">
+				<?php
+				echo $this->formRow($shopForm->get('send'));
+					echo $this->form()->closeTag($shopForm);
+				?>
 				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 				<button type="button" class="btn btn-primary save-shop">Save changes</button>
 			</div>

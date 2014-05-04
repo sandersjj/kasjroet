@@ -16,7 +16,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * Class Shop
- * @ORM\Entity$this
+ * @ORM\Entity
  * @ORM\Table(name="Shop")
  */
 class Shop {
@@ -29,63 +29,63 @@ class Shop {
 	protected $id;
 
 	/**
-	 * @ORM\Column(type="string", length=50, unique=true, nullable=false)
+	 * @ORM\Column(type="string", length=50,  nullable=false)
 	 *
 	 */
 	protected $shopName;
 
 	/**
-	 * @ORM\Column(type="string", length=50, unique=true, nullable=false)
+	 * @ORM\Column(type="string", length=50, nullable=false)
 	 *
 	 */
 	protected $street;
 
 	/**
-	 * @ORM\Column(type="string", length=50, unique=true, nullable=false)
+	 * @ORM\Column(type="string", length=50, nullable=true)
 	 *
 	 */
 	protected $houseNo;
 
 	/**
-	 * @ORM\Column(type="string", length=50, unique=true, nullable=false)
+	 * @ORM\Column(type="string", length=50, nullable=true)
 	 *
 	 */
 	protected $zipcode;
 
 
 	/**
-	 * @ORM\Column(type="string", length=50, unique=true, nullable=false)
+	 * @ORM\Column(type="string", length=50,  nullable=true)
 	 *
 	 */
 	protected $city;
 
 	/**
-	 * @ORM\Column(type="string", length=50, unique=true, nullable=false)
+	 * @ORM\Column(type="string", length=50, nullable=true)
 	 *
 	 */
 	protected $country;
 
 
 	/**
-	 * @ORM\Column(type="string", length=50, unique=true, nullable=false)
+	 * @ORM\Column(type="string", length=50, nullable=true)
 	 *
 	 */
 	protected $phoneNumber;
 
 	/**
-	 * @ORM\Column(type="string", length=50, unique=true, nullable=false)
+	 * @ORM\Column(type="string", length=50, nullable=true)
 	 *
 	 */
 	protected $fax;
 
 	/**
-	 * @ORM\Column(type="string", length=50, unique=true, nullable=false)
+	 * @ORM\Column(type="string", length=50, nullable=true)
 	 *
 	 */
 	protected $email;
 
 	/**
-	 * @ORM\Column(type="string", length=50, unique=true, nullable=false)
+	 * @ORM\Column(type="string", length=50, nullable=true)
 	 *
 	 */
 	protected $website;
