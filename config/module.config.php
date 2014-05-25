@@ -13,10 +13,14 @@ return array(
 			'Kasjroet\Controller\Memo' => 'Kasjroet\Controller\MemoController',
 			'Kasjroet\Controller\Index' => 'Kasjroet\Controller\IndexController',
 			'Kasjroet\Controller\Shop' => 'Kasjroet\Controller\ShopController',
+			//'Kasjroet\Controller\ProductVariant' => 'Kasjroet\Controller\ProductVariantController',
 		),
 		'abstract_factories' => array(
 			'Kasjroet\AbstractEntityControllerFactory' => 'Kasjroet\AbstractEntityControllerFactory',
 		),
+		'factories' => array(
+			'Kasjroet\Controller\ProductVariant' => 'Kasjroet\Service\Factory\ProductVariantControllerFactory'
+		)
 	),
 	'entity_controllers' => array(
 		'Products' => 'Kasjroet\Controller\ProductsController',
@@ -102,6 +106,21 @@ return array(
 							'defaults' => array(
 								'__NAMESPACE__' => 'Kasjroet\Controller',
 								'controller' => 'Shop',
+								'action' => 'index',
+							),
+
+						),
+					),
+					'productvariant' => array(
+						'type' => 'Segment',
+						'options' => array(
+							'route' => '/productvariant[/:action][/:id]',
+							'constraints' => array(
+								'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
+							),
+							'defaults' => array(
+								'__NAMESPACE__' => 'Kasjroet\Controller',
+								'controller' => 'productvariant',
 								'action' => 'index',
 							),
 
@@ -222,9 +241,6 @@ return array(
 		'exception_template' => 'error/index',
 		'template_map' => array(
 			'layout/frontend' => __DIR__ . '/../view/layout/frontend.phtml'
-			// 'index/index'   => __DIR__ . '/../view/index/index.phtml',
-			// 'error/404'     => __DIR__ . '/../view/error/404.phtml',
-			// 'error/index'   => __DIR__ . '/../view/error/index.phtml',
 		),
 		'template_path_stack' => array(
 			'application' => __DIR__ . '/../view'
@@ -254,16 +270,7 @@ return array(
 	'service_manager' => array(
 		'factories' => array(
 			'admin_navigation' => 'Kasjroet\Navigation\Service\AdminNavigationFactory',
-//            'ProductHydrator' => function ($sm) {
-//    return new Util\Hydrator\Product(
-//        new Util\Hydrator\ProductGroups(new Util\Hydrator\ProductGroup()),
-//        new Util\Hydrator\Brand(),
-//        new Util\Hydrator\Hechsheriem(new Util\Hydrator\Hechsher())
-//
-//    );
-//},
-
-
+			'product-variant-service' => 'Kasjroet\Service\Factory\ProductVariantServiceFactory'
 		),
 
 	),

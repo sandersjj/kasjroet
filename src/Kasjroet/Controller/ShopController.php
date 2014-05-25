@@ -12,15 +12,28 @@ use Kasjroet\Form\ShopForm;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\JsonModel;
 use DoctrineModule\Stdlib\Hydrator\DoctrineObject as DoctrineHydrator;
+use Doctrine\ORM\EntityManager as EntityManager;
 
 class ShopController extends AbstractActionController
 {
 
+	private $entityManager;
+	private $shopService;
+
+	public function construct(ShopService $shopService)
+	{
+		$this->shopService = $shopService;
+
+	}
+
+
+
 	public function ajaxAction()
 	{
+
 		$request = $this->getRequest();
 		$aReturnArray = array();
-		if ($this->getRequest()->isXmlHttpRequest()) {
+		if ($request->isXmlHttpRequest()) {
 			$form = new ShopForm();
 			if ($request->isPost() && $request->getPost()) {
 				$form->setData($request->getPost());
@@ -32,7 +45,7 @@ class ShopController extends AbstractActionController
 					if(is_object($postData)) {
 						$postData = get_object_vars($postData);
 					}
-					$repo = $this->getEntityManager()->getRepository('Kasjroet\Entity\Shop');
+//					$repo = $this->getEntityManager()->getRepository('Kasjroet\Entity\Shop');
 					$entityManager = $this->getEntityManager();
 					$hydrator = new DoctrineHydrator($entityManager, 'Kasjroet\Entity\Shop');
 					$shop = new Shop();
@@ -52,11 +65,9 @@ class ShopController extends AbstractActionController
 					$aReturnArray['status']  = 'error';
 					$aReturnArray['message']  = 'Het formulier kon niet worden opgeslagen';
 				}
-
 			} else {
 				$aReturnArray['status']  = 'error';
 				$aReturnArray['shopForm'] = $form;
-
 			}
 
 			return  new JsonModel($aReturnArray);
@@ -69,13 +80,14 @@ class ShopController extends AbstractActionController
 	 * @return type
 	 */
 	public function getEntityManager() {
-		return $this->_entityManager;
+		return $this->entityManager;
 	}
 
 	/**
-	 * @param EntityManager $entityManager
+	 * @param \Doctrine\ORM\EntityManager $entityManager
 	 */
-	public function setEntityManager(\Doctrine\ORM\EntityManager $entityManager) {
-		$this->_entityManager = $entityManager;
+	public function setEntityManager(EntityManager $entityManager)
+	{
+		$this->entityManager = $entityManager;
 	}
 } 

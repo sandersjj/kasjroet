@@ -10,7 +10,8 @@ namespace Kasjroet\Navigation\Service;
 
 use Zend\Navigation\Service\DefaultNavigationFactory;
 
-class AdminNavigationFactory extends DefaultNavigationFactory{
+class AdminNavigationFactory extends DefaultNavigationFactory
+{
 
 	protected function getName()
 	{

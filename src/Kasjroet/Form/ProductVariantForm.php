@@ -23,6 +23,13 @@ class ProductVariantForm extends Form
 
 		$this->add(
 			array(
+				'name' => 'productId_id',
+				'type' => 'Zend\Form\Element\Hidden',
+			)
+		);
+
+		$this->add(
+			array(
 				'name' => 'name',
 				'type' => 'Zend\Form\Element\Text',
 				'options' => array(
@@ -50,5 +57,18 @@ class ProductVariantForm extends Form
 				)
 			)
 		);
+
+		$this->add(
+			array(
+				'name' => 'send',
+				'type' => 'Zend\Form\Element\Submit',
+				'attributes' => array(
+					'type' => 'submit',
+					'value' => 'Submit',
+				),
+			)
+		);
 	}
+
+
 } 
