@@ -48,27 +48,6 @@
 	</div>
 	<div class="tab-pane active" id="memos">
 		<div class="panel panel-default">
-<!--			<table class="table">-->
-<!--				<thead>-->
-<!--					<tr>-->
-<!--						<th>id</th>-->
-<!--						<th>Variant</th>-->
-<!--						<th>Tags</th>-->
-<!--						<th>Opmerkingen</th>-->
-<!--						<th>Zichtbaar</th>-->
-<!--					</tr>-->
-<!--					--><?php //foreach($this->product->getProductVariants() as $variant): ?>
-<!--						<tr>-->
-<!--							<td>--><?php //echo $this->escapeHtml($variant->getId());?><!--</td>-->
-<!--							<td>--><?php //echo $this->escapeHtml($variant->getName());?><!--</td>-->
-<!--							<td>&nbsp;</td>-->
-<!--							<td>&nbsp;</td>-->
-<!--							<td>--><?php //echo $this->escapeHtml($variant->getVisible());?><!--</td>-->
-<!--						</tr>-->
-<!---->
-<!--					--><?php //endforeach ?>
-<!--				</thead>-->
-<!--			</table>-->
 			<?php echo $this->overview($this->product->getProductVariants(), array('id', 'name', 'visible' ), null, true); ?>
 		</div>
 	</div>
