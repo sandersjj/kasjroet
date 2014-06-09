@@ -1,8 +1,23 @@
 <h1>EDIT VIEW</h1>
 <div class="row">
-	<?php echo $this->productView; ?>
+<!--	--><?php //echo $this->partial('partial/modal.phtml'); ?>
+
+	<?php
+	$target = $this->url(
+	'zfcadmin/productvariant',
+	array(),
+	array('query' => array('format' => 'json'))
+	);
+
+	echo $this->modal(
+		'Edit ProductVariant',
+		$this->form($this->productVariantForm), // Use the form view helper to set the modal content
+		$target
+	);
+
+	 echo $this->productView; ?>
 
 	<?php echo $this->shop; ?>
-	<?php echo $this->productVariant; ?>
+
 
 </div>
