@@ -72,7 +72,6 @@ return array(
 							'route' => '/brands[/:action][/:id]',
 							'constraints' => array(
 								'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
-								'id' => '[0-9]+',
 							),
 							'defaults' => array(
 								'__NAMESPACE' => 'Kasjroet\Controller',
@@ -121,7 +120,7 @@ return array(
 							'defaults' => array(
 								'__NAMESPACE__' => 'Kasjroet\Controller',
 								'controller' => 'productvariant',
-								'action' => 'index',
+								'action' => 'showForm',
 							),
 
 						),
@@ -240,11 +239,11 @@ return array(
 		'not_found_template' => 'error/404',
 		'exception_template' => 'error/index',
 		'template_map' => array(
-			'layout/frontend' => __DIR__ . '/../view/layout/frontend.phtml'
+			'layout/frontend' => __DIR__ . '/../view/layout/frontend.phtml',
+			'partial/modal' => __DIR__ . '/../view/partial/modal.phtml',
 		),
 		'template_path_stack' => array(
-			'application' => __DIR__ . '/../view'
-		,
+			'application' => __DIR__ . '/../view',
 			'kasjroet' => __DIR__ . '/../view'
 		),
 		'strategies' => array(
@@ -283,6 +282,11 @@ return array(
 		'default_user_state' => 1,
 		'login_redirect_route' => "zfcadmin"
 
+	),
+	'view_helpers' => array(
+		'invokables' => array(
+			'modal' => 'Kasjroet\View\Helper\Modal'
+		)
 	),
 
 
