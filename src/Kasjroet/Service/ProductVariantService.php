@@ -23,7 +23,7 @@ class ProductVariantService implements ObjectManagerAwareInterface
 	 */
 	public function get($id)
 	{
-		if(!is_int($id) || $id <= 0 )
+		if(!is_numeric($id) || $id <= 0 )
 		{
 			throw new \InvalidArgumentException(sprintf('%s is not a valid id', $id));
 		}

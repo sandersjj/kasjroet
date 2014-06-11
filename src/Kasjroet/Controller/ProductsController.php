@@ -87,7 +87,7 @@ class ProductsController extends AbstractKasjroetActionController
 		//$memoForm = $formElementManager->get('memoForm');
 		$memoForm = null;
 
-		if ($request->isPost() && $this->request->getPost()) {
+		if (! $request->isPost() ) {
 			$form->setData($request->getPost());
 			if ($form->isValid()) {
 				$repo->editProduct($id, $this->params()->fromPost());
@@ -105,12 +105,14 @@ class ProductsController extends AbstractKasjroetActionController
 
 
 		$view = new viewModel();
+		$view->setVariable('productVariantForm' , $this->getForm('ProductVariantForm'));
 		$productView = new ViewModel();
 		$aViewVars = array(
 			'product' => $product,
 			'memoForm' => $memoForm,
 			'form' => $form,
-			'isXmlHttpRequest' => 1
+			'isXmlHttpRequest' => 1,
+
 		);
 		$productView->setVariables($aViewVars);
 		$productView->setTemplate('kasjroet/products/product');

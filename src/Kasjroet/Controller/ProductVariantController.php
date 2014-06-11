@@ -9,6 +9,7 @@ namespace Kasjroet\Controller;
 
 use Kasjroet\Form\ProductVariantForm;
 use Zend\Mvc\Controller\AbstractActionController;
+use Zend\View\Helper\ViewModel;
 use Zend\View\Model\JsonModel;
 use DoctrineModule\Stdlib\Hydrator\DoctrineObject as DoctrineHydrator;
 use Doctrine\ORM\EntityManager as EntityManager;
@@ -24,14 +25,22 @@ class ProductVariantController extends AbstractActionController
 
 	}
 
-	public function showFormAction($id)
+	public function showFormAction()
 	{
-
-		$productVariant =   $this->getProductVariantService()->get($id);
-
+		$id = $this->params()->fromRoute('id');
 		$form = new ProductVariantForm();
-		$form->setData($productVariant);
-		exit;
+		try {
+			$productVariant = $this->getProductVariantService()->get($id);
+//			$hydrator = new DoctrineHydrator($this->getEntityManager(), '\Kasjroet\Entity\ProductVariant');
+//			$form->setHydrator($hydrator);
+			$form->bind($productVariant);
+
+		} catch(\InvalidArgumentException $e) {
+			var_dump($e->getMessage());
+		}
+
+		$viewModel = new JsonModel(array('form' => $form));
+		return $viewModel;
 	}
 
 
